@@ -1,0 +1,8 @@
+= Learn Bash The Hard Way
+
+:toc: left
+
+An introduction to Bash using 'The Hard Way' method.
+
+//include::../1.core/1.core.asciidoc[]
+
