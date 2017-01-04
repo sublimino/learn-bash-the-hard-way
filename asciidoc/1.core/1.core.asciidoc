@@ -1,0 +1,10 @@
+:chapter: 1
+
+== Core Git
+
+include::1.intro.asciidoc[]
+
+include::1.1.bash_core.asciidoc[]
+
+include::1.summary.asciidoc[]
+

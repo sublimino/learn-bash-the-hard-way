@@ -1,0 +1,20 @@
+
+
+//This bash course has been written to help git users get a clearer understanding
+//of source control and git concepts. After following it they will be able to:
+//
+//- use git to contribute to projects
+//- understand how to troubleshoot git when it gets confusing
+//- not be fazed when people talk about things like rebasing, bisecting, remotes,
+//  merges
+//
+//It assumes:
+//
+//- No prior knowledge of source control
+//- No prior knowledge of git
+//
+//It aims to give users:
+//
+//- A hands-on, practical understanding of git
+//- Enough information to understand what is going on as they go deeper into git
+//- A familiarity with advanced git usage
