@@ -1,17 +1,47 @@
-//=== Introduction 
-//
-//==== The Four Phases of Bash Content
-//
-//image::diagrams/1.1.3.mermaid.png[scaledwidth="50%",height=200]
+=== Introduction
 
-//==== What you learned
-//
-//- setting up git
-//- what git is - the four stages
-//- differences to other SC systems
-//
-//==== Exercises
-//
-//1) Install git and set up your config. Set up user.email and user.name using the --global flag.
-//2) Find out where the config is stored.
-//3) Research the other config items that are in the file and some of those that are not.
+==== What is bash?
+
+Bash is a shell program.
+
+A shell program is typically an executable binary that takes commands that you
+type and (once you hit return), translates those commands into (ultimately)
+system calls to the Operating System API.
+
+==== Other shells
+
+Other shells include:
+
+- sh
+- ash
+- dash
+- ksh
+- csh
+- tclsh
+
+These other shells have different rules, conventions, logic, and histories that
+means they can look similar.
+
+----
+$ csh
+% 
+
+==== History of bash
+
+This diagram helps give a picture of the history of bash:
+
+image::diagrams/shell_history.gif[scaledwidth="50%",height=200]
+
+Bash is called the 'Bourne Again SHell'. It is a descendant of the Thompson
+Shell and then the 'sh' shell.
+
+
+==== What you learned
+
+- What a shell is
+
+==== Exercises
+
+1) Install git and set up your config. Set up user.email and user.name using the --global flag.
+2) Find out where the config is stored.
+3) Research the other config items that are in the file and some of those that are not.

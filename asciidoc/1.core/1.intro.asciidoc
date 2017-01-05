@@ -1,20 +1,19 @@
+This bash course has been written to help bash users to get to a deeper
+understanding and proficiency in bash. It doesn't aim to make you an expert
+immediately, but you will be more confident about using bash for more tasks than
+just one-off commands.
 
+After following this course, you will be able to:
 
-//This bash course has been written to help git users get a clearer understanding
-//of source control and git concepts. After following it they will be able to:
-//
-//- use git to contribute to projects
-//- understand how to troubleshoot git when it gets confusing
-//- not be fazed when people talk about things like rebasing, bisecting, remotes,
-//  merges
-//
-//It assumes:
-//
-//- No prior knowledge of source control
-//- No prior knowledge of git
-//
-//It aims to give users:
-//
-//- A hands-on, practical understanding of git
-//- Enough information to understand what is going on as they go deeper into git
-//- A familiarity with advanced git usage
+- TODO
+
+It assumes some familiarity with basic shell usage and commands. For those
+looking to get to that point, I recommend following this set of mini-tutorials:
+
+https://learnpythonthehardway.org/book/appendixa.html
+
+This course aims to give students:
+
+- A hands-on, practical understanding of bash
+- Enough information to understand what is going on as they go deeper into bash
+- A familiarity with advanced bash usage
