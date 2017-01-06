@@ -6,5 +6,23 @@ include::1.intro.asciidoc[]
 
 include::1.1.bash_core.asciidoc[]
 
+
+//CORE
+//variables
+//functions - local, parameters, scope
+//builtins vs commands
+
+//pipes
+//redirects
+
+//startup - profile files
+
+TIPS/TRICKS?
+//set -e / -x
+
+
+
 include::1.summary.asciidoc[]
 
+
+//TODO: parameter expansion later in advanced

@@ -22,9 +22,15 @@ Other shells include:
 These other shells have different rules, conventions, logic, and histories that
 means they can look similar.
 
+Because other shells are also programs, they can be run from in each other!
+
+Here you TODO
+
+//TODO some difference between csh and bash
 ----
 $ csh
 % 
+----
 
 ==== History of bash
 
@@ -33,15 +39,23 @@ This diagram helps give a picture of the history of bash:
 image::diagrams/shell_history.gif[scaledwidth="50%",height=200]
 
 Bash is called the 'Bourne Again SHell'. It is a descendant of the Thompson
-Shell and then the 'sh' shell.
+Shell and then the Bourne 'sh' shell. Bash has other 'siblings' (eg ksh),
+'cousins' (eg tcsh), and 'children', eg 'zsh'.
+
+The details aren't important, but it's important to know that different shells
+exist and they can be related and somewhat compatible.
+
+Bash is the most widely seen and used shell as of 2017. However, it is still
+not uncommon to end up on servers that do not have bash!
 
 
 ==== What you learned
 
 - What a shell is
+- How to start up a different shell
+- The family tree of shells
 
 ==== Exercises
 
-1) Install git and set up your config. Set up user.email and user.name using the --global flag.
-2) Find out where the config is stored.
-3) Research the other config items that are in the file and some of those that are not.
+1) Run 'sh' from a bash command line. What happens?
+1) What commands can you find that are work in 'bash', but do not work in 'sh'?

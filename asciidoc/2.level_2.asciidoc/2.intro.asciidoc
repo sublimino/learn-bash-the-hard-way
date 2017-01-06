@@ -1,0 +1,9 @@
+//IMPORTANT
+//command substitution $() vs ` `
+//exit codes $?
+//special variables
+//subshell
+//[[ ]] vs [ ] (test)
+//functions (and arguments)
+//file descriptors
+//-a conditions etc

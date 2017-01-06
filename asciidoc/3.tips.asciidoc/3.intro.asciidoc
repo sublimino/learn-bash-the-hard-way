@@ -1,0 +1,4 @@
+TRICKS / HANDY
+here docs
+debugging
+set (-e -x)

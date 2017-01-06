@@ -1,0 +1,102 @@
+=== Variables in Bash
+
+
+==== Basic Variables
+
+----
+$ MYSTRING=astring    # Line 1
+$ echo $MYSTRING       # Line 2
+----
+
+- Line 1 
+- Line 2
+
+==== Variables and Quoting
+
+
+----
+$ echo "$MYSTRING"       # Line 1
+$ echo '$MYSTRING'       # Line 2
+----
+
+
+----
+$ MYSENTENCE=A sentence     # Line 1
+$ MYSENTENCE="A sentence"   # Line 2
+----
+
+
+----
+$ MYSENTENCE="A sentence with $MYSTRING in it"   # Line 1
+$ MYSENTENCE='A sentence with $MYSTRING in it'   # Line 2
+----
+
+
+
+==== Shell Variables
+
+Some variables are automatically set for you 
+
+----
+$ echo $PPID          # Line 1
+$ PPID=nonsense       # Line 2
+$ echo $PPID          # Line 3
+----
+
+- Line 1 - 
+- Line 2 - 
+- Line 3 - 
+
+What happened there?
+
+If you want to make a readonly variable, put 'readonly' in front of it:
+
+---- 
+$ readonly MYVAR=astring
+$ MYVAR=anotherstring
+----
+
+
+
+----
+$ env
+----
+
+Wherever are you, you can see the variables TODO
+
+
+==== export
+
+----
+$ MYSTRING=astring
+$ bash
+$ echo $MYSTRING
+$ exit
+$ export MYSTRING=anothermystring
+$ bash
+$ echo $MYSTRING
+----
+
+
+==== Arrays
+
+BASH_VERSINFO - read-only array
+
+
+===== Cleanup
+
+Now clean up what you just did:
+
+----
+$ cd -                      # Line 1
+$ rm -rf lbthw_tmp          # Line 2
+----
+
+
+==== What you learned
+
+- 
+
+==== Exercises
+
+1) TODO

@@ -1,0 +1,12 @@
+//ADVANCED
+//file substitution <()
+//traps!
+//signals
+//auto-completion
+//arrays 'when you get to arrays, you probably need a proper language'
+//https://google.github.io/styleguide/shell.xml
+//getopts
+//command
+//which
+//dev/tcp
+//key variables: TERM, USER, DISPLAY

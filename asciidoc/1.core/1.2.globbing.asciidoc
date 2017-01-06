@@ -1,0 +1,131 @@
+=== Unpicking the shell: Globbing and Quoting
+
+You may have wondered what the '*' in bash commands really means, and how it is
+different from regexps.
+
+==== Globbing
+
+Type these commands into your terminal
+
+----
+$ mkdir lbthw_tmp           # Line 1
+$ cd lbthw_tmp              # Line 2
+$ touch file1 file2 file3   # Line 3
+$ ls *                      # Line 4
+$ echo *                    # Line 5
+----
+
+- Line 1 above makes a new folder that should not exist already. 
+- Line 2 moves into that folder.
+- Line 3 creates three files (file1,2,3).
+- Line 4 runs the 'ls' command, which lists files, asking to list the files matching '*' 
+- Line 5 runs the echo command using '*' as the argument to echo
+
+What you should have seen was the three files listed in both cases.
+
+The shell has taken your '*' character and converted it to match all the files
+in the current working directory. In other words, it's converted the '*' character
+into the string "file1 file2 file3" and then processed the resulting command.
+
+==== Quoting
+
+What do you think will be output happen if we run these commands?
+
+Think about it first, make a prediction, and then type it out!
+
+----
+$ ls '*'         # Line 1
+$ ls "*"         # Line 2
+$ echo '*'       # Line 3
+$ echo "*"       # Line 4
+----
+
+- Line 1 lists files matching the '*' character in single quotes
+- Line 2 lists files matching the '*' character in double quotes
+- Line 3 'echo's the '*' character in single quotes
+- Line 4 'echo's the '*' character in double quotes
+
+This is difficult even if you are an expert in bash!
+
+Was the output what you expected? Can you explain it? Ironically it may be
+harder to explain if you have experience of quoting variables in bash!
+
+Quoting in bash is a very tricky topic. You may want to take from this that
+quoting globs removes their effect. But in other contexts single and double 
+quotes have different meanings.
+
+Quoting changes the way bash can read the line, making it decide whether to
+take these characters and transform them into something else, or just leave them
+be.
+
+What you should take from this is that 'quoting in bash is tricky' and be
+prepared for some head-scratching later!
+
+
+
+==== Other glob characters
+
+'*' is not the only globbing primitive. Other globbing primitives are:
+
+- ? - matches any single character
+- [abd] - matches any character from a, b or d
+- [a-d] - matches any character from a, b, c or d
+
+Try running these commands and see if the output is what you expect:
+
+----
+$ ls *1             # Line 1
+$ ls file[a-z]      # Line 2
+$ ls file[0-9]      # Line 3
+----
+
+- Line 1 list all the files that end in '1'
+- Line 2 list all files that start with 'file' and end with a character from a to z
+- Line 3 list all files that start with 'file' and end with a character from 0 to 9
+
+===== Differences with regexes
+
+While globs look similar regexes, they are used in different contexts and are
+separate things.
+
+The '*' characters in this command:
+
+----
+$ rename -n 's/(.*)(.*)/new$1$2/' *      # Line 1
+'file1' would be renamed to 'newfile1'   # Line 2
+'file2' would be renamed to 'newfile2'   # Line 3
+'file3' would be renamed to 'newfile3'   # Line 4
+----
+
+- Line 1 prints the files that would be renamed by the rename command if the -n flag were removed
+- Lines2-4 show the files that would be renamed
+
+have a different significance 
+
+NOTE: this assumes you have the program 'rename' installed.
+
+Again, the key takeaway here is that context is key.
+
+Note that '.' has no meaning as a glob, and that some shells offer extended
+globbing capabilities. Bash offers 'extended globbing', which we do not cover here.
+
+
+===== Cleanup
+
+Now clean up what you just did:
+
+----
+$ cd -                      # Line 1
+$ rm -rf lbthw_tmp          # Line 2
+----
+
+
+==== What you learned
+
+- What a glob is
+- Globs and regexes are different
+- Single and double quotes around globs can be important
+
+==== Exercises
+
+1) TODO
