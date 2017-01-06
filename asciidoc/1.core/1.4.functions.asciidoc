@@ -1,0 +1,66 @@
+=== Functions in Bash
+
+
+==== Basic Functions
+
+TODO 
+----
+$ function myfunc() {
+	echo Hello World
+}
+$ myfunc
+----
+TODO 
+
+==== Arguments
+
+Unlike other languages, little checking by default of functions.
+
+Predict the output of this, and then run it:
+
+----
+$ function myfunc() {
+	echo $1
+}
+$ myfunc "Hello World"
+$ myfunc Hello World
+----
+
+TODO Up to the function to manage arguments. Referred to by number.
+
+==== Variable Scope
+
+local word
+
+
+==== Functions, Builtins, Aliases and Commands
+
+What if I create a function that clashes with a command, like grep.
+
+
+What about builtins, eg cd.
+
+----
+function cd() {
+	echo 'No!'
+}
+----
+
+
+===== Cleanup
+
+Now clean up what you just did:
+
+----
+$ cd -                      # Line 1
+$ rm -rf lbthw_tmp          # Line 2
+----
+
+
+==== What you learned
+
+- 
+
+==== Exercises
+
+1) TODO

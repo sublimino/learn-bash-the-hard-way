@@ -1,0 +1,93 @@
+=== Pipes and redirects
+
+
+==== Basic Redirects
+
+----
+$ mkdir lbthw_pipes_redirects
+$ cd lbthw_pipes_redirects
+$ echo "contents of file1" > file1
+----
+
+- Line 1 
+- Line 2
+
+
+
+==== Basic pipes
+
+Type this in:
+
+----
+$ cat file1 | grep -c file
+----
+
+NOTE: if you don't know what grep is, you will need to learn. This is a good
+place to start: https://en.wikipedia.org/wiki/Grep
+
+Normally you'd run a grep with the filename as the last argument, but instead
+here we 'pipe' the contents of file into the grep command by using the 'pipe'
+operator: '|'.
+
+A pipe takes the standard output of one command and passes it as the input
+to another. What, then is standard output, really? You will find out soon!
+
+----
+$ cat file2
+----
+
+What was the output of that?
+
+Now run this, and try and guess the result before you run it:
+
+----
+$ cat file2 | grep -c file
+----
+
+Was that what you expected? If it was, you can explain to the rest of the class
+:)
+
+If it wasn't, then the answer is related to standard output and other kinds of
+output.
+
+==== Standard output vs standard error
+
+In addition to 'standard output', there is also a 'standard error' channel. When
+you pass a non-existent file to the cat command, it throws an error message out
+to the terminal. Although the message looks the same as the contents of a file,
+it is in fact sent to a different output channel. In this case it's 'standard
+error' rather than 'standard output'.
+
+As a result, it is NOT passed through the pipe to the grep command, and grep
+counts 0 matches in its output.
+
+
+TODO: numbers: 1,2 etc 2>&1, ordering important
+
+==== Difference between pipes and redirects
+
+To recap:
+
+- A pipe passes standard out to another command
+- A redirect sends a channel of output to a file
+
+
+// Other redirection operators >> 2>
+
+===== Cleanup
+
+Now clean up what you just did:
+
+----
+$ cd -                            # Line 1
+$ rm -rf lbthw_pipes_redirects    # Line 2
+----
+
+
+==== What you learned
+
+- 
+
+==== Exercises
+
+1) TODO
