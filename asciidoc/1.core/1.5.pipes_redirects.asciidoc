@@ -1,18 +1,16 @@
 === Pipes and redirects
 
+TODO: Intro
 
 ==== Basic Redirects
+
+Start off by creating a file
 
 ----
 $ mkdir lbthw_pipes_redirects
 $ cd lbthw_pipes_redirects
 $ echo "contents of file1" > file1
 ----
-
-- Line 1 
-- Line 2
-
-
 
 ==== Basic pipes
 

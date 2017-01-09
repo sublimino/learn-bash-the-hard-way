@@ -6,15 +6,5 @@ include::1.intro.asciidoc[]
 
 include::1.1.bash_core.asciidoc[]
 
-
-//CORE
-
-//pipes and redirects
-//scripts? source
-//startup - profile files
-
-
 include::1.summary.asciidoc[]
 
-
-//TODO: parameter expansion later in advanced

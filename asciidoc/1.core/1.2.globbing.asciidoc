@@ -1,7 +1,8 @@
 === Unpicking the shell: Globbing and Quoting
 
 You may have wondered what the '*' in bash commands really means, and how it is
-different from regexps.
+different from regexps. This section will explain all, and introduce you to the
+joy of quoting in bash.
 
 ==== Globbing
 
