@@ -1,16 +1,23 @@
 === Pipes and redirects
 
-TODO: Intro
+Pipes are redirects are used very frequently in bash. This can cause a problem
+in that they are used so often by all users of bash that many don't understand
+their subtleties or how their full power.
+
+This section will lay a firm foundation for you to understand these concepts
+as we move onto deeper bash topics.
 
 ==== Basic Redirects
 
-Start off by creating a file
+Start off by creating a file:
 
 ----
 $ mkdir lbthw_pipes_redirects
 $ cd lbthw_pipes_redirects
 $ echo "contents of file1" > file1
 ----
+
+You've probably seen this before TODO
 
 ==== Basic pipes
 
@@ -59,6 +66,8 @@ error' rather than 'standard output'.
 As a result, it is NOT passed through the pipe to the grep command, and grep
 counts 0 matches in its output.
 
+To the viewer of the terminal, there is no difference, but to bash there is
+all the difference in the world!
 
 TODO: numbers: 1,2 etc 2>&1, ordering important
 
@@ -66,11 +75,12 @@ TODO: numbers: 1,2 etc 2>&1, ordering important
 
 To recap:
 
-- A pipe passes standard out to another command
+- A pipe passes 'standard output' as the 'standard input' to another command
 - A redirect sends a channel of output to a file
 
 
-// Other redirection operators >> 2>
+// Other redirection operators >> 2> 2>&1
+// /dev/null
 
 ===== Cleanup
 
@@ -84,7 +94,7 @@ $ rm -rf lbthw_pipes_redirects    # Line 2
 
 ==== What you learned
 
-- 
+- TODO
 
 ==== Exercises
 

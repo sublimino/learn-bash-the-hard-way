@@ -47,19 +47,10 @@ function cd() {
 ----
 
 
-===== Cleanup
-
-Now clean up what you just did:
-
-----
-$ cd -                      # Line 1
-$ rm -rf lbthw_tmp          # Line 2
-----
-
 
 ==== What you learned
 
-- 
+-  TODO
 
 ==== Exercises
 

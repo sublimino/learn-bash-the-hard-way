@@ -81,25 +81,86 @@ $ MYVAR=anotherstring
 
 ==== env
 
-Wherever are you, you can see the variables 
+Wherever you are, you can see the variables that are set by running this:
 
 ----
 $ env
+TERM_PROGRAM=Apple_Terminal
+TERM=xterm-256color
+SHELL=/bin/bash
+HISTSIZE=1000000
+TMPDIR=/var/folders/mt/mrfvc55j5mg73dxm9jd3n4680000gn/T/
+PERL5LIB=/home/imiell/perl5/lib/perl5
+GOBIN=/space/go/bin
+Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.2BE31oXVrF/Render
+TERM_PROGRAM_VERSION=361.1
+PERL_MB_OPT=--install_base "/home/imiell/perl5"
+TERM_SESSION_ID=07101F8B-1F4C-42F4-8EFF-1E8003E8A024
+HISTFILESIZE=1000000
+USER=imiell
+SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.uNwbe2XukJ/Listeners
+__CF_USER_TEXT_ENCODING=0x1F5:0x0:0x0
+PATH=/home/imiell/perl5/bin:/opt/local/bin:/opt/local/sbin:/Users/imiell/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/space/git/shutit:/space/git/work/bin:/space/git/home/bin:~/.dotfiles/bin:/space/go/bin
+PWD=/space/git/work/home/finances/tax/tax_returns/ian/self_employed_income/2016-2017/manning
+LANG=en_GB.UTF-8
+XPC_FLAGS=0x0
+HISTCONTROL=ignoredups:ignorespace
+XPC_SERVICE_NAME=0
+HOME=/Users/imiell
+SHLVL=2
+PERL_LOCAL_LIB_ROOT=/home/imiell/perl5
+LOGNAME=imiell
+GOPATH=/space/go
+DISPLAY=/private/tmp/com.apple.launchd.lwUJWwBy9y/org.macosforge.xquartz:0
+SECURITYSESSIONID=186a7
+PERL_MM_OPT=INSTALL_BASE=/home/imiell/perl5
+HISTTIMEFORMAT=%d/%m/%y %T 
+HISTFILE=/home/imiell/.bash_history
+_=/usr/bin/env
+OLDPWD=/Users/imiell/Downloads
 ----
 
+The output will be different wherever you run it.
 
 
 ==== export
+
+Type in these commands, and try to predict what will happen:
 
 ----
 $ MYSTRING=astring
 $ bash
 $ echo $MYSTRING
 $ exit
-$ export MYSTRING=anothermystring
+$ echo $MYSTRING
+$ unset MYSTRING
+$ echo $MYSTRING
+$ export MYSTRING=anotherstring
 $ bash
 $ echo $MYSTRING
+$ exit
 ----
+
+Based on this, what do you think export does?
+
+You've already seen that a variable set in a bash terminal can be referenced
+later by using the dollar sign.
+
+But what happens when you set a variable, and then start up another process?
+
+In this case, you set a variable (MYSTRING) to the value "astring", and then
+start up a new bash shell process. Within that bash shell process, MYSTRING
+does not exist, so an error is thrown. In other words, the variable was not
+inherited by the bash process you just started.
+
+After exiting that bash session, and unsetting the MYSTRING variable to ensure
+it's gone, you set it again, but this time 'export' the variable, so that any
+processes started by the running shell will have it in their environment. You
+show this by starting up another bash shell, and it 'echo's the new value
+"anotherstring" to the terminal.
+
+It's not just shells that have environment variables! All processes have
+environment variables.
 
 
 ==== Arrays
@@ -107,20 +168,14 @@ $ echo $MYSTRING
 BASH_VERSINFO - read-only array
 
 
-===== Cleanup
-
-Now clean up what you just did:
-
-----
-$ cd -                      # Line 1
-$ rm -rf lbthw_tmp          # Line 2
-----
-
-
 ==== What you learned
 
-- 
+- TODO
 
 ==== Exercises
 
-1) TODO
+1) Take the output of 'env' in your shell and work out why each item is there
+and what it might be used by. You may want to use 'man bash', or use google to
+figure it out. Or you could try re-setting it and see what happens.
+
+2) 
