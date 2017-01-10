@@ -1,25 +1,37 @@
 === Functions in Bash
 
+From one angle, bash can be viewed as a programming language, albeit a quite
+slow and primitive one.
+
+One of the language features it has are the capability to create and call
+functions.
+
+This leads us onto the topic of what a 'command' can be in bash: function,
+alias, program or 'builtin'.
 
 ==== Basic Functions
 
-TODO 
+Start by creating a simple function
+
 ----
-$ function myfunc() {
+$ function myfunc {
 	echo Hello World
 }
 $ myfunc
 ----
-TODO 
+
+By declaring a function, and placing the block of code that needs to run inside
+curly braces, you can then call that function on the command line as though
+it were a program.
 
 ==== Arguments
 
-Unlike other languages, little checking by default of functions.
+Unlike other languages there is no checking of functions' arguments.
 
 Predict the output of this, and then run it:
 
 ----
-$ function myfunc() {
+$ function myfunc {
 	echo $1
 }
 $ myfunc "Hello World"
@@ -30,10 +42,45 @@ TODO Up to the function to manage arguments. Referred to by number.
 
 ==== Variable Scope
 
-local word
+Variables can have scope in bash. This is particularly useful in functions,
+where you don't want your variables to be accessible from outside the function.
+
+These commands illustrate this:
+
+----
+$ function myfunc {
+	echo $myvar
+}
+$ myfunc
+$ myvar="Hi from outside the function"
+$ myfunc
+----
+
+TODO
+
+----
+$ function myfunc {
+	local myvar="Hi from inside the function"
+	echo $myvar
+}
+$ myfunc
+$ echo $myvar
+----
+
+TODO local is only viewed and accessed locally, and doesn't interfere with
+the outside.
 
 
 ==== Functions, Builtins, Aliases and Commands
+
+Now is a good time to point out another area of bash which can cause confusion.
+
+There are at least 4 ways to call commands in bash:
+
+- Builtins
+- Programs
+- Functions
+- Aliases
 
 What if I create a function that clashes with a command, like grep.
 
@@ -45,7 +92,6 @@ function cd() {
 	echo 'No!'
 }
 ----
-
 
 
 ==== What you learned
