@@ -12,9 +12,9 @@ as we move onto deeper bash topics.
 Start off by creating a file:
 
 ----
-$ mkdir lbthw_pipes_redirects
-$ cd lbthw_pipes_redirects
-$ echo "contents of file1" > file1
+1$ mkdir lbthw_pipes_redirects
+2$ cd lbthw_pipes_redirects
+3$ echo "contents of file1" > file1
 ----
 
 You've probably seen this before TODO
@@ -24,7 +24,7 @@ You've probably seen this before TODO
 Type this in:
 
 ----
-$ cat file1 | grep -c file
+4$ cat file1 | grep -c file
 ----
 
 NOTE: if you don't know what grep is, you will need to learn. This is a good
@@ -38,7 +38,7 @@ A pipe takes the standard output of one command and passes it as the input
 to another. What, then is standard output, really? You will find out soon!
 
 ----
-$ cat file2
+5$ cat file2
 ----
 
 What was the output of that?
@@ -46,7 +46,7 @@ What was the output of that?
 Now run this, and try and guess the result before you run it:
 
 ----
-$ cat file2 | grep -c file
+6$ cat file2 | grep -c file
 ----
 
 Was that what you expected? If it was, you can explain to the rest of the class
@@ -82,8 +82,65 @@ the numbers 0,1 and 2.
 When you redirect standard output to a file, you use the redirection operator
 '>'. Implicitly, you are using the '1' file descriptor.
 
-TODO: stderr output
-TODO: numbers: 1,2 etc 2>&1, ordering important
+Type this to see an example of redirecting '2', which is 'standard error'.
+
+----
+7$ command_does_not_exist
+8$ command_does_not_exist 2> /dev/null
+----
+
+In the second line above 2 ('standard error') is directed to a file called
+/dev/null
+
+/dev/null is a special file, created by UNIX kernels. It is effectively a 
+black hole into which data can be pumped: anything written to it will be
+absorbed and ignored.
+
+Another commonly seen redirection operator is '2>&1'.
+
+----
+9$ command_does_not_exist 2>&1
+----
+
+What this does is tell the shell to send the output on standard error (2) to
+whatever standard output is pointed at at that point in the command.
+
+Since standard output is pointed at the terminal at that time, standard error
+is pointed at the terminal. From your point of view you see no difference,
+since by default . But when we try and redirect to files things get interesting.
+
+Now type these in and try and figure out why they produce different output:
+
+----
+10$ command_does_not_exist 2>&1 > outfile
+11$ command_does_not_exist > outfile 2>&1
+----
+
+This is where things get tricky and you need to think carefully!
+
+Remember that the redirection operator 2>&1 points (standard error) at whatever
+1 (standard output) was pointed to at the time. If you read the first line
+carefully, at the point 2>&1 was used, standard output was pointed at the terminal.
+So standard error is pointed at the terminal. After that point, standard output
+is redirected (with the '>' operator) to the file 'outfile'.
+
+So at the end of all this, the standard error of the output of the command
+'command_does_not_exist' points at the terminal, and the standard output points
+at the file 'outfile'.
+
+In the second line, what is different?
+
+The order of redirections is changed. Now, the standard output of the command
+'command_does_not_exist' is pointed at the file 'outfile', and the redirection
+operator 2>&1 points 2 (standard error) to whatever 1 (standard output) is
+pointed at. So in effect, both standard out and standard error are pointed at 
+the file 
+
+This pattern of sending all the output to a single file is seen very often, and
+few understand why it has to be in that order. Once you understand, you will
+never pause to think about which way round the operators should go again!
+
+//http://sc.tamu.edu/help/general/unix/redirection.html
 
 ==== Difference between pipes and redirects
 
@@ -92,17 +149,35 @@ To recap:
 - A pipe passes 'standard output' as the 'standard input' to another command
 - A redirect sends a channel of output to a file
 
+A couple of other commonly used operators are worth mentioning here:
 
-// Other redirection operators >> 2> 2>&1
-// /dev/null
+----
+12$ grep -c file < file1
+----
+
+The '<' operator redirects standard input to the command from a file, in this
+case just as 'cat file1 | grep -c file' did.
+
+----
+13$ echo line1 > file3
+14$ echo line2 > file3
+15$ echo line3 >> file3
+16$ cat file3
+----
+
+The first two lines above use the '>' operator, while the third one uses
+the '>>' operator. The '>' operator effectively creates the file anew whether it
+already exists or not. The '>>' operator, by contrast, appends to the end of the
+file. As a result, only line2 and line3 are added to file3.
+
 
 ===== Cleanup
 
 Now clean up what you just did:
 
 ----
-$ cd -                            # Line 1
-$ rm -rf lbthw_pipes_redirects    # Line 2
+17$ cd -
+18$ rm -rf lbthw_pipes_redirects
 ----
 
 

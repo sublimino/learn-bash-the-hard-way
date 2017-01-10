@@ -9,8 +9,8 @@ subtleties.
 Start by creating a variable and echoing it.
 
 ----
-$ MYSTRING=astring
-$ echo $MYSTRING
+1$ MYSTRING=astring
+2$ echo $MYSTRING
 ----
 
 Simple enough: you create a variable by stating its name, immediately adding an
@@ -28,9 +28,9 @@ Things get more interesting when you start quoting.
 Quoting used to group different 'words' into a variable value:
 
 ----
-$ MYSENTENCE=A sentence
-$ MYSENTENCE="A sentence"
-$ echo $MYSENTENCE
+3$ MYSENTENCE=A sentence
+4$ MYSENTENCE="A sentence"
+5$ echo $MYSENTENCE
 ----
 
 Since (by default) the shell reads each word in separated by a space, it thinks
@@ -41,8 +41,8 @@ enclose it in the double quotes, as above.
 Things get more interesting when we embed other variables in the quoted string:
 
 ----
-$ MYSENTENCE="A sentence with $MYSTRING in it"
-$ MYSENTENCE='A sentence with $MYSTRING in it'
+6$ MYSENTENCE="A sentence with $MYSTRING in it"
+7$ MYSENTENCE='A sentence with $MYSTRING in it'
 ----
 
 If you were expecting similar behaviour to the previous section you may have got
@@ -60,9 +60,9 @@ are not expanded when in either single or double quotes. Confusing isn't it?
 Some variables are special, and set up when bash starts:
 
 ----
-$ echo $PPID          # Line 1
-$ PPID=nonsense       # Line 2
-$ echo $PPID          # Line 3
+8$ echo $PPID          # Line 1
+9$ PPID=nonsense       # Line 2
+10$ echo $PPID          # Line 3
 ----
 
 - Line 1 - PPID is a special variable set by the bash shell. It contains the bash's parent process id.
@@ -75,8 +75,8 @@ If you want to make a readonly variable, put 'readonly' in front of it, like
 this:
 
 ---- 
-$ readonly MYVAR=astring
-$ MYVAR=anotherstring
+11$ readonly MYVAR=astring
+12$ MYVAR=anotherstring
 ----
 
 ==== env
@@ -84,7 +84,7 @@ $ MYVAR=anotherstring
 Wherever you are, you can see the variables that are set by running this:
 
 ----
-$ env
+13$ env
 TERM_PROGRAM=Apple_Terminal
 TERM=xterm-256color
 SHELL=/bin/bash
@@ -128,17 +128,17 @@ The output will be different wherever you run it.
 Type in these commands, and try to predict what will happen:
 
 ----
-$ MYSTRING=astring
-$ bash
-$ echo $MYSTRING
-$ exit
-$ echo $MYSTRING
-$ unset MYSTRING
-$ echo $MYSTRING
-$ export MYSTRING=anotherstring
-$ bash
-$ echo $MYSTRING
-$ exit
+14$ MYSTRING=astring
+15$ bash
+16$ echo $MYSTRING
+17$ exit
+18$ echo $MYSTRING
+19$ unset MYSTRING
+20$ echo $MYSTRING
+21$ export MYSTRING=anotherstring
+22$ bash
+23$ echo $MYSTRING
+24$ exit
 ----
 
 Based on this, what do you think export does?
@@ -172,22 +172,22 @@ Type out the following commands, which illustrate how to reference the version
 information's major number: 
 
 ----
-$ bash --version
-$ echo $BASH_VERSINFO
-$ echo $BASH_VERSINFO[0]
-$ echo ${BASH_VERSINFO[0]}
-$ echo ${BASH_VERSINFO}
+25$ bash --version
+26$ echo $BASH_VERSINFO
+27$ echo $BASH_VERSINFO[0]
+28$ echo ${BASH_VERSINFO[0]}
+29$ echo ${BASH_VERSINFO}
 ----
 
 Arrays TODO
 
 ----
-$ echo ${BASH_VERSINFO[1]}
-$ echo ${BASH_VERSINFO[2]}
-$ echo ${BASH_VERSINFO[3]}
-$ echo ${BASH_VERSINFO[4]}
-$ echo ${BASH_VERSINFO[5]}
-$ echo ${BASH_VERSINFO[6]}
+31$ echo ${BASH_VERSINFO[1]}
+32$ echo ${BASH_VERSINFO[2]}
+33$ echo ${BASH_VERSINFO[3]}
+34$ echo ${BASH_VERSINFO[4]}
+35$ echo ${BASH_VERSINFO[5]}
+36$ echo ${BASH_VERSINFO[6]}
 ----
 
 

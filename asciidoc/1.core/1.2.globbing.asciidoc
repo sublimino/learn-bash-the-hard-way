@@ -9,11 +9,11 @@ joy of quoting in bash.
 Type these commands into your terminal
 
 ----
-$ mkdir lbthw_tmp           # Line 1
-$ cd lbthw_tmp              # Line 2
-$ touch file1 file2 file3   # Line 3
-$ ls *                      # Line 4
-$ echo *                    # Line 5
+1$ mkdir lbthw_tmp           # Line 1
+2$ cd lbthw_tmp              # Line 2
+3$ touch file1 file2 file3   # Line 3
+4$ ls *                      # Line 4
+5$ echo *                    # Line 5
 ----
 
 - Line 1 above makes a new folder that should not exist already. 
@@ -35,10 +35,10 @@ What do you think will be output happen if we run these commands?
 Think about it first, make a prediction, and then type it out!
 
 ----
-$ ls '*'         # Line 1
-$ ls "*"         # Line 2
-$ echo '*'       # Line 3
-$ echo "*"       # Line 4
+6$ ls '*'         # Line 1
+7$ ls "*"         # Line 2
+8$ echo '*'       # Line 3
+9$ echo "*"       # Line 4
 ----
 
 - Line 1 lists files matching the '*' character in single quotes
@@ -75,9 +75,9 @@ prepared for some head-scratching later!
 Try running these commands and see if the output is what you expect:
 
 ----
-$ ls *1             # Line 1
-$ ls file[a-z]      # Line 2
-$ ls file[0-9]      # Line 3
+10$ ls *1             # Line 1
+11$ ls file[a-z]      # Line 2
+12$ ls file[0-9]      # Line 3
 ----
 
 - Line 1 list all the files that end in '1'
@@ -92,7 +92,7 @@ separate things.
 The '*' characters in this command:
 
 ----
-$ rename -n 's/(.*)(.*)/new$1$2/' *      # Line 1
+13$ rename -n 's/(.*)(.*)/new$1$2/' *      # Line 1
 'file1' would be renamed to 'newfile1'   # Line 2
 'file2' would be renamed to 'newfile2'   # Line 3
 'file3' would be renamed to 'newfile3'   # Line 4
@@ -116,8 +116,8 @@ globbing capabilities. Bash offers 'extended globbing', which we do not cover he
 Now clean up what you just did:
 
 ----
-$ cd -                      # Line 1
-$ rm -rf lbthw_tmp          # Line 2
+14$ cd -                      # Line 1
+15$ rm -rf lbthw_tmp          # Line 2
 ----
 
 

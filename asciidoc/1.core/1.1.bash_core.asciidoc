@@ -28,8 +28,8 @@ Here you TODO
 
 //TODO some difference between csh and bash
 ----
-$ csh
-% 
+1$ csh
+2% 
 ----
 
 ==== History of bash

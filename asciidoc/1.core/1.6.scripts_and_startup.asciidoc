@@ -1,0 +1,23 @@
+=== Scripts and Startups
+
+TODO
+
+==== Shell scripts
+
+===== Cleanup
+
+Now clean up what you just did:
+
+----
+$ cd -
+$ rm -rf lbthw_scripts_and_startups
+----
+
+
+==== What you learned
+
+- 
+
+==== Exercises
+
+1) TODO

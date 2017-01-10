@@ -14,10 +14,10 @@ alias, program or 'builtin'.
 Start by creating a simple function
 
 ----
-$ function myfunc {
+1$ function myfunc {
 	echo Hello World
 }
-$ myfunc
+2$ myfunc
 ----
 
 By declaring a function, and placing the block of code that needs to run inside
@@ -31,11 +31,11 @@ Unlike other languages there is no checking of functions' arguments.
 Predict the output of this, and then run it:
 
 ----
-$ function myfunc {
+3$ function myfunc {
 	echo $1
 }
-$ myfunc "Hello World"
-$ myfunc Hello World
+4$ myfunc "Hello World"
+5$ myfunc Hello World
 ----
 
 TODO Up to the function to manage arguments. Referred to by number.
@@ -48,23 +48,23 @@ where you don't want your variables to be accessible from outside the function.
 These commands illustrate this:
 
 ----
-$ function myfunc {
+6$ function myfunc {
 	echo $myvar
 }
-$ myfunc
-$ myvar="Hi from outside the function"
-$ myfunc
+7$ myfunc
+8$ myvar="Hi from outside the function"
+9$ myfunc
 ----
 
 TODO
 
 ----
-$ function myfunc {
+10$ function myfunc {
 	local myvar="Hi from inside the function"
 	echo $myvar
 }
-$ myfunc
-$ echo $myvar
+11$ myfunc
+12$ echo $myvar
 ----
 
 TODO local is only viewed and accessed locally, and doesn't interfere with
