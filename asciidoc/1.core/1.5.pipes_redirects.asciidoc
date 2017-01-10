@@ -69,6 +69,20 @@ counts 0 matches in its output.
 To the viewer of the terminal, there is no difference, but to bash there is
 all the difference in the world!
 
+There is a simpler way to refer to these channels. A number is assigned to each
+of them by the operating system.
+
+These are the numbered 'file descriptors', and the first three are assigned to
+the numbers 0,1 and 2.
+
+- 0 is 'standard input'
+- 1 is 'standard output'
+- 2 is 'standard error'
+
+When you redirect standard output to a file, you use the redirection operator
+'>'. Implicitly, you are using the '1' file descriptor.
+
+TODO: stderr output
 TODO: numbers: 1,2 etc 2>&1, ordering important
 
 ==== Difference between pipes and redirects

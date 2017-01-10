@@ -78,20 +78,46 @@ Now is a good time to point out another area of bash which can cause confusion.
 There are at least 4 ways to call commands in bash:
 
 - Builtins
-- Programs
 - Functions
+- Programs
 - Aliases
 
-What if I create a function that clashes with a command, like grep.
+===== Builtins
 
-
-What about builtins, eg cd.
+Builtins are commands that come 'built in' to the bash shell program. One such
+builtin is 'builtin'!
 
 ----
-function cd() {
+$ builtin cd /tmp
+$ cd -
+$ builtin grep
+$ builtin notaprogram
+----
+
+As you've probably guessed from typing the above in, the 'builtin' builtin calls
+the builtin program (this time 'cd'), and
+
+In case you didn't know 'cd -' returns you to the previous directory you were
+in.
+
+===== Functions
+
+Functions we have covered above, but what happens if we write a function that
+clashes with a builtin?
+
+----
+$ function cd() {
 	echo 'No!'
 }
+$ cd /tmp
+$ builtin cd /tmp
+$ cd -
+$ unset -f cd
 ----
+
+TODO: explain unset
+
+TODO: declare -f
 
 
 ==== What you learned
@@ -101,3 +127,4 @@ function cd() {
 ==== Exercises
 
 1) TODO
+2) Run typeset -f
