@@ -165,7 +165,31 @@ environment variables.
 
 ==== Arrays
 
-BASH_VERSINFO - read-only array
+Worth mentioning here also are arrays. One such built-in, read only array is
+BASH_VERSINFO. As in other languages, arrays in bash are zero-indexed.
+
+Type out the following commands, which illustrate how to reference the version
+information's major number: 
+
+----
+$ bash --version
+$ echo $BASH_VERSINFO
+$ echo $BASH_VERSINFO[0]
+$ echo ${BASH_VERSINFO[0]}
+$ echo ${BASH_VERSINFO}
+----
+
+Arrays TODO
+
+----
+$ echo ${BASH_VERSINFO[1]}
+$ echo ${BASH_VERSINFO[2]}
+$ echo ${BASH_VERSINFO[3]}
+$ echo ${BASH_VERSINFO[4]}
+$ echo ${BASH_VERSINFO[5]}
+$ echo ${BASH_VERSINFO[6]}
+----
+
 
 
 ==== What you learned
