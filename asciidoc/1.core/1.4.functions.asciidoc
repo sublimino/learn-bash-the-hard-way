@@ -144,6 +144,17 @@ If you want to know what functions are set in your environment, run
 'declare -f'.  This will output the functions and their bodies, so if you just
 want the names, use the '-F' flag.
 
+===== Programs
+
+which TODO
+
+
+===== Aliases
+
+alias
+unalias
+
+and yes, you can alias alias.
 
 ==== What you learned
 
@@ -153,3 +164,6 @@ want the names, use the '-F' flag.
 
 1) TODO
 2) Run typeset -f
+3) alias alias, override cd. Try and break things. Have fun. If you get stuck,
+close down your terminal, or exit your bash shell (if you haven't overridden
+exit!).

@@ -1,9 +1,6 @@
-//IMPORTANT
-//command substitution $() vs ` `
-//exit codes $?
 //special variables
-//subshell
+//command substitution $() vs ` `
 //[[ ]] vs [ ] (test)
-//functions (and arguments)
-//file descriptors
+//exit codes $?
+//subshell
 //-a conditions etc
