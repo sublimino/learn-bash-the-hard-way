@@ -1,8 +1,25 @@
 === Scripts and Startups
 
-TODO
+This section considers TODO
 
 ==== Shell scripts
+
+----
+1$ mkdir -p lbthw_scripts_and_startups
+2$ cd lbthw_scripts_and_startups
+----
+
+Simplest script (not executable, then executable)
+
+==== Startup Scripts
+
+When bash starts up TODO
+
+Unfortunately,  Complicated... TODO
+
+image::diagrams/shell-startup-actual.png[]
+
+
 
 ===== Cleanup
 
@@ -16,7 +33,7 @@ $ rm -rf lbthw_scripts_and_startups
 
 ==== What you learned
 
-- 
+- TODO
 
 ==== Exercises
 

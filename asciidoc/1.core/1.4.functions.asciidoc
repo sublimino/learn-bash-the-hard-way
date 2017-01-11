@@ -102,10 +102,10 @@ but after reading this you will be able to.
 Two such builtins are the familiar 'cd' and one called 'builtin'!
 
 ----
-$ builtin cd /tmp
-$ cd -
-$ builtin grep
-$ builtin notaprogram
+14$ builtin cd /tmp
+15$ cd -
+16$ builtin grep
+17$ builtin notaprogram
 ----
 
 As you've probably guessed from typing the above in, the 'builtin' builtin calls
@@ -120,15 +120,15 @@ Functions we have covered above, but what happens if we write a function that
 clashes with a builtin? What if you create a function called 'cd'?
 
 ----
-$ function cd() {
+18$ function cd() {
 	echo 'No!'
 }
-$ cd /tmp
-$ builtin cd /tmp
-$ cd -
-$ unset -f cd
-$ cd /tmp
-$ cd -
+19$ cd /tmp
+20$ builtin cd /tmp
+21$ cd -
+22$ unset -f cd
+23$ cd /tmp
+24$ cd -
 ----
 
 At the end there you 'unset' the function 'cd'. 'unset' is also . You can also
@@ -136,8 +136,8 @@ At the end there you 'unset' the function 'cd'. 'unset' is also . You can also
 a variable by default.
 
 ----
-$ declare -f
-$ declare -F
+25$ declare -f
+26$ declare -F
 ----
 
 If you want to know what functions are set in your environment, run
@@ -146,15 +146,39 @@ want the names, use the '-F' flag.
 
 ===== Programs
 
-which TODO
+Programs are executable files. Commonly-used examples of these are programs such as 'grep', 'sed', 'vi' and so on.
+
+How do you tell whether a command is a 
+
+First, see whether it's a builtin by running 'builtin <command>' as you did before. Then you can also run the 'which' command to determine where the file is on your filesystem.
+
+----
+27$ which grep
+28$ which cd
+29$ which builtin
+30$ which doesnotexist
+----
+
+Is 'which' a builtin or a program? 
 
 
 ===== Aliases
 
-alias
-unalias
+Finally there are aliases. Aliases are strings that the shell takes and translates to whatever that string is aliased to.
 
-and yes, you can alias alias.
+Try this and explain what is going on as you go:
+
+----
+31$ alias cd=doesnotexist
+32$ alias
+33$ cd
+34$ unalias cd
+35$ cd /tmp
+36$ cd -
+37$ alias
+----
+
+And yes, you can alias alias.
 
 ==== What you learned
 
@@ -162,8 +186,8 @@ and yes, you can alias alias.
 
 ==== Exercises
 
-1) TODO
-2) Run typeset -f
-3) alias alias, override cd. Try and break things. Have fun. If you get stuck,
+1) Run typeset -f TODO
+2) alias alias, override cd. Try and break things. Have fun. If you get stuck,
 close down your terminal, or exit your bash shell (if you haven't overridden
 exit!).
+

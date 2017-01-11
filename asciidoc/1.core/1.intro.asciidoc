@@ -54,4 +54,22 @@ This course aims to give students:
 - A familiarity with advanced bash usage
 
 
-==== Structure TODO
+==== Structure
+
+This book is structured into four parts:
+
+===== Core Bash
+
+Core foundational concepts essential for understanding bash. 
+
+===== 'Level Two' Bash
+
+Some more advanced concepts that are commonly-used in bash.
+
+===== Tips
+
+A primer on commonly-used techniques and features that are useful to know about.
+
+===== Advanced Bash
+
+Building on the first three chapters, and introducing some more advanced features, this chapters takes your bash skills beyond the norm.
