@@ -179,17 +179,46 @@ information's major number:
 29$ echo ${BASH_VERSINFO}
 ----
 
-Arrays TODO
+Arrays can be tricky to deal with, and bash doesn't give you much help!
+
+The first thing to notice is that if the array will output the item at the first
+element (0) if no index is given.
+
+The second thing to notice is that simply adding [0] to a normal array reference
+does not work. Bash treats the square bracket as a character not associated with
+the variable and appends it to the end of the array.
+
+You have to tell bash to treat the whole string "BASH_VERSION[0]" as the variable
+to be dereferenced. You do this by using the curly braces.
+
+These curly braces can be used on simple variables too:
 
 ----
-31$ echo ${BASH_VERSINFO[1]}
-32$ echo ${BASH_VERSINFO[2]}
-33$ echo ${BASH_VERSINFO[3]}
-34$ echo ${BASH_VERSINFO[4]}
-35$ echo ${BASH_VERSINFO[5]}
-36$ echo ${BASH_VERSINFO[6]}
+30$ echo $BASH_VERSION_and_some_string
+31$ echo ${BASH_VERSION}_and_some_string
 ----
 
+In fact, 'simple variables' can be treated as arrays with one element!
+
+----
+32$ echo ${BASH_VERSION[0]}
+----
+
+So all bash variables are 'really' arrays!
+
+Bash has 6 items (0-5) in its BASH_VERSINFO array:
+
+----
+33$ echo ${BASH_VERSINFO[1]}
+34$ echo ${BASH_VERSINFO[2]}
+35$ echo ${BASH_VERSINFO[3]}
+36$ echo ${BASH_VERSINFO[4]}
+37$ echo ${BASH_VERSINFO[5]}
+38$ echo ${BASH_VERSINFO[6]}
+----
+
+As ever with variables, if the item does not exist then the output will be an
+empty line.
 
 
 ==== What you learned
@@ -202,4 +231,4 @@ Arrays TODO
 and what it might be used by. You may want to use 'man bash', or use google to
 figure it out. Or you could try re-setting it and see what happens.
 
-2) 
+2) Find out what the items in BASH_VERSINFO mean.

@@ -33,12 +33,16 @@ Predict the output of this, and then run it:
 ----
 3$ function myfunc {
 	echo $1
+	echo $2
 }
 4$ myfunc "Hello World"
 5$ myfunc Hello World
 ----
 
-TODO Up to the function to manage arguments. Referred to by number.
+Can you explain the output?
+
+Arguments to functions are numbered, from 1 to n. It's up to the function to
+manage these arguments.
 
 ==== Variable Scope
 
@@ -56,7 +60,9 @@ These commands illustrate this:
 9$ myfunc
 ----
 
-TODO
+Bash functions have no special scope. variables outside are visible to it.
+
+There is, however, the capability within bash to declare a variable as local:
 
 ----
 10$ function myfunc {
@@ -65,13 +71,16 @@ TODO
 }
 11$ myfunc
 12$ echo $myvar
+13$ local myvar="Will this work?"
 ----
 
-TODO local is only viewed and accessed locally, and doesn't interfere with
-the outside.
+The variable declared with 'local' is only viewed and accessed within the
+function, and doesn't interfere with the outside.
 
+'local' is an example of a bash 'builtin'. Now is a good time to talk about
+the different types of commands.
 
-==== Functions, Builtins, Aliases and Commands
+==== Functions, Builtins, Aliases and Programs
 
 Now is a good time to point out another area of bash which can cause confusion.
 
@@ -82,10 +91,15 @@ There are at least 4 ways to call commands in bash:
 - Programs
 - Aliases
 
+Let's take each one in turn.
+
 ===== Builtins
 
-Builtins are commands that come 'built in' to the bash shell program. One such
-builtin is 'builtin'!
+Builtins are commands that come 'built in' to the bash shell program. Normally
+you can't easily tell the difference between a builtin, a program or a function,
+but after reading this you will be able to.
+
+Two such builtins are the familiar 'cd' and one called 'builtin'!
 
 ----
 $ builtin cd /tmp
@@ -95,7 +109,7 @@ $ builtin notaprogram
 ----
 
 As you've probably guessed from typing the above in, the 'builtin' builtin calls
-the builtin program (this time 'cd'), and
+the builtin program (this time 'cd'), and throws an error if no builtin exists
 
 In case you didn't know 'cd -' returns you to the previous directory you were
 in.
@@ -103,7 +117,7 @@ in.
 ===== Functions
 
 Functions we have covered above, but what happens if we write a function that
-clashes with a builtin?
+clashes with a builtin? What if you create a function called 'cd'?
 
 ----
 $ function cd() {
@@ -113,11 +127,22 @@ $ cd /tmp
 $ builtin cd /tmp
 $ cd -
 $ unset -f cd
+$ cd /tmp
+$ cd -
 ----
 
-TODO: explain unset
+At the end there you 'unset' the function 'cd'. 'unset' is also . You can also
+'unset -v' a variable. Or just leave the -v out, as it will assume you mean 
+a variable by default.
 
-TODO: declare -f
+----
+$ declare -f
+$ declare -F
+----
+
+If you want to know what functions are set in your environment, run
+'declare -f'.  This will output the functions and their bodies, so if you just
+want the names, use the '-F' flag.
 
 
 ==== What you learned

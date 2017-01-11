@@ -24,13 +24,19 @@ means they can look similar.
 
 Because other shells are also programs, they can be run from in each other!
 
-Here you TODO
+Here you run csh from within your bash terminal. Note that you get a different
+prompt (by default):
 
-//TODO some difference between csh and bash
+
+//TODO some difference between csh and bash (google it)
 ----
 1$ csh
 2% 
 ----
+
+Typically, a csh will give you a prompt with a percent sign, while bash will
+give you a prompt with a dollar sign. This is configurable, though, so your
+setup may be different.
 
 ==== History of bash
 

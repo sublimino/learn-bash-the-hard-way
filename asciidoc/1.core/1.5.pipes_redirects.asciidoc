@@ -17,8 +17,6 @@ Start off by creating a file:
 3$ echo "contents of file1" > file1
 ----
 
-You've probably seen this before TODO
-
 ==== Basic pipes
 
 Type this in:
