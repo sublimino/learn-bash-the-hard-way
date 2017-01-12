@@ -42,7 +42,7 @@ setup may be different.
 
 This diagram helps give a picture of the history of bash:
 
-image::diagrams/shell_history.gif[scaledwidth="50%",height=200]
+image::diagrams/shell_history.png[scaledwidth="50%",height=200]
 
 Bash is called the 'Bourne Again SHell'. It is a descendant of the Thompson
 Shell and then the Bourne 'sh' shell. Bash has other 'siblings' (eg ksh),
