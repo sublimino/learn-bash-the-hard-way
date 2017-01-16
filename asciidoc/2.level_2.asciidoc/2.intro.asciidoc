@@ -1,6 +1,0 @@
-//special variables
-//command substitution $() vs ` `
-//[[ ]] vs [ ] (test)
-//exit codes $?
-//subshell
-//-a conditions etc

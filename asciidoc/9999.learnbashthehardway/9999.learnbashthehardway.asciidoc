@@ -6,3 +6,8 @@ An introduction to Bash using 'The Hard Way' method.
 
 include::../1.core/1.core.asciidoc[]
 
+include::../2.scripting/2.scripting.asciidoc[]
+
+include::../3.tips/3.tips.asciidoc[]
+
+include::../4.advanced/4.advanced.asciidoc[]

@@ -1,0 +1,154 @@
+=== Exit Codes
+
+Now that you know about tests and special parameters in bash, a crucial and
+related thing to understand is exit codes.
+
+==== What Is An Exit Code?
+
+When you run a command, function or builtin, a special variable is set that
+tells you what the result of that command was. If you're familiar with HTTP
+codes like 200 or 404, it's a similar concept to that.
+
+Take a simple example:
+
+----
+TODO$ ls
+TODO$ echo $?
+TODO$ doesnotexist
+TODO$ echo $?
+----
+
+When that special variable is set to '0' it means that the command completed
+successfully.
+
+You should be able to follow what is going on here at this point:
+
+----
+TODO$ function trycmd {
+	$1
+	if [[ $? -eq 127 ]]
+	then
+		echo 'What are you doing?'
+	fi
+}
+TODO$ trycomd ls
+TODO$ trycmd doesnotexist
+----
+
+You can easily write tests to use exit codes for various ends like this.
+
+==== Standard Exit Codes
+
+There are guidelines for exit codes for 
+
+TODO: Have a look at:
+
+http://www.tldp.org/LDP/abs/html/exitcodes.html
+
+and write up.
+
+==== Tests and Exit Codes
+
+So far so simple, but unfortunately (and because they are useful) exit codes can
+be used for many different reasons, not just to tell you whether the command
+completed successfully or not. Just as with exit codes in HTTP, the application
+can use exit codes to indicate something went wrong, or it can return a '200 OK'
+and give you a message directly.
+
+Try to predict the output of this:
+
+----
+TODO$ echo 'grepme' > afile.txt
+TODO$ grep not_there afile.txt
+TODO$ echo $?
+----
+
+Did you expect that? grep finished successfully (there was no segmentation
+fault, memory, it was not killed etc..) but no lines were matched to it returned
+'1' as an exit code.
+
+In one way this is great because you can write tests like this:
+
+----
+TODO$ if [[ grep grepme afile.txt ]]
+then
+	echo 'matched!'
+fi
+----
+
+On the other hand, it means that you cannot be sure about what an exit code
+might mean about a particular program's termination. I have to look up the grep
+exit code every time, and if I use a program's exit code I make sure to do a
+few tests first to be sure I know what is going to happen!
+
+
+==== Exit codes, functions and builtins
+
+
+
+0 generally means failure
+
+==== Exit codes and pipelines
+
+
+
+----
+TODO$ grep notthere afile.txt | xargs echo
+TODO$ echo $?
+----
+
+
+----
+TODO$ set +o pipefail
+TODO$ grep notthere afile.txt | xargs echo
+TODO$ echo $?
+----
+
+
+==== Setting Your Own Exit Code
+
+
+----
+TODO$ function trycmd {
+	$1
+	if [[ $? -eq 127 ]]
+	then
+		echo 'What are you doing?'
+		return 1
+	fi
+}
+TODO$
+----
+
+
+==== Other Special Parameters
+
+The variable '$?' is an example of a 'special parameter'. I'm not sure why they
+are called 'special parameters' and not 'special variables', but it is perhaps
+to do with the fact that they are considered alongside the normal parameters of
+functions and scripts ($1,$2 etc) as automatically assigned variables within
+a context.
+
+TODO: mention:
+-      Expands to the current option flags as specified upon invocation, by the set builtin command, or those set by the shell itself such as the -i option
+$      Expands  to  the  process  ID of the shell.  In a () subshell, it expands to the process ID of the current shell, not the subshell.
+!      Expands to the process ID of the most recently executed background (asynchronous) command.
+
+
+===== Cleanup
+
+Now clean up what you just did:
+
+----
+TODO$ rm afile.txt
+----
+
+
+==== What you learned
+
+- TODO
+
+==== Exercises
+
+1) Look up under what circumstances git returns a non-zero exit code.
+2) Look up all the 'special parameters' and see what they do.

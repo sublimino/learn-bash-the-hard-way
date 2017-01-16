@@ -174,7 +174,7 @@ file. As a result, only line2 and line3 are added to file3.
 Now clean up what you just did:
 
 ----
-17$ cd -
+17$ cd ..
 18$ rm -rf lbthw_pipes_redirects
 ----
 

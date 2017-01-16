@@ -3,6 +3,17 @@ understanding and proficiency in bash. It doesn't aim to make you an expert
 immediately, but you will be more confident about using bash for more tasks than
 just one-off commands.
 
+==== Why learn bash?
+
+There are a few reasons to learn bash in a structured way:
+
+- Bash is ubiquitous
+- Bash is powerful
+
+You often use bash without realising it, and people often get confused by why things don't work, or how things work when they're given one-liners to run.
+
+It doesn't take long to get a better understanding of bash, and once you have the basics, its power and ubiquity mean that you can be useful in all sorts of contexts.
+
 ==== Assumptions
 
 It assumes some familiarity with very basic shell usage and commands. For those
@@ -60,11 +71,11 @@ This book is structured into four parts:
 
 ===== Core Bash
 
-Core foundational concepts essential for understanding bash. 
+Core foundational concepts essential for understanding bash on the command line.
 
-===== 'Level Two' Bash
+===== Scripting Bash
 
-Some more advanced concepts that are commonly-used in bash.
+Gets your bash scripting skills up to a proficient point.
 
 ===== Tips
 
@@ -72,4 +83,5 @@ A primer on commonly-used techniques and features that are useful to know about.
 
 ===== Advanced Bash
 
-Building on the first three chapters, and introducing some more advanced features, this chapters takes your bash skills beyond the norm.
+Building on the first three chapters, and introducing some more advanced
+features, this chapters takes your bash skills beyond the norm.

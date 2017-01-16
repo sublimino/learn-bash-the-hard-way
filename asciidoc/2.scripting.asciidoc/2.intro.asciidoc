@@ -1,0 +1,19 @@
+//command substitution $() vs ` `
+	some examples of using this
+	maybe add in <() ?
+//subshell?
+	When to use
+	logging example?
+	redirection example?
+//[[ ]] vs [ ] (test)
+	prefer [[
+//-a conditions etc
+	string vs number comparisons
+	only example of typing in bash?
+	arithmetic substitution
+//set options
+//exit codes $?
+	/bin/true / false
+	pipelines and exit codes
+//backgrounding and waiting
+

@@ -116,8 +116,8 @@ globbing capabilities. Bash offers 'extended globbing', which we do not cover he
 Now clean up what you just did:
 
 ----
-14$ cd -                      # Line 1
-15$ rm -rf lbthw_tmp          # Line 2
+14$ cd ..
+15$ rm -rf lbthw_tmp
 ----
 
 

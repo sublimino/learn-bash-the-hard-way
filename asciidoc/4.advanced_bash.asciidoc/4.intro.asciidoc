@@ -8,3 +8,7 @@
 //command
 //dev/tcp
 //key variables: TERM, USER, DISPLAY
+
+
+Putting it all together:
+https://github.com/ianmiell/cheapci/blob/master/cheapci

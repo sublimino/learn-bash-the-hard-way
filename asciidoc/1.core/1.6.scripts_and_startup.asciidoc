@@ -1,6 +1,11 @@
 === Scripts and Startups
 
-This section considers TODO
+This section considers two related subjects: shell scripts, and what happens
+when the shell is started up.
+
+You've probably come across shell scripts, which won't take long to cover, but
+shell startup is a useful but tricky topic that catches most people out at some
+point, and is worth understanding well.
 
 ==== Shell scripts
 
@@ -9,16 +14,178 @@ This section considers TODO
 2$ cd lbthw_scripts_and_startups
 ----
 
-Simplest script (not executable, then executable)
+A shell script is simply a collection of shell commands that can be run
+non-interactively. These can be quick one-off scripts that you run, or very
+complex programs.
+
+===== The Shebang
+
+Run this:
+
+----
+4$ echo '#!/bin/bash' > simple_script
+3$ echo 'echo I am a script' >> simple_script
+----
+
+You have just created a file called 'simple_script' that has two lines in it.
+The first consists of two special characters: the hash and the exclamation mark.
+This is often called 'shebang', or 'hashbang' to make it easier to say.
+When the operating system is given a file to run as a program, if it sees those
+two characters at the start, it knows that the file is to be run under the
+control of another program (or 'interpreter' as it is often called).
+
+Now try running it:
+
+----
+5$ ./simple_script
+----
+
+That should have failed. Before we explain why, let's understand the command.
+
+The './' characters at the start of the above command tells the shell that you
+want to run this file from within the context of the current working directory.
+It's followed by the filename to run.
+
+Similarly, the '../' characters indicate that you want to run from the directory
+above the current working directory.
+
+This:
+
+----
+6$ mkdir tmp
+7$ cd tmp
+8$ ../simple_script
+9$ cd ..
+10$ rm -rf tmp
+----
+
+will give you the same output as before.
+
+===== The Executable Flag
+
+That script will have failed because the file was not marked as executable, so
+you will have got an error saying permission was denied.
+
+To correct this, run:
+
+----
+11$ chmod +x simple_script
+12$ ./simple_script
+----
+
+The chmod program changes the 
+
+NOTE: The subject of file permissions and ownership can get complex and is not
+covered in full here. TODO more info where?
+
+===== The PATH variable
+
+What happens if you don't specify the './' and just run:
+
+----
+13$ simple_script
+----
+
+The truth I won't know what happens. Either you'll get an error saying it
+can't find it, or it will work as before.
+
+The reason I don't know is that it depends on how your PATH variable is set up
+in your environment.
+
+If you run this you will see your PATH variable:
+
+----
+$14 echo $PATH
+----
+
+Your output may vary. For example, mine is:
+
+----
+/home/imiell/perl5/bin:/opt/local/bin:/opt/local/sbin:/Users/imiell/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/space/git/shutit:/space/git/work/bin:/space/git/home/bin:~/.dotfiles/bin:/space/go/bin
+----
+
+The PATH variable is a set of directories, separated by colons. It could be as
+simple as:
+
+----
+/usr/sbin:/usr/bin
+----
+
+for example.
+
+These are the directories bash looks through to find commands, in order.
+
+So what changes the PATH variable? The answer is: bash startup scripts.
+
+But before we discuss them, how can we make sure that simple_script can be run
+without using './' at the front? 
+
+----
+15$ PATH=${PATH}:.
+16$ simple_script
+----
+
+That's how! In the first line you set the PATH to itself, plus the current
+working directory. It then looks through all the directories that were
+previously set in your PATH variable, and then finally tries the '.', or local
+folder, as we saw before.
+
 
 ==== Startup Scripts
 
-When bash starts up TODO
+Understanding startup scripts and environment variables are key to a lot of
+issues that you can end up spending a lot of time debugging! If something works
+in one environment and not in another, the answer is often a difference in
+startup scripts and how they set up an environment.
 
-Unfortunately,  Complicated... TODO
+==== Startup Explained
+
+When bash starts up, it calls a runs a series of files to set up the environment you arrive at at the terminal. If you've ever noticed that bash can 'pause' before giving you a prompt, it may be because the startup script
+
+Have a look at this diagram:
 
 image::diagrams/shell-startup-actual.png[]
 
+Yes, this can be confusing. The diagram shows the startup script order for different shells in different contexts. We are going to follow (from the top) the path from the 'bash' bubble, and ignore the zsh and sh , but it's interesting to note they have their own separate paths (in the case of zsh) and join up at points (in the case of sh and bash).
+
+At each point in this graph the shell you choose either makes a decision about which path to follow, or runs a script.
+
+==== When You Run Bash
+
+So which path does it take when you run 'bash' on the command line? You're going to follow the graph through here.
+
+The first decision you need to make is whether bash is running 'normally' or as a 'remote' shell. Obviously, you ran bash on a terminal, so it's 'normal'. 
+
+From there, you decide if this is a 'login' or a 'non-login' shell. You did not login when you ran bash, so follow 'non-login'. 
+
+The final decision is whether bash is running interactively (ie can you type things in, or is bash running a script?). You are on an interactive shell, so follow 'interactive'.
+
+Now, whichever colour line you have followed up to this point, continue with: those files are the ones that get run when bash is started up.
+
+If the file does not exist, it is simply ignored.
+
+===== Beware
+
+To __further__ complicate things, these scripts can be made to call each other in 
+ways that confuse things if you simply believe that diagram. So be careful!
+
+
+===== source
+
+Now that you understand builtins, shell scripts, and environments, it's a good time to introduce another builtin: 'source'.
+
+----
+17$ MYVAR=Hello
+18$ echo 'echo $MYVAR' > simple_echo
+19$ chmod +x simple_echo
+20$ ./simple_echo
+21$ source simple_echo
+----
+
+I'm sure you can figure out from that that source runs the script from within
+
+NOTE: Most shell scripts have a '.sh' suffix, but this is not required - the
+OS does not care or take any notice of the suffix.
 
 
 ===== Cleanup
@@ -26,8 +193,9 @@ image::diagrams/shell-startup-actual.png[]
 Now clean up what you just did:
 
 ----
-$ cd -
-$ rm -rf lbthw_scripts_and_startups
+22$ cd ..
+23$ rm -rf lbthw_scripts_and_startups
+24$ unset MYVAR
 ----
 
 
@@ -37,4 +205,7 @@ $ rm -rf lbthw_scripts_and_startups
 
 ==== Exercises
 
-1) TODO
+1) Go through all the scripts that you bash session went through. Read through them and try and understand what they're doing. If you don't understand parts of them, try and figure out what's going on by reading 'man bash'.
+
+
+2) Go through the other files in that diagram that exist on your machine. Do as per 1).
