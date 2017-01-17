@@ -1,0 +1,99 @@
+=== Command Substitution and Evaluation
+
+When writing bash scripts you often want to take the standard output of one command and 'drop' it into the script as though you had written that into it.
+
+This can be achieved with command subsitution.
+
+==== Command Subsitution Example
+
+An example may help illustrate. Type these commands:
+
+----
+1$ hostname
+2$ echo 'My hostname is: $(hostname)'
+3$ echo "My hostname is: $(hostname)"
+----
+
+If that is placed in a script, it will output the hostname of the script it is running on. This can make your script much more dynamic. You can set variables based on the output of commands, add debug.
+
+You will have noticed that if wrapped in single quotes, the special meaning of the '$' sign is ignored again!
+
+===== The Two Command Substitution Methods
+
+There are two ways to do command substitution:
+
+----
+4$ echo "My hostname is: `hostname`"
+5$ echo "My hostname is: $(hostname)"
+----
+
+These give the same output and the backticks perform the same function. So which should you use?
+
+Type this:
+
+----
+6$ mkdir lbthw_tmp
+7$ cd lbthw_tmp
+8$ echo $(touch $(ls ..))
+9$ cd ..
+10$ rm -rf lbthw_tmp
+----
+
+What happened there?
+
+You created a folder and moved into it.
+
+The next line is easiest to read from the innermost parentheses outwards.
+
+The 'ls ..' command is run in the innermost parentheses. This outputs the contents of the parent directory.
+
+This output is fed into the next level, where a 'touch' command is run. So the touch command creates a set of empty files, based on the list of the parent directory's contents.
+
+The echo command takes the output of the 'touch' command, which is the list of all the files created.
+
+So, in summary, the line outputs the list of files of the parent directory, and those filenames are also created locally as empty files.
+
+This is an example of how subcommands can be nested. As you can see, the nesting is simple - just place a command wrapped inside a '$()' inside another command wrapped inside a '$()'.
+
+Type this out:
+
+----
+11$ rm -rf lbthw_tmp
+12$ mkdir lbthw_tmp
+13$ cd lbthw_tmp
+14$ echo `touch \`ls ..\``
+15$ cd ..
+----
+
+To nest the backtick version, you have to 'escape' the inner backtick with a backslash, so bash knows which level the backtick should be interpreted at.
+
+For historical reasons, the backtick form is still very popular, but I prefer the '$()' form because of the nesting benefit. You need to be aware of both, though, if you are looking at others' code!
+
+If you want to see how messy things can get, compare these two lines:
+
+----
+16$ echo `echo \`echo \\\`echo inside\\\`\``
+17$ echo $(echo $(echo $(echo inside)))
+----
+
+and consider which one is easier to read (and write)!
+
+
+
+==== Cleanup
+
+Remove the left-over directory:
+
+----
+18$ rm -rf lbthw_tmp
+----
+
+==== What You Learned
+
+- TODO
+
+==== Exercises
+
+1) Try various command subsitution commands, and plug in variables and quotes to see what happens.
+2) Explain why three backslashes are required in the last 
+       

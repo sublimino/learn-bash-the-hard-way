@@ -12,10 +12,10 @@ codes like 200 or 404, it's a similar concept to that.
 Take a simple example:
 
 ----
-TODO$ ls
-TODO$ echo $?
-TODO$ doesnotexist
-TODO$ echo $?
+1$ ls
+2$ echo $?
+3$ doesnotexist
+4$ echo $?
 ----
 
 When that special variable is set to '0' it means that the command completed
@@ -24,22 +24,24 @@ successfully.
 You should be able to follow what is going on here at this point:
 
 ----
-TODO$ function trycmd {
+5$ bash
+6$ function trycmd {
 	$1
 	if [[ $? -eq 127 ]]
 	then
 		echo 'What are you doing?'
 	fi
 }
-TODO$ trycomd ls
-TODO$ trycmd doesnotexist
+7$ trycomd ls
+8$ trycmd doesnotexist
+9$ exit
 ----
 
 You can easily write tests to use exit codes for various ends like this.
 
 ==== Standard Exit Codes
 
-There are guidelines for exit codes for 
+There are guidelines for exit codes for TODO
 
 TODO: Have a look at:
 
@@ -58,9 +60,9 @@ and give you a message directly.
 Try to predict the output of this:
 
 ----
-TODO$ echo 'grepme' > afile.txt
-TODO$ grep not_there afile.txt
-TODO$ echo $?
+10$ echo 'grepme' > afile.txt
+11$ grep not_there afile.txt
+12$ echo $?
 ----
 
 Did you expect that? grep finished successfully (there was no segmentation
@@ -70,7 +72,7 @@ fault, memory, it was not killed etc..) but no lines were matched to it returned
 In one way this is great because you can write tests like this:
 
 ----
-TODO$ if [[ grep grepme afile.txt ]]
+13$ if [[ grep grepme afile.txt ]]
 then
 	echo 'matched!'
 fi
@@ -82,34 +84,16 @@ exit code every time, and if I use a program's exit code I make sure to do a
 few tests first to be sure I know what is going to happen!
 
 
-==== Exit codes, functions and builtins
-
-
-
-0 generally means failure
-
-==== Exit codes and pipelines
-
-
-
-----
-TODO$ grep notthere afile.txt | xargs echo
-TODO$ echo $?
-----
-
-
-----
-TODO$ set +o pipefail
-TODO$ grep notthere afile.txt | xargs echo
-TODO$ echo $?
-----
-
-
 ==== Setting Your Own Exit Code
 
+If you are writing a script or a function, you can set the exit code by using
+the 'return' builtin.
+
+Type this:
 
 ----
-TODO$ function trycmd {
+14$ bash
+15$ function trycmd {
 	$1
 	if [[ $? -eq 127 ]]
 	then
@@ -117,7 +101,9 @@ TODO$ function trycmd {
 		return 1
 	fi
 }
-TODO$
+16$ trycmd ls
+17$ trycmd doesnotexit
+18$ exit
 ----
 
 
@@ -152,3 +138,6 @@ TODO$ rm afile.txt
 
 1) Look up under what circumstances git returns a non-zero exit code.
 2) Look up all the 'special parameters' and see what they do.
+
+
+NEXT: set
