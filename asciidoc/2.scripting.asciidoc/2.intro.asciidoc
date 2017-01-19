@@ -1,18 +1,16 @@
 //command substitution $() vs ` ` DONE
 	some examples of using this
 
-//subshell?
-	When to use
-	logging example?
-	redirection example?
-
 //[[ ]] vs [ ] (test)
 	prefer [[
-//-a conditions etc
+	//-a conditions etc
 	string vs number comparisons
 	only example of typing in bash?
 	arithmetic substitution
 
+// loops
+	for (( expr1 ; expr2 ; expr3 )) ; do list ; done
+	select?
 
 //exit codes $? DOING
 	/bin/true / false
@@ -23,3 +21,7 @@
 
 //backgrounding and waiting
 
+//subshell??
+	When to use
+	logging example?
+	redirection example?
