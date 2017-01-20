@@ -92,6 +92,10 @@ Remove the left-over directory:
 
 - TODO
 
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
+
 ==== Exercises
 
 1) Try various command subsitution commands, and plug in variables and quotes to see what happens.

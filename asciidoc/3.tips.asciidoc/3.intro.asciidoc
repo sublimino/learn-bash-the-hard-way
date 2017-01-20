@@ -29,7 +29,7 @@ history, !? etc:
 
 
 
-Get a date on the script:
+Get a date on the script: (read)
 -------------------------
 
 ----

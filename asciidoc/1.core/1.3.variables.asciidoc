@@ -228,6 +228,10 @@ TODO: http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-exa
 
 - TODO
 
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
+
 ==== Exercises
 
 1) Take the output of 'env' in your shell and work out why each item is there

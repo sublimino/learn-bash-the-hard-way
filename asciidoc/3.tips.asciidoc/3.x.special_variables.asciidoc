@@ -1,0 +1,4 @@
+
+Special variables and their uses
+
+$BASH_SOURCE 

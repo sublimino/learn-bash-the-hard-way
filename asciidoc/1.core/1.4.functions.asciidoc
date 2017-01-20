@@ -184,6 +184,10 @@ And yes, you can alias alias.
 
 -  TODO
 
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
+
 ==== Exercises
 
 1) Run 'typeset -f'. Find out how this relates to 'declare -f' by looking at the

@@ -127,6 +127,10 @@ Now clean up what you just did:
 - Globs and regexes are different
 - Single and double quotes around globs can be important
 
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
+
 ==== Exercises
 
 1) TODO

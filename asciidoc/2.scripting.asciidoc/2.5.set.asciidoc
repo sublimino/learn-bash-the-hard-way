@@ -164,6 +164,10 @@ Now clean up what you just did:
 
 - TODO
 
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
+
 ==== Exercises
 
 1) Read the man page to see what all the options are. Don't worry if you don't

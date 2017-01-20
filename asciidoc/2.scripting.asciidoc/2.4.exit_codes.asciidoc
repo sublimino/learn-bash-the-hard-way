@@ -134,10 +134,12 @@ TODO$ rm afile.txt
 
 - TODO
 
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
+
 ==== Exercises
 
 1) Look up under what circumstances git returns a non-zero exit code.
 2) Look up all the 'special parameters' and see what they do.
 
-
-NEXT: set

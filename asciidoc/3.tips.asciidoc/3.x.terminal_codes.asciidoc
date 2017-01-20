@@ -1,5 +1,7 @@
 === Terminal Codes and Non-Standard Characters
 
+Important to understand eg prompts, end-of-file
+
 ==== Non-Standard Characters
 
 echo -e '\n'
@@ -40,6 +42,10 @@ tput rmcup
 ----
 
 
+
+==== What Next?                                                                                                                                             
+                                                                                                                                                            
+TODO
 
 
 
