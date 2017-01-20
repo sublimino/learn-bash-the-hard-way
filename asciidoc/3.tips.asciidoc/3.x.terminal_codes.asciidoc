@@ -1,6 +1,16 @@
-=== Terminal Codes
+=== Terminal Codes and Non-Standard Characters
 
+==== Non-Standard Characters
 
+echo -e '\n'
+
+CTRL-M
+
+==== Terminal Codes - How They Work
+
+==== Playing With Terminal Codes
+
+TODO
 
 Escape codes
 
@@ -8,6 +18,34 @@ echo -e
 
 echo -e '\033[?47h' # save screen
 echo -e '\033[?47l' # restore screen
+
+
+==== Terminal Types
+
+terminfo databases
+tput
+
+----
+# save, clear screen
+tput smcup
+clear
+
+# example "application" follows...
+read -n1 -p "Press any key to continue..."
+
+# example "application" ends here
+
+# restore
+tput rmcup
+----
+
+
+
+
+
+
+
+
 
 
 ===== NOTES
@@ -145,19 +183,6 @@ Save/restore screen
 Used capabilities: smcup, rmcup
 You've undoubtedly already encountered programs that restore the terminal contents after they do their work (like vim). This can be done by the following commands:
 
-----
-# save, clear screen
-tput smcup
-clear
-
-# example "application" follows...
-read -n1 -p "Press any key to continue..."
-
-# example "application" ends here
-
-# restore
-tput rmcup
-----
 
 
 These features require that certain capabilities exist in your termcap/ terminfo. While xterm and most of its clones (rxvt, urxvt, etc) will support the instructions, your operating system may not include references to them in its default xterm profile. (FreeBSD, in particular, falls into this category.) If `tput smcup` appears to do nothing for you, and you don't want to modify your system termcap/terminfo data, and you KNOW that you are using a compatible xterm application, the following may work for you:

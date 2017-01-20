@@ -1,8 +1,8 @@
-:chapter: 2
+:chapter: 3 
 
-== Level Two Bash
+== Tips
 
-include::2.intro.asciidoc[]
+include::3.intro.asciidoc[]
 
-include::2.summary.asciidoc[]
+include::3.summary.asciidoc[]
 

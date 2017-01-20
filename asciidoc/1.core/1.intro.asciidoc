@@ -3,14 +3,6 @@ understanding and proficiency in bash. It doesn't aim to make you an expert
 immediately, but you will be more confident about using bash for more tasks than
 just one-off commands.
 
-==== Aims
-
-TODO: 
-
-- Practical over theoretical
-- Useful over deep
-- Not to be confused by scripts
-- Understand what is going on and where to learn more
 
 ==== Why learn bash?
 
@@ -23,23 +15,39 @@ You often use bash without realising it, and people often get confused by why th
 
 It doesn't take long to get a better understanding of bash, and once you have the basics, its power and ubiquity mean that you can be useful in all sorts of contexts.
 
+
+==== What You Will Get
+
+This course aims to give students:
+
+- A hands-on, quick and practical understanding of bash
+- Enough information to understand what is going on as they go deeper into bash
+- A familiarity with advanced bash usage
+
+It does not:
+
+- Give you a mastery of all the tools you might use on the command line, eg sed, awk, perl
+- Give a complete theoretical understanding of all the 
+- Explain everything.
+
+You are going to have to think sometimes to understand what is happening. This is the Hard Way, and it's the only way to really learn. This course will save you time as you scratch your head later wondering what something means, or why that StackOverflow answer worked.
+
+Sometimes the course will go into other areas closely associated with bash, but not directly bash-related, eg specific tools, terminal knowledge. Again, this is always oriented around my decades of experience using bash and other shells.
+
+
 ==== Assumptions
 
-It assumes some familiarity with very basic shell usage and commands. For those
-looking to get to that point, I recommend following this set of mini-tutorials:
+It assumes some familiarity with _very_ basic shell usage and commands. For those looking to get to that point, I recommend following this set of mini-tutorials:
 
 https://learnpythonthehardway.org/book/appendixa.html
 
-It also assumes you are equipped with a bash shell and a terminal. If you're
-unsure whether  you're in bash, type:
+It also assumes you are equipped with a bash shell and a terminal. If you're unsure whether  you're in bash, type:
 
 ----
 echo $BASH_VERSION
 ----
 
 into your terminal. If you get a bash version string output then you in bash.
-
-In this book, listings have a '$' sign 
 
 ==== How The Course Works
 
@@ -53,8 +61,7 @@ This is really important: you must get used to working in bash, and figuring out
 what's going on by scratching your head and trying to work it out before I explain
 it to you.
 
-Each section is self-contained, and must be followed in full. To help show you
-where you are, the shell commands are numbered 1-n, eg:
+Each section is self-contained, and must be followed in full. To help show you where you are, the shell commands are numbered 1-n and the number is followed by a '$' sign, eg:
 
 ----
 1$ #first command
@@ -64,14 +71,6 @@ where you are, the shell commands are numbered 1-n, eg:
 At the end of each section is a set of 'cleanup' commands (where needed) if you
 want to use them.
 
-
-==== What You Will Get
-
-This course aims to give students:
-
-- A hands-on, practical understanding of bash
-- Enough information to understand what is going on as they go deeper into bash
-- A familiarity with advanced bash usage
 
 
 ==== Structure
