@@ -31,12 +31,6 @@
               attempted.  The exit status is zero if no pattern matches.  Otherwise, it is the exit status of the last command  executed  in
               list.
 
-       if list; then list; [ elif list; then list; ] ... [ else list; ] fi
-              The  if  list  is  executed.  If its exit status is zero, the then list is executed.  Otherwise, each elif list is executed in
-              turn, and if its exit status is zero, the corresponding then list is executed and the command completes.  Otherwise, the  else
-              list is executed, if present.  The exit status is the exit status of the last command executed, or zero if no condition tested
-              true.
-
        while list; do list; done
        until list; do list; done
               The while command continuously executes the do list as long as the last command in list returns an exit status of  zero.   The

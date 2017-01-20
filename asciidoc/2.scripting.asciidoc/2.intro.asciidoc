@@ -1,7 +1,7 @@
 //command substitution $() vs ` ` DONE
 	some examples of using this
 
-//[[ ]] vs [ ] (test)
+//[[ ]] vs [ ] (test) DOING
 	prefer [[
 	//-a conditions etc
 	string vs number comparisons
@@ -17,7 +17,7 @@
 	pipelines and exit codes
 	special parameters
 
-//set options DONE
+//set options DOING
 
 //backgrounding and waiting
 

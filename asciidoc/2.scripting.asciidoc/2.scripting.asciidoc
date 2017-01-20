@@ -1,8 +1,10 @@
 :chapter: 2
 
-== Level Two Bash
+== Scripting
 
 include::2.intro.asciidoc[]
+
+include::2.1.command_substitution.asciidoc[]
 
 include::2.summary.asciidoc[]
 

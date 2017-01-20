@@ -1,0 +1,794 @@
+=== Terminal Codes
+
+
+
+Escape codes
+
+echo -e
+
+echo -e '\033[?47h' # save screen
+echo -e '\033[?47l' # restore screen
+
+
+===== NOTES
+
+http://wiki.bash-hackers.org/scripting/terminalcodes
+
+
+Terminal codes (ANSI/VT100) introduction 
+====
+
+Terminal (control) codes are used to issue specific commands to your terminal.
+This can be related to switching colors or positioning the cursor, i.e.
+anything that can't be done by the application itself.
+
+How it technically works 
+====
+
+A terminal control code is a special sequence of characters that is printed
+(like any other text). If the terminal understands the code, it won't display
+the character-sequence, but will perform some action. You can print the codes
+with a simple echo command.
+
+The tput command 
+====
+
+Because there's a large number of different terminal control languages, usually a system has an intermediate communication layer. The real codes are looked up in a database for the currently detected terminal type and you give standardized requests to an API or (from the shell) to a command. One of these commands is tput. Tput accepts a set of acronyms called capability names and any parameters, if appropriate, then looks up the correct escape sequences for the detected terminal in the terminfo database and prints the correct codes (the terminal hopefully understands).
+
+The codes 
+====
+
+In this list I'll focus on ANSI/VT100 control codes for the most common actions - take it as quick reference. The documentation of your terminal or the terminfo database is always the preferred source when something is unclear! Also the tput acronyms are usually the ones dedicated for ANSI escapes! I listed only the most relevant codes, of course, any ANSI terminal understands many more! But let's keep the discussion centered on common shell scripting [;-)]
+If I couldn't find a matching ANSI escape, you'll see a [:?:] as the code. Feel free to mail me or fix it.
+The ANSI codes always start with the ESC character. (ASCII 0x1B or octal 033)
+This isn't part of the list, but you should avoid using the ANSI codes directly - use the tput command!
+All codes that can be used with tput can be found in terminfo(5). (on OpenBSD at least) See OpenBSD's_terminfo(5) under the Capabilities section. The cap-name is the code to use with tput. A description of each code is also provided.
+
+General useful ASCII codes 
+====
+
+The Ctrl-Key representation is simply associating the non-printable characters from ASCII code 1 with the printable (letter) characters from ASCII code 65 ("A"). ASCII code 1 would be ^A (Ctrl-A), while ASCII code 7 (BEL) would be ^G (Ctrl-G). This is a common representation (and input method) and historically comes from one of the VT series of terminals.
+
+----
+Name decimal octal hex C-escape Ctrl-Key Description
+BEL 7 007 0x07 \a ^G Terminal bell
+BS 8 010 0x08 \b ^H Backspace
+HT 9 011 0x09 \t ^I Horizontal TAB
+LF 10 012 0x0A \n ^J Linefeed (newline)
+VT 11 013 0x0B \v ^K Vertical TAB
+FF 12 014 0x0C \f ^L Formfeed (also: New page NP)
+CR 13 015 0x0D \r ^M Carriage return
+ESC 27 033 0x1B <none> ^[ Escape character
+DEL 127 177 0x7F <none> <none> Delete character
+----
+
+Cursor handling 
+====
+
+----
+ANSI terminfo equivalent Description
+ Home-positioning to X and Y
+[ <X> ; <Y> H cup <X> <Y> coordinates
+[ <X> ; <Y> f [:!:] it seems that ANSI uses
+ 1-1 as home while tput uses 0-0
+[ H home Move cursor to home position
+ (0-0)
+7 sc Save current cursor position
+8 rc Restore saved cursor position
+[:?:] most likely a normal cub1 move left one space (backspace)
+code like \b
+VT100 [ ? 25 l civis make cursor invisible
+VT100 [ ? 25 h cvvis make cursor visible
+----
+
+ Erasing text 
+
+----
+ANSI terminfo equivalent Description
+[ K el Clear line from current cursor position to end of
+[ 0 K line
+[ 1 K el1 Clear line from beginning to current cursor position
+[ 2 K el2[:?:] Clear whole line (cursor position unchanged)
+----
+
+General text attributes 
+====
+----
+ANSI terminfo equivalent Description
+[ 0 m sgr0 Reset all attributes
+[ 1 m bold Set "bright" attribute
+[ 2 m dim Set "dim" attribute
+[ 4 m set smul unset rmul [:?:] Set "underscore" (underlined text) attribute
+[ 5 m blink Set "blink" attribute
+[ 7 m rev Set "reverse" attribute
+[ 8 m invis Set "hidden" attribute
+----
+
+Foreground coloring 
+====
+
+----
+ANSI terminfo equivalent Description
+[ 3 0 m setaf 0 Set foreground to color #0 - black
+[ 3 1 m setaf 1 Set foreground to color #1 - red
+[ 3 2 m setaf 2 Set foreground to color #2 - green
+[ 3 3 m setaf 3 Set foreground to color #3 - yellow
+[ 3 4 m setaf 4 Set foreground to color #4 - blue
+[ 3 5 m setaf 5 Set foreground to color #5 - magenta
+[ 3 6 m setaf 6 Set foreground to color #6 - cyan
+[ 3 7 m setaf 7 Set foreground to color #7 - white
+[ 3 9 m setaf 9 Set default color as foreground color
+----
+
+Background coloring 
+====
+
+----
+ANSI terminfo equivalent Description
+[ 4 0 m setab 0 Set background to color #0 - black
+[ 4 1 m setab 1 Set background to color #1 - red
+[ 4 2 m setab 2 Set background to color #2 - green
+[ 4 3 m setab 3 Set background to color #3 - yellow
+[ 4 4 m setab 4 Set background to color #4 - blue
+[ 4 5 m setab 5 Set background to color #5 - magenta
+[ 4 6 m setab 6 Set background to color #6 - cyan
+[ 4 7 m setab 7 Set background to color #7 - white
+[ 4 9 m setaf 9 Set default color as background color
+----
+
+Misc codes 
+====
+
+Save/restore screen
+====
+
+Used capabilities: smcup, rmcup
+You've undoubtedly already encountered programs that restore the terminal contents after they do their work (like vim). This can be done by the following commands:
+
+----
+# save, clear screen
+tput smcup
+clear
+
+# example "application" follows...
+read -n1 -p "Press any key to continue..."
+
+# example "application" ends here
+
+# restore
+tput rmcup
+----
+
+
+These features require that certain capabilities exist in your termcap/ terminfo. While xterm and most of its clones (rxvt, urxvt, etc) will support the instructions, your operating system may not include references to them in its default xterm profile. (FreeBSD, in particular, falls into this category.) If `tput smcup` appears to do nothing for you, and you don't want to modify your system termcap/terminfo data, and you KNOW that you are using a compatible xterm application, the following may work for you:
+
+----
+echo -e '\033[?47h' # save screen
+echo -e '\033[?47l' # restore screen
+----
+
+
+Certain software uses these codes (via their termcap capabilities) as well. You may have seen the screen save/restore in less, vim, top, screen and others. Some of these applications may also provide configuration options to *disable* this behaviour. For example, less has a -X option for this, which can also be set in an environment variable:
+
+----
+export LESS=X
+less /path/to/file
+----
+
+Similarly, vim can be configured not to "restore" the screen by adding the following to your ~/.vimrc:
+
+----
+set t_ti= t_te=
+----
+
+*** Additional colors ***
+
+Some terminal emulators support many additional colors. The most common extension used by xterm-compatible terminals supports 256 colors. These can be generated by tput with seta{f,b} [0-255] when the TERM value has a -256color suffix. Konsole supports full 24-bit colors, and as of KDE 4.9 any X11 color code can be written directly into a special escape sequence. Other terminals may offer similar extensions. Few, if any programs are able to make use of anything beyond 256, and tput doesn't know about them. Colors beyond 16 usually only apply to modern terminal emulators running in graphical environments. The Virtual Terminal implemented in the Linux kernel supports only 16 colors, and the usual default terminfo entry for TERM=linux defines only 8. There is sometimes an alternate "linux-16color" that you can switch to, to get the other 8 colors.
+
+Bash examples 
+====
+
+Hardcoded colors 
+====
+
+----
+printf '%b\n' 'It is \033[31mnot\033[39m intelligent to use \033[32mhardcoded
+ANSI\033[39m codes!'
+----
+
+Colors using tput :
+
+Directly inside the echo:
+
+----
+echo "TPUT is a $(tput setaf 2)nice$(tput setaf 9) and $(tput setaf 5)user friendly$(tput setaf 9) terminal capability database."
+----
+
+With preset variables:
+
+----
+COL_NORM="$(tput setaf 9)"
+COL_RED="$(tput setaf 1)"
+COL_GREEN="$(tput setaf 2)"
+echo "It's ${COL_RED}red${COL_NORM} and ${COL_GREEN}green${COL_NORM} - have you seen?"
+----
+
+Misc 
+====
+
+----
+HOME function
+home() {
+ # yes, actually not much shorter ;-)
+ tput home
+}
+----
+
+Silly but nice effect 
+====
+
+----
+#!/bin/bash
+
+DATA[0]=" _/ _/ _/ _/ "
+DATA[1]=" _/_/_/_/_/ _/_/_/ _/_/_/ _/_/_/ _/_/_/ "
+DATA[2]=" _/ _/ _/ _/ _/ _/ _/_/ _/ _/"
+DATA[3]="_/_/_/_/_/ _/ _/ _/ _/ _/_/ _/ _/ "
+DATA[4]=" _/ _/ _/_/_/ _/_/_/ _/_/_/ _/ _/ "
+
+# virtual coordinate system is X*Y ${#DATA} * 5
+
+REAL_OFFSET_X=0
+REAL_OFFSET_Y=0
+
+draw_char() {
+ V_COORD_X=$1
+ V_COORD_Y=$2
+
+ tput cup $((REAL_OFFSET_Y + V_COORD_Y)) $((REAL_OFFSET_X + V_COORD_X))
+
+ printf %c ${DATA[V_COORD_Y]:V_COORD_X:1}
+}
+
+
+trap 'exit 1' INT TERM
+trap 'tput setaf 9; tput cvvis; clear' EXIT
+
+tput civis
+clear
+
+while :; do
+
+for ((c=1; c <= 7; c++)); do
+ tput setaf $c
+ for ((x=0; x<${#DATA[0]}; x++)); do
+ for ((y=0; y<=4; y++)); do
+ draw_char $x $y
+ done
+ done
+done
+
+done
+----
+
+Mandelbrot set 
+====
+
+This is a slightly modified version of Charles Cooke's colorful Mandelbrot plot scripts (original_w/_screenshot) ungolfed, optimized a bit, and without hard-coded terminal escapes. The colorBox function is memoized to collect tput output only when required and output a new escape only when a color change is needed. This limits the number of tput calls to at most 16, and reduces raw output by more than half. The doBash function uses integer arithmetic, but is still ksh93-compatible (run as e.g. bash ./mandelbrot to use it). The ksh93- only floating-point doKsh is almost 10x faster than doBash (thus the ksh shebang by default), but uses only features that don't make the Bash parser
+crash.
+
+----
+#!/usr/bin/env ksh
+
+# Charles Cooke's 16-color Mandelbrot
+# http://earth.gkhs.net/ccooke/shell.html
+# Combined Bash/ksh93 flavors by Dan Douglas (ormaaj)
+
+function doBash {
+	typeset P Q X Y a b c i v x y
+	for ((P=10**8,Q=P/100,X=320*Q/cols,Y=210*Q/lines,y=-105*Q,v=-
+220*Q,x=v;y<105*Q;x=v,y+=Y)); do
+		for ((;x<P;a=b=i=c=0,x+=X)); do
+			for ((;a**2+b**2<4*P**2&&i++<99;a=((c=a)**2-b**2)/P+x,b=2*c*b/P+y)); do :
+			done
+			colorBox $((i<99?i%16:0))
+		done
+		echo
+	done
+}
+
+function doKsh {
+	integer i
+	float a b c x=2.2 y=-1.05 X=3.2/cols Y=2.1/lines
+	while
+		for ((a=b=i=0;(c=a)**2+b**2<=2&&i++<99&&(a=a**2-b**2+x,b=2*c*b+y);)); do :
+		done
+		. colorBox $((i<99?i%16:0))
+		if ((x<1?!(x+=X):(y+=Y,x=-2.2))); then
+			print
+			((y<1.05))
+		fi
+		do :
+	done
+}
+
+function colorBox {
+	(($1==lastclr)) || printf %s "${colrs[lastclr=$1]:=$(tput setaf "$1")}"
+	printf '\u2588'
+}
+
+unset -v lastclr
+((cols=$(tput cols)-1, lines=$(tput lines)))
+typeset -a colrs
+trap 'tput sgr0; echo' EXIT
+${KSH_VERSION+. doKsh} ${BASH_VERSION+doBash}
+----
+
+A much more sophisticated version by Roland Mainz can be found here: http://svn.nrubsig.org/svn/people/gisburn/scripts/mandelbrotset1.sh
+
+
+Discussion 
+====
+
+
+In the table showing [ 3 9 m setaf 9 Set default foreground color the Description "Set default foreground color" is ambiguous.
+
+That phrase could mean either that the commands will 1) store the value of a specified color as the "default" color value, or that 2) a stored "default" color value will be used to re-set the current foreground or background color to a new value. Which is it? In one case there can be a visible change on the screen. In the other case, the will never be a visible change on the screen. As it is, some people will create termcap files which gratuitously reset the display to the "default" colors, which makes using custom foreground and background colors impossible. Of course, this is just mean, and requires rewriting the termcap file.
+
+Also, the Descriptions of the "Dim", "Bright", and "Reverse" attributes could actually say what these are suppose to do. For instance, what is suppose to happen when setting both "Dim" and "Bright"? Or, does "Reverse" apply to both the foreground and background colors? Does "Reverse" mean to exchange the foreground and background colors? Or to set some kind of "complement" color to each of the foreground and background? These "Descriptions" that do not describe are not useful.
+
+
+# print shortcuts for all ansi codes, NB: please add plus plus in for statements!
+
+----
+ansi-test()
+{
+for a in 0 1 4 5 7; do
+echo "a=$a "
+for (( f=0; f<=9; f++ )) ; do
+for (( b=0; b<=9; b++ )) ; do
+#echo -ne "f=$f b=$b"
+echo -ne "\\033[${a};3${f};4${b}m"
+echo -ne "\\\\\\\\033[${a};3${f};4${b}m"
+echo -ne "\\033[0m "
+done
+echo
+done
+echo
+done
+echo
+}
+----
+
+
+This describes things from the display end. What about the keyboard? How does someone read the codes from the keyboard and figure out that the user pressed the up arrow key, for example? I'm interested in this for using the bash read -s -n 1 mechanism to bring in keystrokes 1 character at a time and then try to figure out what key the user pressed. Up arrow for example is \E[A . I want to get the entire list of possible character combinations that are legitimate for a given environment. The infocmp utility can dump the terminfo for a particular entity (xterm, linux, etc) but I can't find the equivalent for a keybaord.
+A very good question. Sorry, I can't answer it. I think there are no such things as "standardized" key codes.
+
+well, just use read! read does not only read the input from the keyboard, but reflects it on the terminal resulting in the keycodes you are looking for. I used my findings for the following python script: (sorry for not using bash)
+
+[see term.py]
+
+If you're using X, you can get keycodes from the keyboard with the 'xev' program; it opens a window that prints in the terminal every event (mouse move, mouse button press, keypress, keyrelease, etc). I know I'm more than a year late, but google brought me here, so hopefully someone will find this useful.
+
+First - thank you for this article as I have written a sub-routine for various *nix and non-nix systems to parse ANSI (as best as possible). Point is - I WORSHIP THIS OVERVIEW - especially when I come across individuals interested in making the most of bash, etc. Second - I get to contribute! From bash, leverage the read command. I've included a few links for reference, but the general idea is that it can be used for "Hey, type in a something and press enter" to being nested in a loop condition to "trap" (that is a term you will want to look at) single key strokes. The command even goes as far to give a "timeout" if the user doesn't press any key!
+
+http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_08_02.html
+http://www.unix.com/shell-programming-and-scripting/140231-bash-keypress-read-single-character.html
+
+and this sorta brings the previous links together in a practical example:
+
+http://top-scripts.blogspot.com/2011/01/blog-post.html
+
+Quickly see the foreground/background colors:
+
+----
+for b in {0..7} 9; do for f in {0..7} 9; do for attr in "" bold; do echo -e "$(tput setab $b; tput setaf $f; [ -n "$attr" ] && tput $attr) $f ON $b $attr $(tput sgr0)"; done; done; done
+----
+
+Or the same on several lines for readability:
+
+----
+ for b in {0..7} 9; do
+ for f in {0..7} 9; do
+ for attr in "" bold; do
+ echo -e "$(tput setab $b; tput setaf $f; [ -n "$attr" ] && tput
+$attr) $f ON $b $attr $(tput sgr0)"
+ done
+ done
+ done
+----
+
+
+
+
+
+
+=== MAN PAGE:
+
+ The Linux console implements a large subset of the VT102 and ECMA-48/ISO 6429/ANSI X3.64 terminal controls, plus certain private-mode sequences for changing the color palette, character-set
+ mapping, and so on. In the tabular descriptions below, the second column gives ECMA-48 or DEC mnemonics (the latter if prefixed with DEC) for the given function. Sequences without a
+ mnemonic are neither ECMA-48 nor VT102.
+
+ After all the normal output processing has been done, and a stream of characters arrives at the console driver for actual printing, the first thing that happens is a translation from the
+ code used for processing to the code used for printing.
+
+ If the console is in UTF-8 mode, then the incoming bytes are first assembled into 16-bit Unicode codes. Otherwise, each byte is transformed according to the current mapping table (which
+ translates it to a Unicode value). See the Character Sets section below for discussion.
+
+ In the normal case, the Unicode value is converted to a font index, and this is stored in video memory, so that the corresponding glyph (as found in video ROM) appears on the screen. Note
+ that the use of Unicode (and the design of the PC hardware) allows us to use 512 different glyphs simultaneously.
+
+ If the current Unicode value is a control character, or we are currently processing an escape sequence, the value will treated specially. Instead of being turned into a font index and ren‐
+ dered as a glyph, it may trigger cursor movement or other control functions. See the Linux Console Controls section below for discussion.
+
+ It is generally not good practice to hard-wire terminal controls into programs. Linux supports a terminfo(5) database of terminal capabilities. Rather than emitting console escape
+ sequences by hand, you will almost always want to use a terminfo-aware screen library or utility such as ncurses(3), tput(1), or reset(1).
+
+ Linux console controls
+ This section describes all the control characters and escape sequences that invoke special functions (i.e., anything other than writing a glyph at the current cursor location) on the Linux
+ console.
+
+ Control characters
+
+ A character is a control character if (before transformation according to the mapping table) it has one of the 14 codes 00 (NUL), 07 (BEL), 08 (BS), 09 (HT), 0a (LF), 0b (VT), 0c (FF), 0d
+ (CR), 0e (SO), 0f (SI), 18 (CAN), 1a (SUB), 1b (ESC), 7f (DEL). One can set a "display control characters" mode (see below), and allow 07, 09, 0b, 18, 1a, 7f to be displayed as glyphs. On
+ the other hand, in UTF-8 mode all codes 00-1f are regarded as control characters, regardless of any "display control characters" mode.
+
+ If we have a control character, it is acted upon immediately and then discarded (even in the middle of an escape sequence) and the escape sequence continues with the next character. (How‐
+ ever, ESC starts a new escape sequence, possibly aborting a previous unfinished one, and CAN and SUB abort any escape sequence.) The recognized control characters are BEL, BS, HT, LF, VT,
+ FF, CR, SO, SI, CAN, SUB, ESC, DEL, CSI. They do what one would expect:
+
+ BEL (0x07, ^G) beeps;
+
+ BS (0x08, ^H) backspaces one column (but not past the beginning of the line);
+
+ HT (0x09, ^I) goes to the next tab stop or to the end of the line if there is no earlier tab stop;
+
+ LF (0x0A, ^J), VT (0x0B, ^K) and FF (0x0C, ^L) all give a linefeed, and if LF/NL (new-line mode) is set also a carriage return;
+
+ CR (0x0D, ^M) gives a carriage return;
+
+ SO (0x0E, ^N) activates the G1 character set;
+
+ SI (0x0F, ^O) activates the G0 character set;
+
+ CAN (0x18, ^X) and SUB (0x1A, ^Z) interrupt escape sequences;
+
+ ESC (0x1B, ^[) starts an escape sequence;
+
+ DEL (0x7F) is ignored;
+
+ CSI (0x9B) is equivalent to ESC [.
+
+ ESC- but not CSI-sequences
+
+ ESC c RIS Reset.
+ ESC D IND Linefeed.
+ ESC E NEL Newline.
+ ESC H HTS Set tab stop at current column.
+ ESC M RI Reverse linefeed.
+ ESC Z DECID DEC private identification. The kernel returns the
+ string ESC [ ? 6 c, claiming that it is a VT102.
+ ESC 7 DECSC Save current state (cursor coordinates,
+ attributes, character sets pointed at by G0, G1).
+ ESC 8 DECRC Restore state most recently saved by ESC 7.
+ ESC [ CSI Control sequence introducer
+ ESC % Start sequence selecting character set
+ ESC % @ Select default (ISO 646 / ISO 8859-1)
+ ESC % G Select UTF-8
+ ESC % 8 Select UTF-8 (obsolete)
+ ESC # 8 DECALN DEC screen alignment test - fill screen with E's.
+ ESC ( Start sequence defining G0 character set
+ ESC ( B Select default (ISO 8859-1 mapping)
+ ESC ( 0 Select VT100 graphics mapping
+ ESC ( U Select null mapping - straight to character ROM
+ ESC ( K Select user mapping - the map that is loaded by
+ the utility mapscrn(8).
+ ESC ) Start sequence defining G1
+ (followed by one of B, 0, U, K, as above).
+ ESC > DECPNM Set numeric keypad mode
+ ESC = DECPAM Set application keypad mode
+ ESC ] OSC (Should be: Operating system command) ESC ] P
+ nrrggbb: set palette, with parameter given in 7
+ hexadecimal digits after the final P :-(. Here n
+ is the color (0-15), and rrggbb indicates the
+ red/green/blue values (0-255). ESC ] R: reset
+ palette
+
+ ECMA-48 CSI sequences
+
+ CSI (or ESC [) is followed by a sequence of parameters, at most NPAR (16), that are decimal numbers separated by semicolons. An empty or absent parameter is taken to be 0. The sequence of
+ parameters may be preceded by a single question mark.
+
+ However, after CSI [ (or ESC [ [) a single character is read and this entire sequence is ignored. (The idea is to ignore an echoed function key.)
+
+ The action of a CSI sequence is determined by its final character.
+
+ @ ICH Insert the indicated # of blank characters.
+ A CUU Move cursor up the indicated # of rows.
+ B CUD Move cursor down the indicated # of rows.
+ C CUF Move cursor right the indicated # of columns.
+ D CUB Move cursor left the indicated # of columns.
+ E CNL Move cursor down the indicated # of rows, to column 1.
+ F CPL Move cursor up the indicated # of rows, to column 1.
+ G CHA Move cursor to indicated column in current row.
+ H CUP Move cursor to the indicated row, column (origin at 1,1).
+ J ED Erase display (default: from cursor to end of display).
+ ESC [ 1 J: erase from start to cursor.
+ ESC [ 2 J: erase whole display.
+ ESC [ 3 J: erase whole display including scroll-back
+ buffer (since Linux 3.0).
+ K EL Erase line (default: from cursor to end of line).
+ ESC [ 1 K: erase from start of line to cursor.
+ ESC [ 2 K: erase whole line.
+ L IL Insert the indicated # of blank lines.
+ M DL Delete the indicated # of lines.
+ P DCH Delete the indicated # of characters on current line.
+ X ECH Erase the indicated # of characters on current line.
+ a HPR Move cursor right the indicated # of columns.
+ c DA Answer ESC [ ? 6 c: "I am a VT102".
+
+ d VPA Move cursor to the indicated row, current column.
+ e VPR Move cursor down the indicated # of rows.
+ f HVP Move cursor to the indicated row, column.
+ g TBC Without parameter: clear tab stop at current position.
+ ESC [ 3 g: delete all tab stops.
+ h SM Set Mode (see below).
+ l RM Reset Mode (see below).
+ m SGR Set attributes (see below).
+ n DSR Status report (see below).
+ q DECLL Set keyboard LEDs.
+ ESC [ 0 q: clear all LEDs
+ ESC [ 1 q: set Scroll Lock LED
+ ESC [ 2 q: set Num Lock LED
+ ESC [ 3 q: set Caps Lock LED
+ r DECSTBM Set scrolling region; parameters are top and bottom row.
+ s ? Save cursor location.
+ u ? Restore cursor location.
+ ` HPA Move cursor to indicated column in current row.
+
+ ECMA-48 Set Graphics Rendition
+
+ The ECMA-48 SGR sequence ESC [ parameters m sets display attributes. Several attributes can be set in the same sequence, separated by semicolons. An empty parameter (between semicolons or
+ string initiator or terminator) is interpreted as a zero.
+
+ param result
+ 0 reset all attributes to their defaults
+ 1 set bold
+ 2 set half-bright (simulated with color on a color display)
+ 4 set underscore (simulated with color on a color display) (the col‐
+ ors used to simulate dim or underline are set using ESC ] ...)
+ 5 set blink
+ 7 set reverse video
+ 10 reset selected mapping, display control flag, and toggle meta flag
+ (ECMA-48 says "primary font").
+ 11 select null mapping, set display control flag, reset toggle meta
+ flag (ECMA-48 says "first alternate font").
+ 12 select null mapping, set display control flag, set toggle meta
+ flag (ECMA-48 says "second alternate font"). The toggle meta flag
+ causes the high bit of a byte to be toggled before the mapping ta‐
+ ble translation is done.
+ 21 set normal intensity (ECMA-48 says "doubly underlined")
+ 22 set normal intensity
+ 24 underline off
+ 25 blink off
+ 27 reverse video off
+ 30 set black foreground
+ 31 set red foreground
+ 32 set green foreground
+ 33 set brown foreground
+ 34 set blue foreground
+ 35 set magenta foreground
+ 36 set cyan foreground
+ 37 set white foreground
+ 38 set underscore on, set default foreground color
+ 39 set underscore off, set default foreground color
+ 40 set black background
+ 41 set red background
+ 42 set green background
+ 43 set brown background
+ 44 set blue background
+ 45 set magenta background
+ 46 set cyan background
+ 47 set white background
+ 49 set default background color
+
+ ECMA-48 Mode Switches
+
+ ESC [ 3 h
+ DECCRM (default off): Display control chars.
+
+ ESC [ 4 h
+ DECIM (default off): Set insert mode.
+
+ ESC [ 20 h
+ LF/NL (default off): Automatically follow echo of LF, VT or FF with CR.
+
+ ECMA-48 Status Report Commands
+
+ ESC [ 5 n
+ Device status report (DSR): Answer is ESC [ 0 n (Terminal OK).
+
+ ESC [ 6 n
+ Cursor position report (CPR): Answer is ESC [ y ; x R, where x,y is the cursor location.
+
+ DEC Private Mode (DECSET/DECRST) sequences
+
+ These are not described in ECMA-48. We list the Set Mode sequences; the Reset Mode sequences are obtained by replacing the final 'h' by 'l'.
+
+ ESC [ ? 1 h
+ DECCKM (default off): When set, the cursor keys send an ESC O prefix, rather than ESC [.
+
+ ESC [ ? 3 h
+ DECCOLM (default off = 80 columns): 80/132 col mode switch. The driver sources note that this alone does not suffice; some user-mode utility such as resizecons(8) has to change the
+ hardware registers on the console video card.
+
+ ESC [ ? 5 h
+ DECSCNM (default off): Set reverse-video mode.
+
+ ESC [ ? 6 h
+ DECOM (default off): When set, cursor addressing is relative to the upper left corner of the scrolling region.
+
+ ESC [ ? 7 h
+ DECAWM (default on): Set autowrap on. In this mode, a graphic character emitted after column 80 (or column 132 of DECCOLM is on) forces a wrap to the beginning of the following line
+ first.
+
+ ESC [ ? 8 h
+ DECARM (default on): Set keyboard autorepeat on.
+
+ ESC [ ? 9 h
+ X10 Mouse Reporting (default off): Set reporting mode to 1 (or reset to 0)—see below.
+
+ ESC [ ? 25 h
+ DECTECM (default on): Make cursor visible.
+
+ ESC [ ? 1000 h
+ X11 Mouse Reporting (default off): Set reporting mode to 2 (or reset to 0)—see below.
+
+ Linux Console Private CSI Sequences
+
+ The following sequences are neither ECMA-48 nor native VT102. They are native to the Linux console driver. Colors are in SGR parameters: 0 = black, 1 = red, 2 = green, 3 = brown, 4 = blue,
+ 5 = magenta, 6 = cyan, 7 = white.
+
+ ESC [ 1 ; n ] Set color n as the underline color
+ ESC [ 2 ; n ] Set color n as the dim color
+ ESC [ 8 ] Make the current color pair the default attributes.
+ ESC [ 9 ; n ] Set screen blank timeout to n minutes.
+ ESC [ 10 ; n ] Set bell frequency in Hz.
+ ESC [ 11 ; n ] Set bell duration in msec.
+ ESC [ 12 ; n ] Bring specified console to the front.
+ ESC [ 13 ] Unblank the screen.
+ ESC [ 14 ; n ] Set the VESA powerdown interval in minutes.
+
+ ESC [ 15 ] Bring the previous console to the front (since Linux 2.6.0).
+ ESC [ 16 ; n ] Set the cursor blink interval in milliseconds (since Linux 4.2)
+
+ Character sets
+ The kernel knows about 4 translations of bytes into console-screen symbols. The four tables are: a) Latin1 -> PC, b) VT100 graphics -> PC, c) PC -> PC, d) user-defined.
+
+ There are two character sets, called G0 and G1, and one of them is the current character set. (Initially G0.) Typing ^N causes G1 to become current, ^O causes G0 to become current.
+
+ These variables G0 and G1 point at a translation table, and can be changed by the user. Initially they point at tables a) and b), respectively. The sequences ESC ( B and ESC ( 0 and ESC (
+ U and ESC ( K cause G0 to point at translation table a), b), c) and d), respectively. The sequences ESC ) B and ESC ) 0 and ESC ) U and ESC ) K cause G1 to point at translation table a),
+ b), c) and d), respectively.
+
+ The sequence ESC c causes a terminal reset, which is what you want if the screen is all garbled. The oft-advised "echo ^V^O" will make only G0 current, but there is no guarantee that G0
+ points at table a). In some distributions there is a program reset(1) that just does "echo ^[c". If your terminfo entry for the console is correct (and has an entry rs1=\Ec), then "tput
+ reset" will also work.
+
+ The user-defined mapping table can be set using mapscrn(8). The result of the mapping is that if a symbol c is printed, the symbol s = map[c] is sent to the video memory. The bitmap that
+ corresponds to s is found in the character ROM, and can be changed using setfont(8).
+
+ Mouse tracking
+ The mouse tracking facility is intended to return xterm(1)-compatible mouse status reports. Because the console driver has no way to know the device or type of the mouse, these reports are
+ returned in the console input stream only when the virtual terminal driver receives a mouse update ioctl. These ioctls must be generated by a mouse-aware user-mode application such as the
+ gpm(8) daemon.
+
+ The mouse tracking escape sequences generated by xterm(1) encode numeric parameters in a single character as value+040. For example, '!' is 1. The screen coordinate system is 1-based.
+
+ The X10 compatibility mode sends an escape sequence on button press encoding the location and the mouse button pressed. It is enabled by sending ESC [ ? 9 h and disabled with ESC [ ? 9 l.
+ On button press, xterm(1) sends ESC [ M bxy (6 characters). Here b is button-1, and x and y are the x and y coordinates of the mouse when the button was pressed. This is the same code the
+ kernel also produces.
+
+ Normal tracking mode (not implemented in Linux 2.0.24) sends an escape sequence on both button press and release. Modifier information is also sent. It is enabled by sending ESC [ ? 1000 h
+ and disabled with ESC [ ? 1000 l. On button press or release, xterm(1) sends ESC [ M bxy. The low two bits of b encode button information: 0=MB1 pressed, 1=MB2 pressed, 2=MB3 pressed,
+ 3=release. The upper bits encode what modifiers were down when the button was pressed and are added together: 4=Shift, 8=Meta, 16=Control. Again x and y are the x and y coordinates of the
+ mouse event. The upper left corner is (1,1).
+
+ Comparisons with other terminals
+ Many different terminal types are described, like the Linux console, as being "VT100-compatible". Here we discuss differences between the Linux console and the two most important others,
+ the DEC VT102 and xterm(1).
+
+ Control-character handling
+
+ The VT102 also recognized the following control characters:
+
+ NUL (0x00) was ignored;
+
+ ENQ (0x05) triggered an answerback message;
+
+ DC1 (0x11, ^Q, XON) resumed transmission;
+
+ DC3 (0x13, ^S, XOFF) caused VT100 to ignore (and stop transmitting) all codes except XOFF and XON.
+
+ VT100-like DC1/DC3 processing may be enabled by the terminal driver.
+
+ The xterm(1) program (in VT100 mode) recognizes the control characters BEL, BS, HT, LF, VT, FF, CR, SO, SI, ESC.
+
+ Escape sequences
+
+ VT100 console sequences not implemented on the Linux console:
+
+ ESC N SS2 Single shift 2. (Select G2 character set for the next
+ character only.)
+ ESC O SS3 Single shift 3. (Select G3 character set for the next
+ character only.)
+ ESC P DCS Device control string (ended by ESC \)
+ ESC X SOS Start of string.
+
+ ESC ^ PM Privacy message (ended by ESC \)
+ ESC \ ST String terminator
+ ESC * ... Designate G2 character set
+ ESC + ... Designate G3 character set
+
+ The program xterm(1) (in VT100 mode) recognizes ESC c, ESC # 8, ESC >, ESC =, ESC D, ESC E, ESC H, ESC M, ESC N, ESC O, ESC P ... ESC \, ESC Z (it answers ESC [ ? 1 ; 2 c, "I am a VT100 with
+ advanced video option") and ESC ^ ... ESC \ with the same meanings as indicated above. It accepts ESC (, ESC ), ESC *, ESC + followed by 0, A, B for the DEC special character and line
+ drawing set, UK, and US-ASCII, respectively.
+
+ The user can configure xterm(1) to respond to VT220-specific control sequences, and it will identify itself as a VT52, VT100, and up depending on the way it is configured and initialized.
+
+ It accepts ESC ] (OSC) for the setting of certain resources. In addition to the ECMA-48 string terminator (ST), xterm(1) accepts a BEL to terminate an OSC string. These are a few of the
+ OSC control sequences recognized by xterm(1):
+
+ ESC ] 0 ; txt ST Set icon name and window title to txt.
+ ESC ] 1 ; txt ST Set icon name to txt.
+ ESC ] 2 ; txt ST Set window title to txt.
+ ESC ] 4 ; num; txt ST Set ANSI color num to txt.
+ ESC ] 10 ; txt ST Set dynamic text color to txt.
+ ESC ] 4 6 ; name ST Change log file to name (normally disabled
+ by a compile-time option)
+ ESC ] 5 0 ; fn ST Set font to fn.
+
+ It recognizes the following with slightly modified meaning (saving more state, behaving closer to VT100/VT220):
+
+ ESC 7 DECSC Save cursor
+ ESC 8 DECRC Restore cursor
+
+ It also recognizes
+
+ ESC F Cursor to lower left corner of screen (if enabled by
+ xterm(1)'s hpLowerleftBugCompat resource)
+ ESC l Memory lock (per HP terminals).
+ Locks memory above the cursor.
+ ESC m Memory unlock (per HP terminals).
+ ESC n LS2 Invoke the G2 character set.
+ ESC o LS3 Invoke the G3 character set.
+ ESC | LS3R Invoke the G3 character set as GR.
+ Has no visible effect in xterm.
+ ESC } LS2R Invoke the G2 character set as GR.
+ Has no visible effect in xterm.
+ ESC ~ LS1R Invoke the G1 character set as GR.
+ Has no visible effect in xterm.
+
+ It also recognizes ESC % and provides a more complete UTF-8 implementation than Linux console.
+
+ CSI Sequences
+
+ Old versions of xterm(1), for example, from X11R5, interpret the blink SGR as a bold SGR. Later versions which implemented ANSI colors, for example, XFree86 3.1.2A in 1995, improved this by
+ allowing the blink attribute to be displayed as a color. Modern versions of xterm implement blink SGR as blinking text and still allow colored text as an alternate rendering of SGRs. Stock
+ X11R6 versions did not recognize the color-setting SGRs until the X11R6.8 release, which incorporated XFree86 xterm. All ECMA-48 CSI sequences recognized by Linux are also recognized by
+ xterm, however xterm(1) implements several ECMA-48 and DEC control sequences not recognized by Linux.
+
+ The xterm(1) program recognizes all of the DEC Private Mode sequences listed above, but none of the Linux private-mode sequences. For discussion of xterm(1)'s own private-mode sequences,
+ refer to the Xterm Control Sequences document by Edward Moy, Stephen Gildea, and Thomas E. Dickey available with the X distribution. That document, though terse, is much longer than this
+ manual page. For a chronological overview,
+
+ ⟨http://invisible-island.net/xterm/xterm.log.html⟩
+
+ details changes to xterm.
+
+ The vttest program
+
+ ⟨http://invisible-island.net/vttest/⟩
+
+ demonstrates many of these control sequences. The xterm(1) source distribution also contains sample scripts which exercise other features.

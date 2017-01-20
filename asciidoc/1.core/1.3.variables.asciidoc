@@ -220,6 +220,9 @@ Bash has 6 items (0-5) in its BASH_VERSINFO array:
 As ever with variables, if the item does not exist then the output will be an
 empty line.
 
+==== Associative Arrays
+
+TODO: http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
 
 ==== What you learned
 

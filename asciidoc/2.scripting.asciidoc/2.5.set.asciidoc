@@ -118,6 +118,20 @@ is the same as:
 
 I generally prefer the name form rather than flag, just because it's easier to read.
 
+When I start writing a script, I usually start with the following:
+
+----
+#!/bin/bash
+
+set -o errexit
+set -o xtrace
+set -o unset
+
+[...]
+----
+
+The 'unset' throws an error if a variable is unset when referenced. (The special variables $@ and $* are exempt).
+
 ==== The 'pipefail' Option, Exit Codes and Pipelines
 
 TODO

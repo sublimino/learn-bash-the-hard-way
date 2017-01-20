@@ -3,6 +3,15 @@ understanding and proficiency in bash. It doesn't aim to make you an expert
 immediately, but you will be more confident about using bash for more tasks than
 just one-off commands.
 
+==== Aims
+
+TODO: 
+
+- Practical over theoretical
+- Useful over deep
+- Not to be confused by scripts
+- Understand what is going on and where to learn more
+
 ==== Why learn bash?
 
 There are a few reasons to learn bash in a structured way:
