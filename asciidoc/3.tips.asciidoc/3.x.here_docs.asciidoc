@@ -1,67 +1,90 @@
-   Here Documents
-       No parameter expansion, command substitution, arithmetic expansion, or pathname expansion is performed on word.  If any characters in
-       word  are quoted, the delimiter is the result of quote removal on word, and the lines in the here-document are not expanded.  If word
-       is unquoted, all lines of the here-document are subjected to parameter expansion, command substitution, and arithmetic expansion.  In
-       the latter case, the character sequence \<newline> is ignored, and \ must be used to quote the characters \, $, and `.
+TODO: THIS MUST COME AFTER THE CTRL-V, TAB TO DO THE TABS
 
-       If  the redirection operator is <<-, then all leading tab characters are stripped from input lines and the line containing delimiter.
-       This allows here-documents within shell scripts to be indented in a natural fashion.
+=== Here Documents
 
+Here documents are one of the handiest tricks you will have at your disposal. They allow you to embed content directly in your script.
 
-<<
+NOTE: In this section, leading spaces are tabs. We have covered this in a previous section, but as a reminder: to get a tab character in your shell, type 'CTRL+v', and then hit the 'tab' button.
 
-<<-
-tabs only ignored at front
+==== Basic Here Docs
 
-<<<
-
-Quotes << 'END'
-
-
-example:
-
-Step 1:
+Type this in to see the basic form of the here doc:
 
 ----
-TODO$ function write_file {
+TODO$ cat > afile.txt << END
+A file can contain 
+	whatever you like
+END
+TODO$ cat afile.txt
+----
+
+The 'cat' command is used without a filename given, and the output is redirected to the file 'afile.txt'. If no filename is given, cat takes its input from standard input.
+
+The '<<' indicates that the standard input will be taken up to whatever line just contains the word after the '<<' characters. In this case, the word is 'END'.
+
+The word does not need to be 'END'! It could be anything you choose. 'END' is generally used as a convention. Sometimes you see 'EOF', or 'STOP', or something similar. If you have a document with 'END' in it, for example, you might want to avoid problems with the document ending early by choosing a different word.
+
+
+==== More Advanced Here Docs
+
+Now you're going to put a here document in a function. The function takes one argument. This argument is used as a filename, and the function creates a simple script with that filename that echoes the first argument given to that script.
+
+Will this work? Read it carefully, predict the outcome, and then run it:
+
+----
+TODO$ function write_echoer_file {
 	cat > $1 << END
 #!/bin/bash
 echo $1
 END
 	chmod +x $1
 }
-TODO$ write_file echoer
-TODO$ ./echoer
+TODO$ write_echoer_file echoer
+TODO$ ./echoer 'Hello world'
 ----
 
+Hmmm. That didn't work, because the '$1' got interpreted in the write_echoer_file function as being the filename we passed in. In the 'here doc', we wanted the '$1' characters to be put into the script without being interpreted.
+
+Try this instead:
+
 ----
-TODO$ function write_file {
+TODO$ function write_echoer_file {
 	cat > $1 << 'END'
 #!/bin/bash
 echo $1
 END
 	chmod +x $1
 }
-TODO$ write_file echoer
-TODO$ ./echoer
+TODO$ write_echoer_file echoer
+TODO$ ./echoer 'Hello world'
 ----
 
+Do you see the difference? This time, the delimiter word 'END' was wrapped in single quotes. This made sure that the 'echo $1' was not interpreted by the shell when being written in
+
+Can you see why we needed to use single quotes here? What happens when you use double quotes?
+
+This kind of confusion can happen all the time when writing bash scripts, so it's really important to get these differences clear in your mind.
+
+Our function is working now, but we could still make it better.
+
+Try this (remember, the leading spaces are tabs - see the note above for how to input a tab):
+
 ----
-TODO$ function write_file {
+TODO$ function write_echoer_file {
 	cat > $1 <<- 'END'
 		#!/bin/bash
 		echo $1
 	END
 	chmod +x $1
 }
-TODO$ write_file echoer
+TODO$ write_echoer_file echoer
 TODO$ ./echoer
 ----
 
-What is END is part of the here doc? No problem if it is not the only thing on the line
+What if END is part of the here doc?
 
 ----
-TODO$ function write_file {
+TODO$ function write_echoer_file {
 	cat > $1 <<- 'END'
 		#!/bin/bash
 		echo $1
@@ -69,12 +92,35 @@ TODO$ function write_file {
 	END
 	chmod +x $1
 }
-TODO$ write_file echoer
+TODO$ write_echoer_file echoer
 TODO$ ./echoer
+----
+
+No problem if it is not the only thing on the line:
+
+==== Here Strings
+
+Related to the 'here doc', a 'here string' can be applied in the same way with the '<<<' operator:
+
+----
+TODO$ function write_here_string_to_file {
+	cat > $1 <<< $2
+}
+TODO$ write_here_string_to_file afile.txt "Write this out"
+----
 
 
 
+==== Cleanup
+
+----
+TODO$ rm -f echoer afile.txt
+----
 
 ==== What Next?                                                                                                                                             
                                                                                                                                                             
 TODO
+
+==== Exercises
+
+1) Try passing a multi-line string to a here string. What happens?

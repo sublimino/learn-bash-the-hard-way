@@ -2,7 +2,7 @@ TRICKS / HANDY
 
 In here are the most commonly-used techniques I use on a regular basis.
 
-here docs
+here docs DONE
 
 prompt
 

@@ -1,25 +1,122 @@
 === Terminal Codes and Non-Standard Characters
 
-Important to understand eg prompts, end-of-file
+Important to understand eg prompts, end-of-file TODO
+
+Steps:
+
+- understand how to output anything with echo
+- understand how to output a character while by-passing the terminal
+- TODO
 
 ==== Non-Standard Characters
 
-echo -e '\n'
+The terminal you use has what are described as 'printable' characters, and non-printable (CHECK THIS).
 
-CTRL-M
+For example, typing a character like 'a' (normally) results in the terminal adding an 'a' to the screen. But there are other characters that tell the terminal to do different things.
 
-==== Terminal Codes - How They Work
+It's easy to forget this, but not everything the shell receives is directly printed to the screen. The terminal 'driver' takes what it is given (which is one or more bytes) and decides what to do with it. It might decide to print it (if it's a 'normal' character), or it might tell the computer to emit a beep, or it might change the colour of the terminal, or delete and go back a space, or it might send a message to the running program to tell it to exit.
 
-==== Playing With Terminal Codes
+When looking at odd characters, it's useful to be aware of a couple of utilities that help you understand what's going on. The first of these is a familiar one: echo.
 
-TODO
+==== Using 'echo'
 
-Escape codes
+----
+TODO$ echo -n 'JUST THESE CHARACTERS'
+----
 
-echo -e
+----
+TODO$ echo -n -e 'JUST THESE CHARACTERS AND A NEWLINE\n'
+----
 
-echo -e '\033[?47h' # save screen
-echo -e '\033[?47l' # restore screen
+The '-e' makes us sure that the '\n' will create a newline. Most often it's the default anyway.
+
+It is the backslash character '\' that makes echo aware that a special character is coming up.
+
+Other special characters include '\b' (for backspace), '\t' (for tab) and '\\' (to output a backslash):
+
+What do you think this will output?
+
+----
+TODO$ echo -n -e 'a\bb\bcde\bfg\b\b\b\n'
+----
+
+----
+TODO$ echo -n -e '\x20\n'
+----
+
+Think about that - you can use echo to control _exactly_ what gets sent to the screen. This is extremely valuable for debugging.
+
+If you want to _prevent_ this behaviour, use the '-E' flag:
+
+----
+TODO$ echo -n 'Line1\nLine2' 
+----
+
+==== CTRL-v Escaping
+
+Being able to output any binary value to the screen that we choose is useful, but what if we want to just output a 'special' character, and not have the terminal interpret it in any special way?
+
+//http://ss64.com/bash/syntax-keyboard.html
+
+For example, if I hit 'tab' in my terminal it would normally _not_ show a tab character, as the terminal uses the tab key (if hit twice quickly) to auto-complete any text we have not finished (we will cover this later). Try it!
+
+But if I'm typing something like:
+
+----
+TODO$ echo -E 'I want a tab here:>X<a tab'
+----
+
+How do I get a tab where the 'X' is?
+
+You do it like this: instead of the 'X', you hold down the 'CTRL' key. Then hold down the 'v' key. Let go of the 'v' key, then tap the 'i' key. Finally, let go of the 'CTRL' key.
+
+Practice that a few times. The pattern is: hit CTRL+v, then CTRL+the character specified (in this case 'i').
+
+This character would normally be represented like this: '^I'.
+
+How would you input this, and what will this output?
+
+----
+TODO$ echo abcc^Hdefg
+----
+
+Confusingly, this 'backspace' actually _deletes_ the last character as well as moving the cursor back. Why '^H' differs from '\b' I'm not sure. TODO
+
+This table is a useful reference for these characters:
+
+[width="100%",options="header,footer"]
+|====================
+| Name | Hex | C-escape | CTRL-key | Description |  
+|  BEL | 0x07 | \a | ^G | Terminal bell |  
+|  BS | 0x08 | \b | ^H | Backspace |  
+|  HT | 0x09 | \t | ^I | Horizontal TAB |  
+|  LF | 0x0A | \n | ^J | Linefeed |
+|  VT | 0x0B | \v | ^K | Vertical TAB |
+|  FF | 0x0C | \f | ^L | Formfeed |
+|  CR | 0x0D | \r | ^M | Carriage return |  
+|  ESC | 0x0E | N/A | ^[ | Escape character |  
+|  DEL | 0x0F | N/A | N/A | Delete character |  
+|====================
+
+//Is it complete? TODO
+
+===== Carriage return vs Line Feeds
+
+
+
+==== Terminal Escape Codes
+
+Now that you've understood echo and escape TODO
+
+----
+TODO$ echo -e '\033[?47h' # save screen
+TODO$ echo -e '\033[?47l' # restore screen
+----
+
+
+
+
+
 
 
 ==== Terminal Types
@@ -43,10 +140,18 @@ tput rmcup
 
 
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
+==== What Next?
+
 TODO
 
+==== Cleanup
+
+TODO
+
+==== Exercises
+
+1) Research and echo all of echo's escape sequences. Play with them and figure out what they do.
+2) Research and echo 10 terminal escape sequences. TODO
 
 
 
@@ -54,32 +159,12 @@ TODO
 
 
 
-===== NOTES
+The tput command
 
-http://wiki.bash-hackers.org/scripting/terminalcodes
-
-
-Terminal codes (ANSI/VT100) introduction 
-====
-
-Terminal (control) codes are used to issue specific commands to your terminal.
-This can be related to switching colors or positioning the cursor, i.e.
-anything that can't be done by the application itself.
-
-How it technically works 
-====
-
-A terminal control code is a special sequence of characters that is printed
-(like any other text). If the terminal understands the code, it won't display
-the character-sequence, but will perform some action. You can print the codes
-with a simple echo command.
-
-The tput command 
-====
 
 Because there's a large number of different terminal control languages, usually a system has an intermediate communication layer. The real codes are looked up in a database for the currently detected terminal type and you give standardized requests to an API or (from the shell) to a command. One of these commands is tput. Tput accepts a set of acronyms called capability names and any parameters, if appropriate, then looks up the correct escape sequences for the detected terminal in the terminfo database and prints the correct codes (the terminal hopefully understands).
 
-The codes 
+The codes
 ====
 
 In this list I'll focus on ANSI/VT100 control codes for the most common actions - take it as quick reference. The documentation of your terminal or the terminfo database is always the preferred source when something is unclear! Also the tput acronyms are usually the ones dedicated for ANSI escapes! I listed only the most relevant codes, of course, any ANSI terminal understands many more! But let's keep the discussion centered on common shell scripting [;-)]
@@ -88,25 +173,8 @@ The ANSI codes always start with the ESC character. (ASCII 0x1B or octal 033)
 This isn't part of the list, but you should avoid using the ANSI codes directly - use the tput command!
 All codes that can be used with tput can be found in terminfo(5). (on OpenBSD at least) See OpenBSD's_terminfo(5) under the Capabilities section. The cap-name is the code to use with tput. A description of each code is also provided.
 
-General useful ASCII codes 
-====
 
-The Ctrl-Key representation is simply associating the non-printable characters from ASCII code 1 with the printable (letter) characters from ASCII code 65 ("A"). ASCII code 1 would be ^A (Ctrl-A), while ASCII code 7 (BEL) would be ^G (Ctrl-G). This is a common representation (and input method) and historically comes from one of the VT series of terminals.
-
-----
-Name decimal octal hex C-escape Ctrl-Key Description
-BEL 7 007 0x07 \a ^G Terminal bell
-BS 8 010 0x08 \b ^H Backspace
-HT 9 011 0x09 \t ^I Horizontal TAB
-LF 10 012 0x0A \n ^J Linefeed (newline)
-VT 11 013 0x0B \v ^K Vertical TAB
-FF 12 014 0x0C \f ^L Formfeed (also: New page NP)
-CR 13 015 0x0D \r ^M Carriage return
-ESC 27 033 0x1B <none> ^[ Escape character
-DEL 127 177 0x7F <none> <none> Delete character
-----
-
-Cursor handling 
+Cursor handling
 ====
 
 ----
@@ -125,7 +193,7 @@ VT100 [ ? 25 l civis make cursor invisible
 VT100 [ ? 25 h cvvis make cursor visible
 ----
 
- Erasing text 
+ Erasing text
 
 ----
 ANSI terminfo equivalent Description
@@ -135,7 +203,7 @@ ANSI terminfo equivalent Description
 [ 2 K el2[:?:] Clear whole line (cursor position unchanged)
 ----
 
-General text attributes 
+General text attributes
 ====
 ----
 ANSI terminfo equivalent Description
@@ -148,7 +216,7 @@ ANSI terminfo equivalent Description
 [ 8 m invis Set "hidden" attribute
 ----
 
-Foreground coloring 
+Foreground coloring
 ====
 
 ----
@@ -164,7 +232,7 @@ ANSI terminfo equivalent Description
 [ 3 9 m setaf 9 Set default color as foreground color
 ----
 
-Background coloring 
+Background coloring
 ====
 
 ----
@@ -180,7 +248,7 @@ ANSI terminfo equivalent Description
 [ 4 9 m setaf 9 Set default color as background color
 ----
 
-Misc codes 
+Misc codes
 ====
 
 Save/restore screen
@@ -216,10 +284,10 @@ set t_ti= t_te=
 
 Some terminal emulators support many additional colors. The most common extension used by xterm-compatible terminals supports 256 colors. These can be generated by tput with seta{f,b} [0-255] when the TERM value has a -256color suffix. Konsole supports full 24-bit colors, and as of KDE 4.9 any X11 color code can be written directly into a special escape sequence. Other terminals may offer similar extensions. Few, if any programs are able to make use of anything beyond 256, and tput doesn't know about them. Colors beyond 16 usually only apply to modern terminal emulators running in graphical environments. The Virtual Terminal implemented in the Linux kernel supports only 16 colors, and the usual default terminfo entry for TERM=linux defines only 8. There is sometimes an alternate "linux-16color" that you can switch to, to get the other 8 colors.
 
-Bash examples 
+Bash examples
 ====
 
-Hardcoded colors 
+Hardcoded colors
 ====
 
 ----
@@ -244,7 +312,7 @@ COL_GREEN="$(tput setaf 2)"
 echo "It's ${COL_RED}red${COL_NORM} and ${COL_GREEN}green${COL_NORM} - have you seen?"
 ----
 
-Misc 
+Misc
 ====
 
 ----
@@ -255,7 +323,7 @@ home() {
 }
 ----
 
-Silly but nice effect 
+Silly but nice effect
 ====
 
 ----
@@ -302,7 +370,7 @@ done
 done
 ----
 
-Mandelbrot set 
+Mandelbrot set
 ====
 
 This is a slightly modified version of Charles Cooke's colorful Mandelbrot plot scripts (original_w/_screenshot) ungolfed, optimized a bit, and without hard-coded terminal escapes. The colorBox function is memoized to collect tput output only when required and output a new escape only when a color change is needed. This limits the number of tput calls to at most 16, and reduces raw output by more than half. The doBash function uses integer arithmetic, but is still ksh93-compatible (run as e.g. bash ./mandelbrot to use it). The ksh93- only floating-point doKsh is almost 10x faster than doBash (thus the ksh shebang by default), but uses only features that don't make the Bash parser
@@ -358,7 +426,7 @@ ${KSH_VERSION+. doKsh} ${BASH_VERSION+doBash}
 A much more sophisticated version by Roland Mainz can be found here: http://svn.nrubsig.org/svn/people/gisburn/scripts/mandelbrotset1.sh
 
 
-Discussion 
+Discussion
 ====
 
 
