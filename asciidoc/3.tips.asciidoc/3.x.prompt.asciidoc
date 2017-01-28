@@ -54,29 +54,21 @@ In 'trace' mode PS4 is echoed before each line of trace output.
 But why is the '>' in echo repeated? This indicates the level of indirection (eg subshells) in the trace.
 
 ====
-Things can get really confusing if you have commands in your prompt, or you have PROMPT_COMMAND set (see next section). If you don't fully understand the output of the above, don't panic!
+Things can get really confusing if you have commands in your prompt, or you have PROMPT_COMMAND set (see below section). If you don't fully understand the output of the above, don't panic!
 
-==== PROMPT_COMMAND
-
-Another way the prompt can be affected is with the bash variable 'PROMPT_COMMAND':
-
-----
-TODO
-----
-
-TODO
 
 ==== Pimp Your Prompt
-
-TODO
 
 For all the PS variables mentioned above, there are special escape values that can be used to make your prompt display interesting information.
 
 ----
-bash etc TODO
+TODO$ bash
 TODO$ PS1='\u@\H:\w \# \$ '
-exit etc TODO
+TODO$ ls
+TODO$ exit
 ----
+
+
               \#     the command number of this command
               \$     if the effective UID is 0, a #, otherwise a $
               \l     the basename of the shell's terminal device name
@@ -86,9 +78,21 @@ exit etc TODO
               \[     begin a sequence of non-printing characters, which could be used to embed a terminal control sequence into the prompt
               \]     end a sequence of non-printing characters
 
-:q
 
+==== PROMPT_COMMAND
 
+Another way the prompt can be affected is with the bash variable 'PROMPT_COMMAND':
+
+----
+TODO$ bash
+TODO$ PROMPT_COMMAND='echo "Hello prompt $(date)"'
+TODO$ ls
+TODO$ exit
+----
+
+Every time the prompt is displayed the PROMPT_COMMAND is treated as a command, and run.
+
+You can use this for all sorts of neat tricks.
 
 ==== What Next?                                                                                                                                             
                                                                                                                                                             
