@@ -158,15 +158,25 @@ You can figure out for yourself the difference between using the -n flag in echo
 Run this:
 
 ----
-TODO$ echo -e '\033[?47h' # save screen
-TODO$ echo -e '\033[?47l' # restore screen
+TODO$ echo -e '\033[?47h'
+TODO$ echo -e '\033[?47l'
 ----
 
-TODO: what they are
+The first line 'saves' the screen (but does not clear it!) and the second restores it.
 
-The ANSI codes always start with the ESC character. (ASCII 0x1B or octal 033)
+These terminal escape codes are standard sequences that tell the terminal to do various things.
 
-Type this out:
+
+The ANSI codes always start with the ESC character and left bracket character: in hex '1B' then '5b', or in octal '033' then ''. So you could rewrite the above as:
+
+----
+TODO$ echo -e '\x1b\x5b?47h'
+TODO$ echo -e '\x1b\133?47l'
+----
+
+These characters are then followed by specific sequences which can change the colour of the screen, the background text, the text itself, set the screen width, or even re-map keyboard keys.
+
+Type this out and see if  you can figure out what it's doing as you go:
 
 ----
 TODO$ ansi-test() {
@@ -190,6 +200,8 @@ echo
 ----
 
 That shows you what all the ansi terminal escape codes are and you can see what they do in the terminal.
+
+Sometimes when you 'cat' a binary file, (or /dev/random, which outputs random bytes) the contents when output to a terminal can cause the terminal to appear to 'go haywire'. This is because these escape codes are accidentally triggered by the sequences of bytes that happen to exist in these files.
 
 ==== Fun With Terminals
 
@@ -251,4 +263,4 @@ If this happens, kill or exit your terminal and restart bash.
 2) Research and echo 10 terminal escape sequences.
 3) Look up all the CTRL-v escape sequences and experiment with them.
 4) Research the command 'tput', figure out what it does and rewrite some of the above commands using it.
-
+5) Re-map your keyboard so it outputs the wrong characters using escape codes.

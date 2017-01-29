@@ -8,10 +8,10 @@ Now that you've learned about escapes and special characters you are in a positi
 Type this:
 
 ----
-TODO$ bash
-TODO$ PS1='My super prompt>>>>   '
-TODO$ ls
-TODO$ exit
+1$ bash
+2$ PS1='My super prompt>>>>   '
+3$ ls
+4$ exit
 ----
 
 As you'll remember, there are a bunch of 
@@ -22,85 +22,103 @@ As you'll remember, there are a bunch of
 Now try this:
 
 ----
-TODO$ bash
-TODO$ PS2='I am in the middle of something!>>>  '
-TODO$ cat > /dev/null << END
+5$ bash
+6$ PS2='I am in the middle of something!>>>  '
+7$ cat > /dev/null << END
 some text
 END
-TODO$ exit
+8$ exit
 ----
 
 The PS2 variable is the 'other' prompt, that the shell uses to indicate that you are being prompted for input to a program that is running.
 
 ==== PS3 and PS4
 
-PS3 is used by the 'select' looping structure. We don't cover that here. TODO: but elsewhere?
+PS3 is used by the 'select' looping structure. We don't cover that in this section.
 
 PS4 is the last one:
 
 ----
-TODO$ bash
-TODO$ PS4='> Value of PWD is: $PWD'
-TODO$ set -x
-TODO$ pwd
-TODO$ cd /tmp
-TODO$ ls $(pwd)
-TODO$ cd -
-TODO$ exit
+9$ bash
+10$ PS4='> Value of PWD is: $PWD'
+11$ set -x
+12$ pwd
+13$ cd /tmp
+14$ ls $(pwd)
+15$ cd -
+16$ exit
 ----
 
 In 'trace' mode PS4 is echoed before each line of trace output.
 
-But why is the '>' in echo repeated? This indicates the level of indirection (eg subshells) in the trace.
+But why is the '>' in echo repeated? This indicates the level of indirection (eg subshells) in the trace. Every time the script goes one level 'down', the first character in the PS3 value is repeated. Look at the output after the 'ls $(pwd)' command.
 
 ====
 Things can get really confusing if you have commands in your prompt, or you have PROMPT_COMMAND set (see below section). If you don't fully understand the output of the above, don't panic!
+====
 
 
 ==== Pimp Your Prompt
 
 For all the PS variables mentioned above, there are special escape values that can be used to make your prompt display interesting information.
 
+See if you can figure out what is going on here:
+
 ----
-TODO$ bash
-TODO$ PS1='\u@\H:\w \# \$ '
-TODO$ ls
-TODO$ exit
+17$ bash
+18$ PS1='\u@\H:\w \# \$ '
+19$ ls
+20$ exit
 ----
 
+The table below may help you.
 
-              \#     the command number of this command
-              \$     if the effective UID is 0, a #, otherwise a $
-              \l     the basename of the shell's terminal device name
-              \t     the current time in 24-hour HH:MM:SS format
-              \H     the hostname
-              \w     the current working directory, with $HOME abbreviated with a tilde
-              \[     begin a sequence of non-printing characters, which could be used to embed a terminal control sequence into the prompt
-              \]     end a sequence of non-printing characters
+[width="100%",options="header,footer"]
+|====================
+| Escape value | Meaning | Notes 
+| \# | Command number | The number (starting from 1 and incrementing by one) of the command in this bash session. 
+| \$ | Root status | If you have root, show a '#' sign, otherwise show '$' 
+| \t | Current time | In HH:MM:SS format - there are other formats possible with eg \T. 
+| \H | Hostname | The hostname (fully-qualified) 
+| \w | Current working directory |  
+| \[ | Start control sequence | Begin a sequence of non-printing characters, eg put a terminal control sequence in a prompt. 
+| \] | End control sequence |  
+|====================
 
+Use your knowledge gained so far to figure out what is going on here:
+
+----
+21$ bash
+22$ PS1='\[\033[01;31m\]PRODUCTION\$ '
+23$ PS1='\[\033[01;32m\]DEV\$ '
+24$ exit
+----
+
+How would you make this automatically happen on a given server when you log in?
 
 ==== PROMPT_COMMAND
 
 Another way the prompt can be affected is with the bash variable 'PROMPT_COMMAND':
 
 ----
-TODO$ bash
-TODO$ PROMPT_COMMAND='echo "Hello prompt $(date)"'
-TODO$ ls
-TODO$ exit
+25$ bash
+26$ PROMPT_COMMAND='echo "Hello prompt $(date)"'
+27$ ls
+28$ exit
 ----
 
 Every time the prompt is displayed the PROMPT_COMMAND is treated as a command, and run.
 
-You can use this for all sorts of neat tricks.
+You can use this for all sorts of neat tricks!
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
+==== What Next? 
+
 TODO
 
 ==== Cleanup
 
 ==== Exercises
 
-1) TODO
-Look up the other prompt escape characters.
+1) Look up the other prompt escape characters and use them.
+
+2) TODO

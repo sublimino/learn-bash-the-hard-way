@@ -2,32 +2,14 @@ TRICKS / HANDY
 
 In here are the most commonly-used techniques I use on a regular basis.
 
+
+terminal codes DONE
+
+prompt DONE
+
 here docs DONE
 
-prompt
-
-terminal codes
-
 history, !? etc:
-   Event Designators
-       An event designator is a reference to a command line entry in the history list.
-
-       !      Start a history substitution, except when followed by a blank, newline, carriage return, = or ( (when the extglob shell option
-              is enabled using the shopt builtin).
-       !n     Refer to command line n.
-       !-n    Refer to the current command line minus n.
-       !!     Refer to the previous command.  This is a synonym for `!-1'.
-       !string
-              Refer to the most recent command starting with string.
-       !?string[?]
-              Refer to the most recent command containing string.  The trailing ? may be omitted if string is followed immediately by a new-
-              line.
-       ^string1^string2^
-              Quick substitution.  Repeat the last command, replacing string1 with string2.  Equivalent  to  ``!!:s/string1/string2/''  (see
-              Modifiers below).
-       !#     The entire command line typed so far.
-
-
 
 Get a date on the script: (read)
 -------------------------
