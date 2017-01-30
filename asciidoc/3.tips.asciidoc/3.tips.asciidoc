@@ -12,5 +12,7 @@ include::3.3.here_docs.asciidoc[]
 
 include::3.4.history.asciidoc[]
 
+include::3.5.history.asciidoc[]
+
 include::3.summary.asciidoc[]
 
