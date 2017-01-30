@@ -1,47 +1,69 @@
-TODO: prefer this to come earlier, so quotes can be considered.
+== History
 
-   Event Designators
-       An event designator is a reference to a command line entry in the history list.
+We all know understanding history is important, and this is true in bash as well.
 
-       !      Start a history substitution, except when followed by a blank, newline, carriage return, = or ( (when the extglob shell option
-              is enabled using the shopt builtin).
-       !n     Refer to command line n.
-       !-n    Refer to the current command line minus n.
-       !!     Refer to the previous command.  This is a synonym for `!-1'.
-       !string
-              Refer to the most recent command starting with string.
-       !?string[?]
-              Refer to the most recent command containing string.  The trailing ? may be omitted if string is followed immediately by a new-
-              line.
-       ^string1^string2^
-              Quick substitution.  Repeat the last command, replacing string1 with string2.  Equivalent  to  ``!!:s/string1/string2/''  (see
-              Modifiers below).
-       !#     The entire command line typed so far.
+This section gives you a pragmatic overview of bash's history features, which can save you lots of time when at the terminal.
 
-history
-!!
-!$
+=== Bash and History
+
+Bash keeps a history of commands you have run in a file. By default this is in your $HOME directory and has the name '.bash_history'.
+
+It can be tedious to type out commands again and again, so bash offers several ways to save your effort.
+
+Type this out:
+
+----
+TODO$ mkdir lbthw_history
+TODO$ cd !$
+TODO$ echo 'About bash history' > file1
+TODO$ echo 'Another file' > file2
+TODO$ grep About file1
+TODO$ !!
+TODO$ grep About file2
+TODO$ grep Another !$
+TODO$ rm file2
+TODO$ !e
+TODO$ !g
+----
+
+That introduced a few tricks you haven't necessarily seen before.
+
+
+
+
+
+Event Designators
+An event designator is a reference to a command line entry in the history list.
+^string1^string2^ Quick substitution.  Repeat the last command, replacing string1 with string2.  Equivalent  to  ``!!:s/string1/string2/''  (see Modifiers below).
+
+
+
 !:0-1
-!:0-$
+!:1-$
 
-HISTCONTROL
-A colon-separated list of values controlling how commands are saved on the history list.   If  the  list  of  values  includes ignorespace,  lines  which begin with a space character are not saved in the history list.  A value of ignoredups causes lines matching the previous history entry to not be saved.  A value of ignoreboth is shorthand for ignorespace  and  ignoredups.   A value of erasedups causes all previous lines matching the current line to be removed from the history list before that line is saved.  Any value not in the above list is ignored.  If HISTCONTROL is unset, or does not include a  valid  value,  all  lines read  by  the shell parser are saved on the history list, subject to the value of HISTIGNORE.  The second and subsequent lines of a multi-line compound command are not tested, and are added to the history regardless of the value of HISTCONTROL.
+
+=== How to Learn Them
+
+
+=== History Env Vars
+
 HISTFILE The name of the file in which command history is saved (see HISTORY below).  The default value is ~/.bash_history.  If  unset, the command history is not saved when an interactive shell exits.
-HISTFILESIZE The  maximum number of lines contained in the history file.  When this variable is assigned a value, the history file is trun- cated, if necessary, by removing the oldest entries, to contain no more than that number of lines.  The default value is  500.  The history file is also truncated to this size after writing it when an interactive shell exits.
-HISTIGNORE A  colon-separated  list  of patterns used to decide which command lines should be saved on the history list.  Each pattern is anchored at the beginning of the line and must match the complete line (no implicit `*' is appended).  Each pattern is  tested against  the  line  after  the  checks specified by HISTCONTROL are applied.  In addition to the normal shell pattern matching characters, `&' matches the previous history line.  `&' may be escaped using a backslash;  the  backslash  is  removed  before attempting  a  match.   The  second and subsequent lines of a multi-line compound command are not tested, and are added to the history regardless of the value of HISTIGNORE.
 HISTSIZE The number of commands to remember in the command history (see HISTORY below).  The default value is 500.
 HISTTIMEFORMAT If this variable is set and not null, its value is used as a format string for strftime(3) to print the time stamp  associated with  each  history  entry  displayed by the history builtin.  If this variable is set, time stamps are written to the history file so they may be preserved across shell sessions.
 
-----
-# don't put duplicate lines in the history. See bash(1) for more options
-# ... or force ignoredups and ignorespace
-export HISTCONTROL=ignoredups:ignorespace
 export HISTFILESIZE=1000000
-export HISTFILE=/home/imiell/.bash_history
 export HISTSIZE=1000000
 export HISTTIMEFORMAT="%d/%m/%y %T "
 
-----
+
+=== History Control
+
+export HISTCONTROL=ignoredups:ignorespace
+HISTCONTROL
+A colon-separated list of values controlling how commands are saved on the history list.   If  the  list  of  values  includes ignorespace,  lines  which begin with a space character are not saved in the history list.  A value of ignoredups causes lines matching the previous history entry to not be saved.  A value of ignoreboth is shorthand for ignorespace  and  ignoredups.   A value of erasedups causes all previous lines matching the current line to be removed from the history list before that line is saved.  Any value not in the above list is ignored.  If HISTCONTROL is unset, or does not include a  valid  value,  all  lines read  by  the shell parser are saved on the history list, subject to the value of HISTIGNORE.  The second and subsequent lines of a multi-line compound command are not tested, and are added to the history regardless of the value of HISTCONTROL.
+
+
+=== CTRL-R
 
 
 ==== What Next?
