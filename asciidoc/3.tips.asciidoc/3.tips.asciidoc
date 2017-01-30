@@ -4,5 +4,13 @@
 
 include::3.intro.asciidoc[]
 
+include::3.1.terminal_codes.asciidoc[]
+
+include::3.2.prompt.asciidoc[]
+
+include::3.3.here_docs.asciidoc[]
+
+include::3.4.history.asciidoc[]
+
 include::3.summary.asciidoc[]
 

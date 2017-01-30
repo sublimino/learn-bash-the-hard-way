@@ -9,7 +9,10 @@ prompt DONE
 
 here docs DONE
 
-history, !? etc:
+history DOING
+
+
+Misc
 
 Get a date on the script: (read)
 -------------------------

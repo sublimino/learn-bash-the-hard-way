@@ -1,0 +1,156 @@
+== History
+
+We all know understanding history is important, and this is true in bash as well.
+
+This section gives you a pragmatic overview of bash's history features, which can save you lots of time when at the terminal.
+
+
+=== Bash and History
+
+Bash keeps a history of commands you have run in a file. By default this is in your $HOME directory and has the name '.bash_history'.
+
+Have a look at it:
+
+----
+TODO$ cat ~/.bash_history
+----
+
+NOTE ON MACS and HISTORY?
+
+=== Using Your History
+
+It can be tedious to type out commands and arguments again and again, so bash offers several ways to save your effort.
+
+Type this out and try and figure out what is going on:
+
+----
+TODO$ mkdir lbthw_history
+TODO$ cd !$
+TODO$ echo 'About bash history' > file1
+TODO$ echo 'Another file' > file2
+TODO$ grep About file1
+TODO$ !!
+TODO$ grep About file2
+TODO$ grep Another !$
+TODO$ rm file2
+TODO$ !e
+TODO$ !g
+----
+
+That introduced a few tricks you haven't necessarily seen before.
+
+All of them start with the '!' (or so-called 'bang') sign, which is the sign used to indicate that the bash history is being referred to.
+
+The simplest, and most frequently seen is the double bang '!!', which just means: re-run the previous command.
+
+The one I use most often, though, is the first one you come across in the listing above: '!$', or 'bang dollar'. This one I must use dozens of times every day. It tells bash to re-use the last argument of the previous command.
+
+Finally, a 'bang' followed by the first letter of 
+
+=== How to Learn Them
+
+Those are enough to be going on with if you've not seen them before.
+
+Before we go on, a quick note about learning these things: it's far more important to learn to _use_ these tricks than _understand_ them. To understand them is pretty easy - I'm sure you understood the passage above without much difficulty.
+
+The way to learn these is to 'get them under your fingers' to the point where you don't even think about it. The way I recommend to do that is to concentrate on one of them at a time, and as you're working, remember to use that one where appropriate. Gradually you'll add more and more to your repertoire, and you will soon look like a whizz at the terminal.
+
+==== More Advanced History Usage
+
+You might want to stop there, as trying to memorize/learn much more in one go can be overwhelming.
+
+But there are many more tricks to learn like this in bash, so I'm going to lay them out now so you might return to them later when you're ready.
+
+Carrying on from where we left off above:
+
+
+----
+TODO$ grep abnother file1
+TODO$ ^Ab^a^
+----
+
+Event Designators
+An event designator is a reference to a command line entry in the history list.
+^string1^string2^ Quick substitution.  Repeat the last command, replacing string1 with string2.  Equivalent  to  ``!!:s/string1/string2/''  (see Modifiers below).
+
+
+
+----
+TODO$ fgrep !:1-$
+----
+
+----
+TODO$ LGTHWDIR=$(PWD)
+TODO$ fgrep !:1-$
+----
+
+!:0-1
+!:1-$
+
+----
+TODO$ cd /tmp
+TODO$ cat ${LGTHWDIR}/file1
+TODO$ cd !$:h
+----
+
+!$:h
+
+
+
+
+
+
+
+
+
+
+
+=== History Env Vars
+
+HISTFILE The name of the file in which command history is saved (see HISTORY below).  The default value is ~/.bash_history.  If  unset, the command history is not saved when an interactive shell exits.
+HISTSIZE The number of commands to remember in the command history (see HISTORY below).  The default value is 500.
+HISTTIMEFORMAT If this variable is set and not null, its value is used as a format string for strftime(3) to print the time stamp  associated with  each  history  entry  displayed by the history builtin.  If this variable is set, time stamps are written to the history file so they may be preserved across shell sessions.
+
+export HISTFILESIZE=1000000
+export HISTSIZE=1000000
+export HISTTIMEFORMAT="%d/%m/%y %T "
+
+
+=== History Control
+
+export HISTCONTROL=ignoredups:ignorespace
+HISTCONTROL
+A colon-separated list of values controlling how commands are saved on the history list.   If  the  list  of  values  includes ignorespace,  lines  which begin with a space character are not saved in the history list.  A value of ignoredups causes lines matching the previous history entry to not be saved.  A value of ignoreboth is shorthand for ignorespace  and  ignoredups.   A value of erasedups causes all previous lines matching the current line to be removed from the history list before that line is saved.  Any value not in the above list is ignored.  If HISTCONTROL is unset, or does not include a  valid  value,  all  lines read  by  the shell parser are saved on the history list, subject to the value of HISTIGNORE.  The second and subsequent lines of a multi-line compound command are not tested, and are added to the history regardless of the value of HISTCONTROL.
+
+
+=== CTRL-R
+
+Bash offers you another means to use your history.
+
+Hit CTRL and hold it down. Then hit R. You should see this on your terminal:
+
+----
+(reverse-i-search)`':
+----
+
+Let go. Now type 'grep' TODO
+
+----
+Searching
+Readline provides commands for searching through the command history (see HISTORY below) for lines containing a specified string.  There are two search modes:  incremental  and non-incremental.
+
+Incremental  searches  begin  before the user has finished typing the search string.  As each character of the search string is typed, readline displays the next entry from the history matching the string typed so far.  An incremental search requires only as many characters as needed to find the desired history entry.  The characters  present  in  the value  of the isearch-terminators variable are used to terminate an incremental search.  If that variable has not been assigned a value the Escape and Control-J characters will terminate an incremental search.  Control-G will abort an incremental search and restore the original line.  When the search is terminated, the  history  entry  containing  the search string becomes the current line.
+
+To find other matching entries in the history list, type Control-S or Control-R as appropriate.  This will search backward or forward in the history for the next entry matching the search string typed so far.  Any other key sequence bound to a readline command will terminate the search and execute that command.  For instance, a newline will  terminate the search and accept the line, thereby executing the command from the history list.  
+
+Readline  remembers  the  last  incremental  search  string.  If two Control-Rs are typed without any intervening characters defining a new search string, any remembered search string is used.
+
+Non-incremental searches read the entire search string before starting to search for matching history lines.  The search string may be typed by the user or be part of the  con- tents of the current line.
+----
+
+
+
+
+==== What Next?
+
+TODO
