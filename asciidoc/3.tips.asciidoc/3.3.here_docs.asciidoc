@@ -1,5 +1,3 @@
-TODO: THIS MUST COME AFTER THE CTRL-V, TAB TO DO THE TABS
-
 === Here Documents
 
 Here documents are one of the handiest tricks you will have at your disposal. They allow you to embed content directly in your script.
