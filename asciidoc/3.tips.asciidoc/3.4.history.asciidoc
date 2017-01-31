@@ -12,7 +12,7 @@ Bash keeps a history of commands you have run in a file. By default this is in y
 Have a look at it:
 
 ----
-TODO$ cat ~/.bash_history
+1$ cat ~/.bash_history
 ----
 
 === Using Your History
@@ -22,17 +22,17 @@ It can be tedious to type out commands and arguments again and again, so bash of
 Type this out and try and figure out what is going on:
 
 ----
-TODO$ mkdir lbthw_history
-TODO$ cd !$
-TODO$ echo 'About bash history' > file1
-TODO$ echo 'Another file' > file2
-TODO$ grep About file1
-TODO$ !!
-TODO$ grep About file2
-TODO$ grep Another !$
-TODO$ rm file2
-TODO$ !e
-TODO$ !gr
+2$ mkdir lbthw_history
+3$ cd !$
+4$ echo 'About bash history' > file1
+5$ echo 'Another file' > file2
+6$ grep About file1
+7$ !!
+8$ grep About file2
+9$ grep Another !$
+10$ rm file2
+11$ !e
+12$ !gr
 ----
 
 That introduced a few tricks you haven't necessarily seen before.
@@ -64,8 +64,8 @@ But there are many more tricks to learn like this in bash, so I'm going to lay t
 Carrying on from where you left off above:
 
 ----
-TODO$ grep Abnother file1
-TODO$ ^Ab^a^
+13$ grep Abnother file1
+14$ ^Ab^a^
 ----
 
 The caret ('^') are used to replace a string from the previous command. In this case, 'Ab' is replaced with 'a'. This is often handy if you made a spelling mistake.
@@ -73,17 +73,17 @@ The caret ('^') are used to replace a string from the previous command. In this 
 Next up are the position command shortcuts, or 'word designators':
 
 ----
-TODO$ grep another file1 | wc -l
-TODO$ # Is that output correct? I want to check the file by eye:
-TODO$ cat !:2
+15$ grep another file1 | wc -l
+16$ # Is that output correct? I want to check the file by eye:
+17$ cat !:2
 ----
 
 Starting with the 'bang' sign to indicate we're referring to the history, there follows a colon. Then, you specify the word with a number. The numbers are zero-based, so 
 
 
 ----
-TODO$ grep another file1
-TODO$ fgrep !:1-$
+18$ grep another file1
+19$ fgrep !:1-$
 ----
 
 In the above example, you want to run the same command as before, but use the 'fgrep' command instead of 'grep' ('fgrep' is a 'faster' grep, which doesn't really help us here, but is just an example). To achieve this you use the so-called 'word designators'. 
@@ -93,10 +93,10 @@ Here you add a dash indicates you want a range of words, and the '$' sign indica
 Finally, another trick I use all the time:
 
 ----
-TODO$ LGTHWDIR=$(PWD)
-TODO$ cd /tmp
-TODO$ cat ${LGTHWDIR}/file1
-TODO$ cd !$:h
+21$ LGTHWDIR=$(PWD)
+22$ cd /tmp
+23$ cat ${LGTHWDIR}/file1
+24$ cd !$:h
 ----
 
 The trick is the ':h' modifier. This is one of several modifiers available, but the only one I regularly use. When using a history shortcut, you can place a modifier at the end that starts with a colon. Here, the '!$' takes the last word from the previous command, (which you set to full directory path to the freshly-created file1 file). Then, the modifier ':h' strips off the file at the end, leaving just the directory name. I use this all the time to quickly hop into a folder of a file I just looked at.
@@ -104,27 +104,20 @@ The trick is the ':h' modifier. This is one of several modifiers available, but 
 
 === History Env Vars
 
-A quick note on environment variables that affect the history kept. TODO
+A quick note on environment variables that affect the history kept. TODO check this and write up
 
 
 ----
-TODO$ bash
-TODO$ HISTFILE=/tmp/lbthwhist
-TODO$ HISTSIZE=2
-TODO$ HISTTIMEFORMAT="%d/%m/%y %T "
-TODO$ ls
-TODO$ pwd
-TODO$ exit
-TODO$ cat /tmp/lbthwhist
-TODO$ rm /tmp/lbthwhist
+25$ bash
+26$ HISTFILE=/tmp/lbthwhist
+27$ HISTSIZE=2
+28$ HISTTIMEFORMAT="%d/%m/%y %T "
+29$ ls
+30$ pwd
+31$ exit
+32$ cat /tmp/lbthwhist
+33$ rm /tmp/lbthwhist
 ----
-bash
-HISTFILE=/tmp/lbthwhist
-HISTSIZE=3
-HISTTIMEFORMAT="%d/%m/%y %T "
-ls
-exit
-cat /tmp/lbthwhist
 
 The value of 'HISTFILE' decides where the history gets saved. It defaults to the ~/.bash_history file you saw above.
 
@@ -145,13 +138,21 @@ It gives me day-to-second granularity, which I usually find to be enough.
 
 === History Control
 
-TODO
+There's another history-controlling environment variable worth understanding:
 
 ----
-export HISTCONTROL=ignoredups:ignorespace
+TODO$ HISTCONTROL=ignoredups:ignorespace
+TODO$ ls
+TODO$ ls
+TODO$  pwd    # <- note the space before the 'pwd'
+TODO$ pwd
+TODO$ ls
+TODO$ history | tail
 ----
 
-//A colon-separated list of values controlling how commands are saved on the history list.   If  the  list  of  values  includes ignorespace,  lines  which begin with a space character are not saved in the history list.  A value of ignoredups causes lines matching the previous history entry to not be saved.  A value of ignoreboth is shorthand for ignorespace  and  ignoredups.   A value of erasedups causes all previous lines matching the current line to be removed from the history list before that line is saved.  Any value not in the above list is ignored.  If HISTCONTROL is unset, or does not include a  valid  value,  all  lines read  by  the shell parser are saved on the history list, subject to the value of HISTIGNORE.  The second and subsequent lines of a multi-line compound command are not tested, and are added to the history regardless of the value of HISTCONTROL.
+Was the output of history what you expected? HISTCONTROL does
+
+If you want to be really severe about your history, you can also use 'erasedups', which adds your latest command to the history, but then wipes all previous examples of the same command out of the history.
 
 
 === CTRL-R
@@ -167,6 +168,9 @@ Hit CTRL and hold it down. Then hit the 'r' key. You should see this on your ter
 Let go. Now type 'grep'. You should see a previous grep command. If you keep hitting CTRL+r you will cycle through all commands that had grep in them, most recent first.
 
 If you want to cycle forward (if you hit CTRL+r too many times and go past the one you want (I do this a lot)), hit CTRL+s.
+
+TODO:
+NOTE on shopt options and history - covered in ch4?
 
 
 ==== What Next?
