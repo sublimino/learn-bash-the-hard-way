@@ -25,13 +25,13 @@ When looking at odd characters, it's useful to be aware of a couple of utilities
 You're already familiar with echo, but it has some sometimes-useful flags:
 
 ----
-TODO$ echo -n 'JUST THESE CHARACTERS'
+1$ echo -n 'JUST THESE CHARACTERS'
 ----
 
 The -n flag tells echo not to print a newline
 
 ----
-TODO$ echo -n -e 'JUST THESE CHARACTERS AND A NEWLINE\n'
+2$ echo -n -e 'JUST THESE CHARACTERS AND A NEWLINE\n'
 ----
 
 The '-e' makes us sure that the '\n' will create a newline. Most often it's the default anyway.
@@ -43,11 +43,13 @@ Other special characters include '\b' (for backspace), '\t' (for tab) and '\\' (
 What do you think this will output?
 
 ----
-TODO$ echo -n -e 'a\bb\bcde\bfg\b\b\b\n'
+3$ echo -n -e 'a\bb\bcde\bfg\b\b\b\n'
 ----
 
+You can also send a specific byte value to the terminal by specifying its hex value:
+
 ----
-TODO$ echo -n -e '\x20\n'
+4$ echo -n -e '\x20\n'
 ----
 
 Think about that - you can use echo to control _exactly_ what gets sent to the screen. This is extremely valuable for debugging.
@@ -55,7 +57,7 @@ Think about that - you can use echo to control _exactly_ what gets sent to the s
 If you want to _prevent_ this behaviour, use the '-E' flag:
 
 ----
-TODO$ echo -n 'Line1\nLine2' 
+5$ echo -E -n 'Line1\nLine2' 
 ----
 
 ==== CTRL-v Escaping
@@ -69,7 +71,7 @@ For example, if I hit 'tab' in my terminal it would normally _not_ show a tab ch
 But if I'm typing something like:
 
 ----
-TODO$ echo -E 'I want a tab here:>X<a tab'
+6$ echo -E 'I want a tab here:>X<a tab'
 ----
 
 How do I get a tab where the 'X' is?
@@ -78,12 +80,12 @@ You do it like this: instead of the 'X', you hold down the 'CTRL' key. Then hold
 
 Practice that a few times. The pattern is: hit CTRL+v, then CTRL+the character specified (in this case 'i').
 
-This character would normally be represented like this: '^I'.
+This character would normally be represented like this: '^I', the '^' indicating a 'CTRL+V' combination, and the 'I' indicating the CTRL+I combination.
 
-How would you input this, and what will this output?
+How would you input this, therefore, and what will it output?
 
 ----
-TODO$ echo abcc^Hdefg
+7$ echo abcc^Hdefg
 ----
 
 This table is a useful reference for these characters:
@@ -104,8 +106,6 @@ This table is a useful reference for these characters:
 
 There are other interesting CTRL-v escape characters, but they are more rarely used. We won't cover them here.
 
-//TODO: difference between this escape and the other?
-
 ==== Carriage return vs Line Feeds
 
 The most commonly-seen 
@@ -123,7 +123,7 @@ What will this output?
 This means that files can 'look funny' in Linux terminals with these weird '^M' characters showing at the end of each line. To confuse things even more, some programs automatically handle the difference for you and hide it from you.
 
 ----
-TODO$ echo -e 'Bad magazine\rMad'
+8$ echo -e 'Bad magazine\rMad'
 ----
 
 This is why it's important to have a way to see what the actual bytes in a file are, and where a very useful tool comes in: hexdump.
@@ -133,8 +133,8 @@ This is why it's important to have a way to see what the actual bytes in a file 
 Run this:
 
 ----
-TODO$ echo -e 'Bad magazine\rMad' | hexdump
-TODO$ echo -e 'Bad magazine\rMad' | hexdump -c
+9$ echo -e 'Bad magazine\rMad' | hexdump
+10$ echo -e 'Bad magazine\rMad' | hexdump -c
 ----
 
 Hexdump prints out the characters received in standard input as hex digits. 16 characters are printed per line, and on the left is displayed the count (also in hex) of the number of bytes processed up to that line.
@@ -146,8 +146,8 @@ It's a great way to see what is _really_ going on with text or any stream of out
 If you go back to the first example in this section:
 
 ----
-TODO$ echo 'JUST THESE CHARACTERS' | hexdump -c
-TODO$ echo -n 'JUST THESE CHARACTERS' | hexdump -c
+11$ echo 'JUST THESE CHARACTERS' | hexdump -c
+12$ echo -n 'JUST THESE CHARACTERS' | hexdump -c
 ----
 
 You can figure out for yourself the difference between using the -n flag in echo and not using it.
@@ -158,8 +158,8 @@ You can figure out for yourself the difference between using the -n flag in echo
 Run this:
 
 ----
-TODO$ echo -e '\033[?47h'
-TODO$ echo -e '\033[?47l'
+13$ echo -e '\033[?47h'
+14$ echo -e '\033[?47l'
 ----
 
 The first line 'saves' the screen (but does not clear it!) and the second restores it.
@@ -170,8 +170,8 @@ These terminal escape codes are standard sequences that tell the terminal to do 
 The ANSI codes always start with the ESC character and left bracket character: in hex '1B' then '5b', or in octal '033' then ''. So you could rewrite the above as:
 
 ----
-TODO$ echo -e '\x1b\x5b?47h'
-TODO$ echo -e '\x1b\133?47l'
+15$ echo -e '\x1b\x5b?47h'
+16$ echo -e '\x1b\133?47l'
 ----
 
 These characters are then followed by specific sequences which can change the colour of the screen, the background text, the text itself, set the screen width, or even re-map keyboard keys.
@@ -179,7 +179,7 @@ These characters are then followed by specific sequences which can change the co
 Type this out and see if  you can figure out what it's doing as you go:
 
 ----
-TODO$ ansi-test() {
+17$ ansi-test() {
 for a in 0 1 4 5 7
     do
     echo "a=$a "
@@ -205,7 +205,15 @@ Sometimes when you 'cat' a binary file, (or /dev/random, which outputs random by
 
 ==== Fun With Terminals
 
-Finally, some (optional) fun which pulls together a few different things you've learned along the way:
+Finally, some (optional) fun which pulls together a few different things you've learned along the way.
+
+Create this as a file called 'shiner', and run it with:
+
+----
+sh shiner
+----
+
+and remove it afterwards if you like.
 
 ----
 #!/bin/bash

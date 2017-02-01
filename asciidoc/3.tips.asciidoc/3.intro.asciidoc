@@ -9,7 +9,7 @@ prompt DONE
 
 here docs DONE
 
-history DOING
+history DONE
 
 
 Misc
