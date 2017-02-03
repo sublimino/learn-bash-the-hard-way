@@ -12,8 +12,8 @@ Tests are constructs that allow you to do conditional expressions in bash. They 
 The simplest test might be:
 
 ----
-TODO$ [ /bin/false ]
-TODO$ echo $?
+1$ [ /bin/false ]
+2$ echo $?
 ----
 
 but this is little different from just running /bin/false.
@@ -24,13 +24,13 @@ Things get more interest
 
 
 ----
-TODO$ A=1
-TODO$ [ $A = 1 ]
-TODO$ echo $?
-TODO$ [ $A == 1 ]
-TODO$ echo $?
-TODO$ [ $A = 2 ]
-TODO$ echo $?
+3$ A=1
+4$ [ $A = 1 ]
+5$ echo $?
+6$ [ $A == 1 ]
+7$ echo $?
+8$ [ $A = 2 ]
+9$ echo $?
 ----
 
 Single assignment works TODO
@@ -38,15 +38,15 @@ Single assignment works TODO
 It is worth noting that '[' is in fact a builtin, as well as (very often) a program.
 
 ----
-TODO$ which [
-TODO$ builtin [
+10$ which [
+11$ builtin [
 ----
 
 ... and that '[' and 'test' are synonymous
 
 ----
-TODO$ which test
-TODO$ builtin test
+12$ which test
+13$ builtin test
 ----
 
 NOTE: which is a program (not a builtin!) that tells you where a program can be
@@ -59,8 +59,8 @@ This is why a space is required after the '[', because it's a separate command a
 What do you expect the output of this to be?
 
 ----
-TODO$ ( [ 1 = 1 ] || [ ! '0' = '0' ] ) && [ '2' = '2' ]
-TODO$ echo $?
+14$ ( [ 1 = 1 ] || [ ! '0' = '0' ] ) && [ '2' = '2' ]
+15$ echo $?
 ----
 
 Similar to other languages, '!' means 'not', '||' means 'or', '&&' means 'and' and items within '()' are evaluated first.
@@ -70,8 +70,8 @@ Note that to combine the
 If you want to do everything 
 
 ----
-TODO$ [  1 = 1 -o  ! '0' = '0'  -a  '2' = '2' ]
-TODO$ echo $?
+16$ [  1 = 1 -o  ! '0' = '0'  -a  '2' = '2' ]
+17$ echo $?
 ----
 
 You can use '-o' as an 'or' operator within the square brackets, but you can't use '(' grouping within them.
@@ -83,8 +83,8 @@ If you're not confused yet, you might be soon!
 There is another very similar operator to the 'test' one that has two angle brackets:
 
 ----
-TODO$ [[ 1 = 1 ]]
-TODO$ echo $?
+18$ [[ 1 = 1 ]]
+19$ echo $?
 ----
 
 This confused me a lot for some time!
@@ -92,19 +92,19 @@ This confused me a lot for some time!
 The differences between '[[' and '[' are relatively subtle. Type these lines to see examples: TODO
 
 ----
-TODO$ [ ${DOESNOTEXIST} = '' ]
-TODO$ echo $?
-TODO$ [[ ${DOESNOTEXIST} = '' ]]
-TODO$ echo $?
-TODO$ [ x${DOESNOTEXIST} = 'x' ]
-TODO$ echo $?
+21$ [ ${DOESNOTEXIST} = '' ]
+22$ echo $?
+23$ [[ ${DOESNOTEXIST} = '' ]]
+24$ echo $?
+25$ [ x${DOESNOTEXIST} = 'x' ]
+26$ echo $?
 ----
 
 
 You frequently come across code like this:
 
 ----
-TODO$ [ "x$DOESNOTEXIST" = "x" ]
+27$ [ "x$DOESNOTEXIST" = "x" ]
 ----
 
 This is to handle those edge cases when using '[', but it is a bit confused. You don't actually need the 'x' because the quotes take care of it, but the rules are so complicated people write it as a superstition.

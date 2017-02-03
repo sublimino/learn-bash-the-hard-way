@@ -1,7 +1,6 @@
 === The Prompt
 
-Now that you've learned about escapes and special characters you are in a position to understand how the prompt can be set up.
-
+Now that you've learned about escapes and special characters you are in a position to understand how the prompt can be set up and controlled.
 
 ==== The PS1 Variable
 
@@ -116,6 +115,8 @@ You can use this for all sorts of neat tricks!
 TODO
 
 ==== Cleanup
+
+TODO
 
 ==== Exercises
 

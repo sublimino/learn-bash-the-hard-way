@@ -1,12 +1,16 @@
 === Terminal Codes and Non-Standard Characters
 
-Important to understand eg prompts, end-of-file TODO
+Although not directly related to bash, if you spend any time at a terminal, then it will pay off to understand how the terminal works with non-standard characters.
 
-Steps:
+Non-standard characters are characters like 'tab', 'newline', 'carriage return', and even 'end of file'. They don't form part of words, or necessarily print anything to the screen, but they are interpreted by the shell and the terminal.
 
-- understand how to output anything with echo
-- understand how to output a character while by-passing the terminal TODO
-- TODO
+In this section you'll:
+
+- Understand how to output anything with echo
+- Understand how to output a character while by-passing the terminal
+- Learn about carriage returns and newlines and how they are used
+- Learn how to use hexdump
+- Learn about standard terminal escape codes
 
 NOTE: Focus here is on ANSI-standard escapes. Rarely, you might come across more complex escapes for specific terminal contexts, but this is beyond the scope of a 'practical' guide.
 
@@ -268,7 +272,11 @@ If this happens, kill or exit your terminal and restart bash.
 ==== Exercises
 
 1) Research and echo all of echo's escape sequences. Play with them and figure out what they do.
+
 2) Research and echo 10 terminal escape sequences.
+
 3) Look up all the CTRL-v escape sequences and experiment with them.
+
 4) Research the command 'tput', figure out what it does and rewrite some of the above commands using it.
+
 5) Re-map your keyboard so it outputs the wrong characters using escape codes.

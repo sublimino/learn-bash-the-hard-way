@@ -125,11 +125,11 @@ Now clean up what you just did:
 
 - What a glob is
 - Globs and regexes are different
-- Single and double quotes around globs can be important
+- Single and double quotes around globs can be significant!
 
 ==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+
+Next up is another fundamental topic: variables.
 
 ==== Exercises
 

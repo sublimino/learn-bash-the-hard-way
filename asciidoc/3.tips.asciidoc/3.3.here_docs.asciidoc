@@ -9,11 +9,11 @@ NOTE: In this section, leading spaces are tabs. We have covered this in a previo
 Type this in to see the basic form of the here doc:
 
 ----
-TODO$ cat > afile.txt << END
+1$ cat > afile.txt << END
 A file can contain 
 	whatever you like
 END
-TODO$ cat afile.txt
+2$ cat afile.txt
 ----
 
 The 'cat' command is used without a filename given, and the output is redirected to the file 'afile.txt'. If no filename is given, cat takes its input from standard input.
@@ -30,15 +30,15 @@ Now you're going to put a here document in a function. The function takes one ar
 Will this work? Read it carefully, predict the outcome, and then run it:
 
 ----
-TODO$ function write_echoer_file {
+3$ function write_echoer_file {
 	cat > $1 << END
 #!/bin/bash
 echo $1
 END
 	chmod +x $1
 }
-TODO$ write_echoer_file echoer
-TODO$ ./echoer 'Hello world'
+4$ write_echoer_file echoer
+5$ ./echoer 'Hello world'
 ----
 
 Hmmm. That didn't work, because the '$1' got interpreted in the write_echoer_file function as being the filename we passed in. In the 'here doc', we wanted the '$1' characters to be put into the script without being interpreted.
@@ -46,15 +46,15 @@ Hmmm. That didn't work, because the '$1' got interpreted in the write_echoer_fil
 Try this instead:
 
 ----
-TODO$ function write_echoer_file {
+6$ function write_echoer_file {
 	cat > $1 << 'END'
 #!/bin/bash
 echo $1
 END
 	chmod +x $1
 }
-TODO$ write_echoer_file echoer
-TODO$ ./echoer 'Hello world'
+7$ write_echoer_file echoer
+8$ ./echoer 'Hello world'
 ----
 
 Do you see the difference? This time, the delimiter word 'END' was wrapped in single quotes. This made sure that the 'echo $1' was not interpreted by the shell when being written in
@@ -68,21 +68,21 @@ Our function is working now, but we could still make it better.
 Try this (remember, the leading spaces are tabs - see the note above for how to input a tab):
 
 ----
-TODO$ function write_echoer_file {
+9$ function write_echoer_file {
 	cat > $1 <<- 'END'
 		#!/bin/bash
 		echo $1
 	END
 	chmod +x $1
 }
-TODO$ write_echoer_file echoer
-TODO$ ./echoer
+10$ write_echoer_file echoer
+11$ ./echoer
 ----
 
 What if END is part of the here doc?
 
 ----
-TODO$ function write_echoer_file {
+12$ function write_echoer_file {
 	cat > $1 <<- 'END'
 		#!/bin/bash
 		echo $1
@@ -90,8 +90,8 @@ TODO$ function write_echoer_file {
 	END
 	chmod +x $1
 }
-TODO$ write_echoer_file echoer
-TODO$ ./echoer
+13$ write_echoer_file echoer
+14$ ./echoer
 ----
 
 No problem if it is not the only thing on the line:
@@ -101,10 +101,10 @@ No problem if it is not the only thing on the line:
 Related to the 'here doc', a 'here string' can be applied in the same way with the '<<<' operator:
 
 ----
-TODO$ function write_here_string_to_file {
+15$ function write_here_string_to_file {
 	cat > $1 <<< $2
 }
-TODO$ write_here_string_to_file afile.txt "Write this out"
+16$ write_here_string_to_file afile.txt "Write this out"
 ----
 
 
@@ -112,7 +112,7 @@ TODO$ write_here_string_to_file afile.txt "Write this out"
 ==== Cleanup
 
 ----
-TODO$ rm -f echoer afile.txt
+17$ rm -f echoer afile.txt
 ----
 
 ==== What Next?                                                                                                                                             

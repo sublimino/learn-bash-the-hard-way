@@ -1,0 +1,41 @@
+Misc
+
+Get a date on the script: (read)
+-------------------------
+
+----
+[metcalfs@gueabetapp37 ~]$
+function dateit {
+   while read line
+   do
+     printf "$line"
+     date '+ %m-%d-%Y %H:%M:%S'
+   done
+}
+[metcalfs@gueabetapp37 ~]$ vmstat 1 | dateit
+----
+
+
+Directory of script
+-------------------
+
+----
+$(dirname ${BASH_SOURCE[0]})
+----
+
+http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
+Is a useful one-liner which will give you the full directory name of the script no matter where it is being called from
+
+These will work as long as the last component of the path used to find the script is not a symlink (directory links are OK). If you want to also resolve any links to the script itself, you need a multi-line solution:
+
+    SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+      DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+      SOURCE="$(readlink "$SOURCE")"
+      [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+    done
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"

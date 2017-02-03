@@ -28,15 +28,16 @@ Here you run csh from within your bash terminal. Note that you get a different
 prompt (by default):
 
 
-//TODO some difference between csh and bash (google it)
 ----
 1$ csh
-2% 
+2% echo $dirstack
 ----
 
 Typically, a csh will give you a prompt with a percent sign, while bash will
 give you a prompt with a dollar sign. This is configurable, though, so your
 setup may be different.
+
+The 'dirstack' variable is set by csh and will output something meaningful. It's not there by default in bash (try it!)
 
 ==== History of bash
 
@@ -63,7 +64,7 @@ not uncommon to end up on servers that do not have bash!
 
 ==== What Next?
 
-TODO
+Next you look at two thorny but ever-present subjects in bash: globbing and quoting.
 
 ==== Exercises
 

@@ -41,7 +41,7 @@ You can easily write tests to use exit codes for various ends like this.
 
 ==== Standard Exit Codes
 
-There are guidelines for exit codes for TODO
+There are guidelines for exit codes for those that want to follow standards:
 
 TODO: Have a look at:
 
@@ -115,10 +115,15 @@ to do with the fact that they are considered alongside the normal parameters of
 functions and scripts ($1,$2 etc) as automatically assigned variables within
 a context.
 
-TODO: mention:
--      Expands to the current option flags as specified upon invocation, by the set builtin command, or those set by the shell itself such as the -i option
-$      Expands  to  the  process  ID of the shell.  In a () subshell, it expands to the process ID of the current shell, not the subshell.
-!      Expands to the process ID of the most recently executed background (asynchronous) command.
+Two of the most important are used in the below listing. Figure out what they are:
+
+----
+19$ ps -ef | grep bash | grep $$
+20$ sleep 999 &
+21$ echo $!
+----
+
+If you're still stuck, have a look at the bash man page...
 
 
 ===== Cleanup
@@ -126,7 +131,7 @@ $      Expands  to  the  process  ID of the shell.  In a () subshell, it expands
 Now clean up what you just did:
 
 ----
-TODO$ rm afile.txt
+22$ rm afile.txt
 ----
 
 
@@ -141,5 +146,6 @@ TODO
 ==== Exercises
 
 1) Look up under what circumstances git returns a non-zero exit code.
-2) Look up all the 'special parameters' and see what they do.
+
+2) Look up all the 'special parameters' and see what they do. Play with them. Research under what circumstances you might want to use them.
 
