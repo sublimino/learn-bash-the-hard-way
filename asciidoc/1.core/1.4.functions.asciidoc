@@ -1,13 +1,10 @@
 === Functions in Bash
 
-From one angle, bash can be viewed as a programming language, albeit a quite
-slow and primitive one.
+From one angle, bash can be viewed as a programming language, albeit a quite slow and primitive one.
 
-One of the language features it has are the capability to create and call
-functions.
+One of the language features it has are the capability to create and call functions.
 
-This leads us onto the topic of what a 'command' can be in bash: function,
-alias, program or 'builtin'.
+This leads us onto the topic of what a 'command' can be in bash: function, alias, program or 'builtin'.
 
 ==== Basic Functions
 
@@ -20,9 +17,7 @@ Start by creating a simple function
 2$ myfunc
 ----
 
-By declaring a function, and placing the block of code that needs to run inside
-curly braces, you can then call that function on the command line as though
-it were a program.
+By declaring a function, and placing the block of code that needs to run inside curly braces, you can then call that function on the command line as though it were a program.
 
 ==== Arguments
 
@@ -41,13 +36,11 @@ Predict the output of this, and then run it:
 
 Can you explain the output?
 
-Arguments to functions are numbered, from 1 to n. It's up to the function to
-manage these arguments.
+Arguments to functions are numbered, from 1 to n. It's up to the function to manage these arguments.
 
 ==== Variable Scope
 
-Variables can have scope in bash. This is particularly useful in functions,
-where you don't want your variables to be accessible from outside the function.
+Variables can have scope in bash. This is particularly useful in functions, where you don't want your variables to be accessible from outside the function.  
 
 These commands illustrate this:
 
@@ -74,11 +67,9 @@ There is, however, the capability within bash to declare a variable as local:
 13$ local myvar="Will this work?"
 ----
 
-The variable declared with 'local' is only viewed and accessed within the
-function, and doesn't interfere with the outside.
+The variable declared with 'local' is only viewed and accessed within the function, and doesn't interfere with the outside.
 
-'local' is an example of a bash 'builtin'. Now is a good time to talk about
-the different types of commands.
+'local' is an example of a bash 'builtin'. Now is a good time to talk about the different types of commands.
 
 ==== Functions, Builtins, Aliases and Programs
 
@@ -95,9 +86,7 @@ Let's take each one in turn.
 
 ===== Builtins
 
-Builtins are commands that come 'built in' to the bash shell program. Normally
-you can't easily tell the difference between a builtin, a program or a function,
-but after reading this you will be able to.
+Builtins are commands that come 'built in' to the bash shell program. Normally you can't easily tell the difference between a builtin, a program or a function, but after reading this you will be able to.
 
 Two such builtins are the familiar 'cd' and one called 'builtin'!
 
@@ -108,16 +97,13 @@ Two such builtins are the familiar 'cd' and one called 'builtin'!
 17$ builtin notaprogram
 ----
 
-As you've probably guessed from typing the above in, the 'builtin' builtin calls
-the builtin program (this time 'cd'), and throws an error if no builtin exists
+As you've probably guessed from typing the above in, the 'builtin' builtin calls the builtin program (this time 'cd'), and throws an error if no builtin exists
 
-In case you didn't know 'cd -' returns you to the previous directory you were
-in.
+In case you didn't know 'cd -' returns you to the previous directory you were in.
 
 ===== Functions
 
-Functions we have covered above, but what happens if we write a function that
-clashes with a builtin? What if you create a function called 'cd'?
+Functions we have covered above, but what happens if we write a function that clashes with a builtin? What if you create a function called 'cd'?
 
 ----
 18$ function cd() {
@@ -131,24 +117,20 @@ clashes with a builtin? What if you create a function called 'cd'?
 24$ cd -
 ----
 
-At the end there you 'unset' the function 'cd'. 'unset' is also . You can also
-'unset -v' a variable. Or just leave the -v out, as it will assume you mean 
-a variable by default.
+At the end there you 'unset' the function 'cd'. You can also 'unset -v' a variable. Or just leave the -v out, as it will assume you mean a variable by default.
 
 ----
 25$ declare -f
 26$ declare -F
 ----
 
-If you want to know what functions are set in your environment, run
-'declare -f'.  This will output the functions and their bodies, so if you just
-want the names, use the '-F' flag.
+If you want to know what functions are set in your environment, run 'declare -f'.  This will output the functions and their bodies, so if you just want the names, use the '-F' flag.
 
 ===== Programs
 
 Programs are executable files. Commonly-used examples of these are programs such as 'grep', 'sed', 'vi' and so on.
 
-How do you tell whether a command is a 
+How do you tell whether a command is a
 
 First, see whether it's a builtin by running 'builtin <command>' as you did before. Then you can also run the 'which' command to determine where the file is on your filesystem.
 
@@ -159,7 +141,7 @@ First, see whether it's a builtin by running 'builtin <command>' as you did befo
 30$ which doesnotexist
 ----
 
-Is 'which' a builtin or a program? 
+Is 'which' a builtin or a program?
 
 
 ===== Aliases
@@ -182,17 +164,16 @@ And yes, you can alias alias.
 
 ==== What you learned
 
--  TODO
+- Basic function creation in bash
+- Functions and variable scope
+- Differences between functions, builtins, aliases and programs
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+==== What Next?
+
+Next you will learn about pipes and redirects in bash. Once learned, you will have all you need to get to writing shell scripts in earnest.
 
 ==== Exercises
 
-1) Run 'typeset -f'. Find out how this relates to 'declare -f' by looking at the
-bash man page ('man bash').
-2) alias alias, override cd. Try and break things. Have fun. If you get stuck,
-close down your terminal, or exit your bash shell (if you haven't overridden
-exit!).
+1) Run 'typeset -f'. Find out how this relates to 'declare -f' by looking at the bash man page ('man bash').
 
+2) alias alias, override cd. Try and break things. Have fun. If you get stuck, close down your terminal, or exit your bash shell (if you haven't overridden exit!).

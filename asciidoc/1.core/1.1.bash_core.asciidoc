@@ -4,9 +4,7 @@
 
 Bash is a shell program.
 
-A shell program is typically an executable binary that takes commands that you
-type and (once you hit return), translates those commands into (ultimately)
-system calls to the Operating System API.
+A shell program is typically an executable binary that takes commands that you type and (once you hit return), translates those commands into (ultimately) system calls to the Operating System API.
 
 ==== Other shells
 
@@ -19,23 +17,18 @@ Other shells include:
 - csh
 - tclsh
 
-These other shells have different rules, conventions, logic, and histories that
-means they can look similar.
+These other shells have different rules, conventions, logic, and histories that means they can look similar.
 
 Because other shells are also programs, they can be run from in each other!
 
-Here you run csh from within your bash terminal. Note that you get a different
-prompt (by default):
-
+Here you run csh from within your bash terminal. Note that you get a different prompt (by default):
 
 ----
 1$ csh
 2% echo $dirstack
 ----
 
-Typically, a csh will give you a prompt with a percent sign, while bash will
-give you a prompt with a dollar sign. This is configurable, though, so your
-setup may be different.
+Typically, a csh will give you a prompt with a percent sign, while bash will give you a prompt with a dollar sign. This is configurable, though, so your setup may be different.
 
 The 'dirstack' variable is set by csh and will output something meaningful. It's not there by default in bash (try it!)
 
@@ -45,15 +38,11 @@ This diagram helps give a picture of the history of bash:
 
 image::diagrams/shell_history.png[scaledwidth="50%",height=200]
 
-Bash is called the 'Bourne Again SHell'. It is a descendant of the Thompson
-Shell and then the Bourne 'sh' shell. Bash has other 'siblings' (eg ksh),
-'cousins' (eg tcsh), and 'children', eg 'zsh'.
+Bash is called the 'Bourne Again SHell'. It is a descendant of the Thompson Shell and then the Bourne 'sh' shell. Bash has other 'siblings' (eg ksh), 'cousins' (eg tcsh), and 'children', eg 'zsh'.
 
-The details aren't important, but it's important to know that different shells
-exist and they can be related and somewhat compatible.
+The details aren't important, but it's important to know that different shells exist and they can be related and somewhat compatible.
 
-Bash is the most widely seen and used shell as of 2017. However, it is still
-not uncommon to end up on servers that do not have bash!
+Bash is the most widely seen and used shell as of 2017. However, it is still not uncommon to end up on servers that do not have bash!
 
 
 ==== What you learned
@@ -69,6 +58,5 @@ Next you look at two thorny but ever-present subjects in bash: globbing and quot
 ==== Exercises
 
 1) Run 'sh' from a bash command line. What happens?
-1) What commands can you find that are work in 'bash', but do not work in 'sh'?
 
-
+2) What commands can you find that are work in 'bash', but do not work in 'sh'?

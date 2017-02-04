@@ -1,8 +1,6 @@
 === Unpicking the shell: Globbing and Quoting
 
-You may have wondered what the '*' in bash commands really means, and how it is
-different from regexps. This section will explain all, and introduce you to the
-joy of quoting in bash.
+You may have wondered what the '*' in bash commands really means, and how it is different from regular expressions. This section will explain all, and introduce you to the joy of quoting in bash.
 
 ==== Globbing
 
@@ -24,9 +22,7 @@ Type these commands into your terminal
 
 What you should have seen was the three files listed in both cases.
 
-The shell has taken your '*' character and converted it to match all the files
-in the current working directory. In other words, it's converted the '*' character
-into the string "file1 file2 file3" and then processed the resulting command.
+The shell has taken your '*' character and converted it to match all the files in the current working directory. In other words, it's converted the '*' character into the string "file1 file2 file3" and then processed the resulting command.
 
 ==== Quoting
 
@@ -48,19 +44,13 @@ Think about it first, make a prediction, and then type it out!
 
 This is difficult even if you are an expert in bash!
 
-Was the output what you expected? Can you explain it? Ironically it may be
-harder to explain if you have experience of quoting variables in bash!
+Was the output what you expected? Can you explain it? Ironically it may be harder to explain if you have experience of quoting variables in bash!
 
-Quoting in bash is a very tricky topic. You may want to take from this that
-quoting globs removes their effect. But in other contexts single and double 
-quotes have different meanings.
+Quoting in bash is a very tricky topic. You may want to take from this that quoting globs removes their effect. But in other contexts single and double quotes have different meanings.
 
-Quoting changes the way bash can read the line, making it decide whether to
-take these characters and transform them into something else, or just leave them
-be.
+Quoting changes the way bash can read the line, making it decide whether to take these characters and transform them into something else, or just leave them be.
 
-What you should take from this is that 'quoting in bash is tricky' and be
-prepared for some head-scratching later!
+What you should take from this is that 'quoting in bash is tricky' and be prepared for some head-scratching later!
 
 
 
@@ -84,10 +74,9 @@ Try running these commands and see if the output is what you expect:
 - Line 2 list all files that start with 'file' and end with a character from a to z
 - Line 3 list all files that start with 'file' and end with a character from 0 to 9
 
-===== Differences with regexes
+===== Differences with Regular Expressions
 
-While globs look similar regexes, they are used in different contexts and are
-separate things.
+While globs look similar to regular expressions (regexes), they are used in different contexts and are separate things.
 
 The '*' characters in this command:
 
@@ -101,14 +90,14 @@ The '*' characters in this command:
 - Line 1 prints the files that would be renamed by the rename command if the -n flag were removed
 - Lines2-4 show the files that would be renamed
 
-have a different significance 
+have a different significance depending on whether it is being treated as a glob or a regular expression.
 
-NOTE: this assumes you have the program 'rename' installed.
+====
+This assumes you have the program 'rename' installed.
 
 Again, the key takeaway here is that context is key.
 
-Note that '.' has no meaning as a glob, and that some shells offer extended
-globbing capabilities. Bash offers 'extended globbing', which we do not cover here.
+Note that '.' has no meaning as a glob, and that some shells offer extended globbing capabilities. Bash offers 'extended globbing', which we do not cover here.
 
 
 ===== Cleanup
@@ -133,4 +122,8 @@ Next up is another fundamental topic: variables.
 
 ==== Exercises
 
-1) TODO
+1) Create a folder with files with very similar names and use globs to list one and not the other.
+
+2) Research regular expressions online.
+
+3) Research the program 'grep'. If you already know it, read the grep man page. (Type 'man grep').

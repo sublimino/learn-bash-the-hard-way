@@ -1,11 +1,8 @@
 === Pipes and redirects
 
-Pipes are redirects are used very frequently in bash. This can cause a problem
-in that they are used so often by all users of bash that many don't understand
-their subtleties or how their full power.
+Pipes are redirects are used very frequently in bash. This can cause a problem in that they are used so often by all users of bash that many don't understand their subtleties or how their full power.
 
-This section will lay a firm foundation for you to understand these concepts
-as we move onto deeper bash topics.
+This section will lay a firm foundation for you to understand these concepts as we move onto deeper bash topics.
 
 ==== Basic Redirects
 
@@ -25,15 +22,12 @@ Type this in:
 4$ cat file1 | grep -c file
 ----
 
-NOTE: if you don't know what grep is, you will need to learn. This is a good
-place to start: https://en.wikipedia.org/wiki/Grep
+====
+If you don't know what grep is, you will need to learn. This is a good place to start: https://en.wikipedia.org/wiki/Grep
 
-Normally you'd run a grep with the filename as the last argument, but instead
-here we 'pipe' the contents of file into the grep command by using the 'pipe'
-operator: '|'.
+Normally you'd run a grep with the filename as the last argument, but instead here we 'pipe' the contents of file into the grep command by using the 'pipe' operator: '|'.
 
-A pipe takes the standard output of one command and passes it as the input
-to another. What, then is standard output, really? You will find out soon!
+A pipe takes the standard output of one command and passes it as the input to another. What, then is standard output, really? You will find out soon!
 
 ----
 5$ cat file2
@@ -47,38 +41,27 @@ Now run this, and try and guess the result before you run it:
 6$ cat file2 | grep -c file
 ----
 
-Was that what you expected? If it was, you can explain to the rest of the class
-:)
+Was that what you expected? If it was, you can explain to the rest of the class :)
 
-If it wasn't, then the answer is related to standard output and other kinds of
-output.
+If it wasn't, then the answer is related to standard output and other kinds of output.
 
 ==== Standard output vs standard error
 
-In addition to 'standard output', there is also a 'standard error' channel. When
-you pass a non-existent file to the cat command, it throws an error message out
-to the terminal. Although the message looks the same as the contents of a file,
-it is in fact sent to a different output channel. In this case it's 'standard
-error' rather than 'standard output'.
+In addition to 'standard output', there is also a 'standard error' channel. When you pass a non-existent file to the cat command, it throws an error message out to the terminal. Although the message looks the same as the contents of a file, it is in fact sent to a different output channel. In this case it's 'standard error' rather than 'standard output'.
 
-As a result, it is NOT passed through the pipe to the grep command, and grep
-counts 0 matches in its output.
+As a result, it is NOT passed through the pipe to the grep command, and grep counts 0 matches in its output.
 
-To the viewer of the terminal, there is no difference, but to bash there is
-all the difference in the world!
+To the viewer of the terminal, there is no difference, but to bash there is all the difference in the world!
 
-There is a simpler way to refer to these channels. A number is assigned to each
-of them by the operating system.
+There is a simpler way to refer to these channels. A number is assigned to each of them by the operating system.
 
-These are the numbered 'file descriptors', and the first three are assigned to
-the numbers 0,1 and 2.
+These are the numbered 'file descriptors', and the first three are assigned to the numbers 0,1 and 2.
 
 - 0 is 'standard input'
 - 1 is 'standard output'
 - 2 is 'standard error'
 
-When you redirect standard output to a file, you use the redirection operator
-'>'. Implicitly, you are using the '1' file descriptor.
+When you redirect standard output to a file, you use the redirection operator '>'. Implicitly, you are using the '1' file descriptor.
 
 Type this to see an example of redirecting '2', which is 'standard error'.
 
@@ -87,12 +70,9 @@ Type this to see an example of redirecting '2', which is 'standard error'.
 8$ command_does_not_exist 2> /dev/null
 ----
 
-In the second line above 2 ('standard error') is directed to a file called
-/dev/null
+In the second line above 2 ('standard error') is directed to a file called '/dev/null'.
 
-/dev/null is a special file, created by UNIX kernels. It is effectively a 
-black hole into which data can be pumped: anything written to it will be
-absorbed and ignored.
+'/dev/null' is a special file, created by UNIX kernels. It is effectively a black hole into which data can be pumped: anything written to it will be absorbed and ignored.
 
 Another commonly seen redirection operator is '2>&1'.
 
@@ -100,12 +80,9 @@ Another commonly seen redirection operator is '2>&1'.
 9$ command_does_not_exist 2>&1
 ----
 
-What this does is tell the shell to send the output on standard error (2) to
-whatever standard output is pointed at at that point in the command.
+What this does is tell the shell to send the output on standard error (2) to whatever standard output is pointed at at that point in the command.
 
-Since standard output is pointed at the terminal at that time, standard error
-is pointed at the terminal. From your point of view you see no difference,
-since by default . But when we try and redirect to files things get interesting.
+Since standard output is pointed at the terminal at that time, standard error is pointed at the terminal. From your point of view you see no difference, since by default . But when we try and redirect to files things get interesting.
 
 Now type these in and try and figure out why they produce different output:
 
@@ -116,27 +93,15 @@ Now type these in and try and figure out why they produce different output:
 
 This is where things get tricky and you need to think carefully!
 
-Remember that the redirection operator 2>&1 points (standard error) at whatever
-1 (standard output) was pointed to at the time. If you read the first line
-carefully, at the point 2>&1 was used, standard output was pointed at the terminal.
-So standard error is pointed at the terminal. After that point, standard output
-is redirected (with the '>' operator) to the file 'outfile'.
+Remember that the redirection operator 2>&1 points (standard error) at whatever 1 (standard output) was pointed to at the time. If you read the first line carefully, at the point 2>&1 was used, standard output was pointed at the terminal.  So standard error is pointed at the terminal. After that point, standard output is redirected (with the '>' operator) to the file 'outfile'.
 
-So at the end of all this, the standard error of the output of the command
-'command_does_not_exist' points at the terminal, and the standard output points
-at the file 'outfile'.
+So at the end of all this, the standard error of the output of the command 'command_does_not_exist' points at the terminal, and the standard output points at the file 'outfile'.
 
 In the second line, what is different?
 
-The order of redirections is changed. Now, the standard output of the command
-'command_does_not_exist' is pointed at the file 'outfile', and the redirection
-operator 2>&1 points 2 (standard error) to whatever 1 (standard output) is
-pointed at. So in effect, both standard out and standard error are pointed at 
-the file 
+The order of redirections is changed. Now, the standard output of the command 'command_does_not_exist' is pointed at the file 'outfile', and the redirection operator 2>&1 points 2 (standard error) to whatever 1 (standard output) is pointed at. So in effect, both standard out and standard error are pointed at the file TODO.
 
-This pattern of sending all the output to a single file is seen very often, and
-few understand why it has to be in that order. Once you understand, you will
-never pause to think about which way round the operators should go again!
+This pattern of sending all the output to a single file is seen very often, and few understand why it has to be in that order. Once you understand, you will never pause to think about which way round the operators should go again!
 
 //http://sc.tamu.edu/help/general/unix/redirection.html
 
@@ -153,8 +118,7 @@ A couple of other commonly used operators are worth mentioning here:
 12$ grep -c file < file1
 ----
 
-The '<' operator redirects standard input to the command from a file, in this
-case just as 'cat file1 | grep -c file' did.
+The '<' operator redirects standard input to the command from a file, in this case just as 'cat file1 | grep -c file' did.
 
 ----
 13$ echo line1 > file3
@@ -163,10 +127,7 @@ case just as 'cat file1 | grep -c file' did.
 16$ cat file3
 ----
 
-The first two lines above use the '>' operator, while the third one uses
-the '>>' operator. The '>' operator effectively creates the file anew whether it
-already exists or not. The '>>' operator, by contrast, appends to the end of the
-file. As a result, only line2 and line3 are added to file3.
+The first two lines above use the '>' operator, while the third one uses the '>>' operator. The '>' operator effectively creates the file anew whether it already exists or not. The '>>' operator, by contrast, appends to the end of the file. As a result, only line2 and line3 are added to file3.
 
 
 ===== Cleanup
@@ -183,10 +144,12 @@ Now clean up what you just did:
 
 - TODO
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+==== What Next?
+
+You're nearly at the end of the first section. Next you will learn about creating shell scripts, and what happens when bash starts up.
 
 ==== Exercises
 
-1) TODO
+1) Try a few different commands and work out what output goes to standard output and what output goes to standard error. Try triggering errors by misusing programs.
+
+2) TODO

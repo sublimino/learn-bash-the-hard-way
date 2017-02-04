@@ -1,11 +1,8 @@
 === Scripts and Startups
 
-This section considers two related subjects: shell scripts, and what happens
-when the shell is started up.
+This section considers two related subjects: shell scripts, and what happens when the shell is started up.
 
-You've probably come across shell scripts, which won't take long to cover, but
-shell startup is a useful but tricky topic that catches most people out at some
-point, and is worth understanding well.
+You've probably come across shell scripts, which won't take long to cover, but shell startup is a useful but tricky topic that catches most people out at some point, and is worth understanding well.
 
 ==== Shell scripts
 
@@ -14,9 +11,7 @@ point, and is worth understanding well.
 2$ cd lbthw_scripts_and_startups
 ----
 
-A shell script is simply a collection of shell commands that can be run
-non-interactively. These can be quick one-off scripts that you run, or very
-complex programs.
+A shell script is simply a collection of shell commands that can be run non-interactively. These can be quick one-off scripts that you run, or very complex programs.
 
 ===== The Shebang
 
@@ -27,12 +22,7 @@ Run this:
 3$ echo 'echo I am a script' >> simple_script
 ----
 
-You have just created a file called 'simple_script' that has two lines in it.
-The first consists of two special characters: the hash and the exclamation mark.
-This is often called 'shebang', or 'hashbang' to make it easier to say.
-When the operating system is given a file to run as a program, if it sees those
-two characters at the start, it knows that the file is to be run under the
-control of another program (or 'interpreter' as it is often called).
+You have just created a file called 'simple_script' that has two lines in it.  The first consists of two special characters: the hash and the exclamation mark.  This is often called 'shebang', or 'hashbang' to make it easier to say.  When the operating system is given a file to run as a program, if it sees those two characters at the start, it knows that the file is to be run under the control of another program (or 'interpreter' as it is often called).
 
 Now try running it:
 
@@ -42,12 +32,9 @@ Now try running it:
 
 That should have failed. Before we explain why, let's understand the command.
 
-The './' characters at the start of the above command tells the shell that you
-want to run this file from within the context of the current working directory.
-It's followed by the filename to run.
+The './' characters at the start of the above command tells the shell that you want to run this file from within the context of the current working directory.  It's followed by the filename to run.
 
-Similarly, the '../' characters indicate that you want to run from the directory
-above the current working directory.
+Similarly, the '../' characters indicate that you want to run from the directory above the current working directory.
 
 This:
 
@@ -63,8 +50,7 @@ will give you the same output as before.
 
 ===== The Executable Flag
 
-That script will have failed because the file was not marked as executable, so
-you will have got an error saying permission was denied.
+That script will have failed because the file was not marked as executable, so you will have got an error saying permission was denied.
 
 To correct this, run:
 
@@ -75,8 +61,8 @@ To correct this, run:
 
 The chmod program changes the 
 
-NOTE: The subject of file permissions and ownership can get complex and is not
-covered in full here. TODO more info where?
+====
+The subject of file permissions and ownership can get complex and is not covered in full here. TODO more info where?
 
 ===== The PATH variable
 
@@ -86,11 +72,9 @@ What happens if you don't specify the './' and just run:
 13$ simple_script
 ----
 
-The truth I won't know what happens. Either you'll get an error saying it
-can't find it, or it will work as before.
+The truth I won't know what happens. Either you'll get an error saying it can't find it, or it will work as before.
 
-The reason I don't know is that it depends on how your PATH variable is set up
-in your environment.
+The reason I don't know is that it depends on how your PATH variable is set up in your environment.
 
 If you run this you will see your PATH variable:
 
@@ -104,8 +88,7 @@ Your output may vary. For example, mine is:
 /home/imiell/perl5/bin:/opt/local/bin:/opt/local/sbin:/Users/imiell/google-cloud-sdk/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/space/git/shutit:/space/git/work/bin:/space/git/home/bin:~/.dotfiles/bin:/space/go/bin
 ----
 
-The PATH variable is a set of directories, separated by colons. It could be as
-simple as:
+The PATH variable is a set of directories, separated by colons. It could be as simple as:
 
 ----
 /usr/sbin:/usr/bin
@@ -117,26 +100,19 @@ These are the directories bash looks through to find commands, in order.
 
 So what changes the PATH variable? The answer is: bash startup scripts.
 
-But before we discuss them, how can we make sure that simple_script can be run
-without using './' at the front? 
+But before we discuss them, how can we make sure that simple_script can be run without using './' at the front? 
 
 ----
 15$ PATH=${PATH}:.
 16$ simple_script
 ----
 
-That's how! In the first line you set the PATH to itself, plus the current
-working directory. It then looks through all the directories that were
-previously set in your PATH variable, and then finally tries the '.', or local
-folder, as we saw before.
+That's how! In the first line you set the PATH to itself, plus the current working directory. It then looks through all the directories that were previously set in your PATH variable, and then finally tries the '.', or local folder, as we saw before.
 
 
 ==== Startup Scripts
 
-Understanding startup scripts and environment variables are key to a lot of
-issues that you can end up spending a lot of time debugging! If something works
-in one environment and not in another, the answer is often a difference in
-startup scripts and how they set up an environment.
+Understanding startup scripts and environment variables are key to a lot of issues that you can end up spending a lot of time debugging! If something works in one environment and not in another, the answer is often a difference in startup scripts and how they set up an environment.
 
 ==== Startup Explained
 
@@ -166,8 +142,7 @@ If the file does not exist, it is simply ignored.
 
 ===== Beware
 
-To __further__ complicate things, these scripts can be made to call each other in 
-ways that confuse things if you simply believe that diagram. So be careful!
+To __further__ complicate things, these scripts can be made to call each other in ways that confuse things if you simply believe that diagram. So be careful!
 
 
 ===== source
@@ -184,8 +159,8 @@ Now that you understand builtins, shell scripts, and environments, it's a good t
 
 I'm sure you can figure out from that that source runs the script from within
 
-NOTE: Most shell scripts have a '.sh' suffix, but this is not required - the
-OS does not care or take any notice of the suffix.
+====
+Most shell scripts have a '.sh' suffix, but this is not required - the OS does not care or take any notice of the suffix.
 
 
 ===== Cleanup
@@ -210,6 +185,5 @@ TODO
 ==== Exercises
 
 1) Go through all the scripts that you bash session went through. Read through them and try and understand what they're doing. If you don't understand parts of them, try and figure out what's going on by reading 'man bash'.
-
 
 2) Go through the other files in that diagram that exist on your machine. Do as per 1).
