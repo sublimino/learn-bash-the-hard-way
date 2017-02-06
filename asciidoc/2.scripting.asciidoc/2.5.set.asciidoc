@@ -1,10 +1,8 @@
 === The 'set' Builtin
 
-When using bash it is very important to understand what options are set, and
-how this can affect the running of your scripts.
+When using bash it is very important to understand what options are set, and how this can affect the running of your scripts.
 
-In this section you will become familiar with the 'set' builtin, which allows
-you to manipulate these options within your scripts.
+In this section you will become familiar with the 'set' builtin, which allows you to manipulate these options within your scripts.
 
 ==== Running 'set'
 
@@ -14,9 +12,7 @@ You start by running 'set' on its own:
 1$ set
 ----
 
-This will produce a stream of output that represents the state of your shell.
-In the normal case, you will see all the variables and functions set in your
-environment.
+This will produce a stream of output that represents the state of your shell.  In the normal case, you will see all the variables and functions set in your environment.
 
 But my bash man page says:
 
@@ -25,7 +21,8 @@ ____
 Without options, the name and value of each shell variable are displayed in a format that can be reused as input for setting or resetting the currently-set variables. Read-only variables cannot be reset. In posix mode, only shell variables are listed.
 ____
 
-NOTE: The **Portable Operating System Interface**(**POSIX**) is a family of https://en.wikipedia.org/wiki/Standardization[standards] specified by the https://en.wikipedia.org/wiki/IEEE_Computer_Society[IEEE Computer Society] for maintaining compatibility between https://en.wikipedia.org/wiki/Operating_system[operating systems].
+====
+The **Portable Operating System Interface**(**POSIX**) is a family of https://en.wikipedia.org/wiki/Standardization[standards] specified by the https://en.wikipedia.org/wiki/IEEE_Computer_Society[IEEE Computer Society] for maintaining compatibility between https://en.wikipedia.org/wiki/Operating_system[operating systems].
 
 Can you work out from your 'set' output whether you are in posix mode?
 
@@ -40,8 +37,8 @@ It is likely that you are not. If so, type:
 
 and you will observe that the output no longer has functions in it. The '-o' switched on the 'posix' option in your bash shell. The same command with '+o' will switch it off. I have trouble remembering which is 'on' and which is 'off' every time!
 
-NOTE: If you did not have functions, then either no functions were set, or you were in posix mode
-already!
+====
+If you did not have functions, then either no functions were set, or you were in posix mode already!
 
 The commands above put you in a fresh bash shell so that we would revert to the previous state.
 
@@ -51,16 +48,17 @@ To show how all your options are set type this:
 6$ set -o
 ----
 
-and you should see the current state of all your options.
+and you will see the current state of all your options.
 
-What you see are all the options bash can set. One of the exercises is to try to understand what they all mean, but right now we're only going to focus on a couple.
+What you see are all the options bash can set. One of the exercises below is to try to understand what they all mean, but in this section we're only going to focus on a couple that I use all the time.
 
 ==== 'set' vs 'env'
 
 One thing that can confuse people is that the output of 'set' is similar to the output of 'env', but different.
 
 ----
-7$ env
+7$ set
+8$ env
 ----
 
 The difference is that _exported_ variables are shown by env, not all the variables set in the shell.
@@ -73,8 +71,8 @@ Where set becomes really useful to understand is in scripting.
 For example, I set these two up every time I start writing a shell script:
 
 ----
-8$ set -o errexit
-9$ set -o xtrace
+9$ set -o errexit
+10$ set -o xtrace
 ----
 
 Although you don't need to be in a script for them to work.
@@ -86,7 +84,7 @@ The xtrace option outputs the
 Type this is to see how this works in practice:
 
 ----
-10$ echo '#!/bin/bash
+11$ echo '#!/bin/bash
 set -o errexit
 set -o xtrace
 pwd
@@ -94,8 +92,8 @@ cd $HOME
 cd -
 false
 echo "should not get here"' > ascript.sh
-11$ chmod +x ascript.sh
-12$ ./ascript.sh
+12$ chmod +x ascript.sh
+13$ ./ascript.sh
 ----
 
 You should be able to explain the output of the above.
@@ -105,15 +103,15 @@ You should be able to explain the output of the above.
 For each 'set' option, you can use a flag instead. For example, this:
 
 ----
-13$ set -e
-14$ set -x
+14$ set -e
+15$ set -x
 ----
 
 is the same as:
 
 ----
-15$ set -o errexit
-16$ set -o xtrace
+16$ set -o errexit
+17$ set -o xtrace
 ----
 
 I generally prefer the name form rather than flag, just because it's easier to read.
@@ -137,15 +135,15 @@ The 'unset' throws an error if a variable is unset when referenced. (The special
 TODO
 
 ----
-17$ grep notthere afile.txt | xargs echo
-18$ echo $?
+18$ grep notthere afile.txt | xargs echo
+19$ echo $?
 ----
 
 
 ----
-19$ set +o pipefail
-20$ grep notthere afile.txt | xargs echo
-21$ echo $?
+20$ set +o pipefail
+21$ grep notthere afile.txt | xargs echo
+22$ echo $?
 ----
 
 ===== Cleanup
@@ -153,12 +151,9 @@ TODO
 Now clean up what you just did:
 
 ----
-22$ rm afile.txt
-23$ rm ascript.sh
+23$ rm afile.txt
+24$ rm ascript.sh
 ----
-
-
-
 
 ==== What You Learned
 
