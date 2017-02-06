@@ -45,7 +45,7 @@ The details aren't important, but it's important to know that different shells e
 Bash is the most widely seen and used shell as of 2017. However, it is still not uncommon to end up on servers that do not have bash!
 
 
-==== What you learned
+==== What You Learned
 
 - What a shell is
 - How to start up a different shell

@@ -90,11 +90,14 @@ Remove the left-over directory:
 
 ==== What You Learned
 
-- TODO
+- What command substitution is
+- How it relates to quoting
+- The two command substitution methods
+- Why one method is generally preferred over the other
 
 ==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+
+Next you will cover tests, which allow you to use what you've learned so far to make your bash code conditional in a flexible and dynamic way.
 
 ==== Exercises
 

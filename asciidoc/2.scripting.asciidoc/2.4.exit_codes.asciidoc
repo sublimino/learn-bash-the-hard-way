@@ -41,9 +41,9 @@ You can easily write tests to use exit codes for various ends like this.
 
 ==== Standard Exit Codes
 
-There are guidelines for exit codes for those that want to follow standards:
+There are guidelines for exit codes for those that want to follow standards.
 
-TODO: Have a look at:
+TODO Have a look at:
 
 http://www.tldp.org/LDP/abs/html/exitcodes.html
 
@@ -135,12 +135,15 @@ Now clean up what you just did:
 ----
 
 
-==== What you learned
+==== What You Learned
 
-- TODO
+- What an exit code is
+- Some standard exit codes and their significance
+- How tests and exit codes work together
+- Some special parameters
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
+==== What Next?
+
 TODO
 
 ==== Exercises

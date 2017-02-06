@@ -160,7 +160,7 @@ Now clean up what you just did:
 
 
 
-==== What you learned
+==== What You Learned
 
 - TODO
 

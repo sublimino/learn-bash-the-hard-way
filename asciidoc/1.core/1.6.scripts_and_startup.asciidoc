@@ -62,7 +62,7 @@ To correct this, run:
 The chmod program changes the 
 
 ====
-The subject of file permissions and ownership can get complex and is not covered in full here. TODO more info where?
+The subject of file permissions and ownership can get complex and is not covered in full here. 'man chmod' is a good place to start if you are interested.
 
 ===== The PATH variable
 
@@ -174,13 +174,20 @@ Now clean up what you just did:
 ----
 
 
-==== What you learned
+==== What You Learned
 
-- TODO
+- What the 'shebang' is
+- How to create and run a shell script
+- The significance of the PATH environment variable
+- What happens when bash starts up
+- What the builtin 'source' does
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+
+==== What Next?
+
+Well done! You've now finished the first part of the course.
+
+You now have a good grounding to learn slightly more advanced bash scripting, which you will cover in part two.
 
 ==== Exercises
 

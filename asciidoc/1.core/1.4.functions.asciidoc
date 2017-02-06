@@ -162,7 +162,7 @@ Try this and explain what is going on as you go:
 
 And yes, you can alias alias.
 
-==== What you learned
+==== What You Learned
 
 - Basic function creation in bash
 - Functions and variable scope

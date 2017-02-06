@@ -99,7 +99,12 @@ So at the end of all this, the standard error of the output of the command 'comm
 
 In the second line, what is different?
 
-The order of redirections is changed. Now, the standard output of the command 'command_does_not_exist' is pointed at the file 'outfile', and the redirection operator 2>&1 points 2 (standard error) to whatever 1 (standard output) is pointed at. So in effect, both standard out and standard error are pointed at the file TODO.
+The order of redirections is changed. Now:
+
+- the standard output of the command 'command_does_not_exist' is pointed at the file 'outfile'
+- the redirection operator 2>&1 points 2 (standard error) to whatever 1 (standard output) is pointed at
+
+So in effect, both standard out and standard error are pointed at the same file (outfile).
 
 This pattern of sending all the output to a single file is seen very often, and few understand why it has to be in that order. Once you understand, you will never pause to think about which way round the operators should go again!
 
@@ -140,9 +145,13 @@ Now clean up what you just did:
 ----
 
 
-==== What you learned
+==== What You Learned
 
-- TODO
+- File redirection
+- Pipes
+- The differences between standard output and standard error
+- How to redirect one to another
+- How to redirect either to a file
 
 ==== What Next?
 
@@ -152,4 +161,4 @@ You're nearly at the end of the first section. Next you will learn about creatin
 
 1) Try a few different commands and work out what output goes to standard output and what output goes to standard error. Try triggering errors by misusing programs.
 
-2) TODO
+2) Write commands to redirect standard output to file descriptor '3'.

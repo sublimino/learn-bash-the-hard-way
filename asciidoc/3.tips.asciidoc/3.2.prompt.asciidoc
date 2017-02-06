@@ -110,6 +110,10 @@ Every time the prompt is displayed the PROMPT_COMMAND is treated as a command, a
 
 You can use this for all sorts of neat tricks!
 
+==== What You Learned
+
+TODO
+
 ==== What Next? 
 
 TODO

@@ -115,6 +115,10 @@ Related to the 'here doc', a 'here string' can be applied in the same way with t
 17$ rm -f echoer afile.txt
 ----
 
+==== What You Learned
+
+TODO
+
 ==== What Next?                                                                                                                                             
                                                                                                                                                             
 TODO

@@ -16,5 +16,3 @@ include::1.5.pipes_redirects.asciidoc[]
 
 include::1.6.scripts_and_startup.asciidoc[]
 
-include::1.summary.asciidoc[]
-

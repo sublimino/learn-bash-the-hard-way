@@ -14,5 +14,3 @@ include::3.4.history.asciidoc[]
 
 include::3.5.history.asciidoc[]
 
-include::3.summary.asciidoc[]
-

@@ -224,7 +224,7 @@ As well as not being compatible with versions less than 4, associative arrays ar
 
 //http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
 
-==== What you learned
+==== What You Learned
 
 - Basic variable usage in bash
 - Variables and quoting

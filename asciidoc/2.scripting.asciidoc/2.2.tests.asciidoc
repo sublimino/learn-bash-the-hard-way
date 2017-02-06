@@ -4,24 +4,23 @@ Tests are a fundamental part of bash scripting, whether it's on the command line
 
 The subject is very fiddly and confusing. In this section I'll show you some pitfalls, and give rules of thumb for practical bash usage.
 
+==== What Are Bash Tests?
 
-==== 
+Tests in bash are constructs that allow you to do conditional expressions. They use the square brackets to enclose what is being tested.
 
-Tests are constructs that allow you to do conditional expressions in bash. They use the square brackets to enclose what is being tested.
-
-The simplest test might be:
+For example, the simplest test might be:
 
 ----
 1$ [ /bin/false ]
 2$ echo $?
 ----
 
-but this is little different from just running /bin/false.
+====
+The second command above is a little mystifying at this stage if you've not seen it before. We will cover it in more depth in a section later in this part. For now, all you need to understand is this: the '$?' variable is a special variable that gives you a number telling you whether the last-executed command succeeded or not. If it succeeded, the number will be '0'. If it failed, the number will _not_ be '0'.
 
-Things get more interest
+'/bin/false' is a program that has one job: to produce a 'failing' exit code. Why would such a thing exist? Well, it's often useful to have a command that you know will fail when you are building or testing a script.
 
-
-
+Things get more interesting if you try and compare values in your tests. Think about what this will output before typing it in:
 
 ----
 3$ A=1
@@ -33,7 +32,9 @@ Things get more interest
 9$ echo $?
 ----
 
-Single assignment works TODO
+A single equals sign works just the same as a double equals sign. Generally I prefer the double one so it does not get confused with variable assignment. TODO TEST THAT
+
+==== What is '[', Really?
 
 It is worth noting that '[' is in fact a builtin, as well as (very often) a program.
 
@@ -49,10 +50,10 @@ It is worth noting that '[' is in fact a builtin, as well as (very often) a prog
 13$ builtin test
 ----
 
-NOTE: which is a program (not a builtin!) that tells you where a program can be
-found.
+====
+'which' is a program (not a builtin!) that tells you where a program can be found on the system.
 
-This is why a space is required after the '[', because it's a separate command and spacing is how bash determines where one command ends and another begins.
+This is why a space is required after the '['. It's a separate command and spacing is how bash determines where one command ends and another begins.
 
 ==== Logic operators
 
@@ -65,9 +66,9 @@ What do you expect the output of this to be?
 
 Similar to other languages, '!' means 'not', '||' means 'or', '&&' means 'and' and items within '()' are evaluated first.
 
-Note that to combine the 
+Note that to combine the  TODO
 
-If you want to do everything 
+If you want to do everything in one set of braces, you can run:
 
 ----
 16$ [  1 = 1 -o  ! '0' = '0'  -a  '2' = '2' ]
@@ -87,7 +88,7 @@ There is another very similar operator to the 'test' one that has two angle brac
 19$ echo $?
 ----
 
-This confused me a lot for some time!
+This confused me a lot for some time! What's the difference between then?
 
 The differences between '[[' and '[' are relatively subtle. Type these lines to see examples: TODO
 
@@ -100,6 +101,7 @@ The differences between '[[' and '[' are relatively subtle. Type these lines to 
 26$ echo $?
 ----
 
+TODO: elucidate
 
 You frequently come across code like this:
 
@@ -107,20 +109,21 @@ You frequently come across code like this:
 27$ [ "x$DOESNOTEXIST" = "x" ]
 ----
 
-This is to handle those edge cases when using '[', but it is a bit confused. You don't actually need the 'x' because the quotes take care of it, but the rules are so complicated people write it as a superstition.
+So '[[' can handle some edge cases when using '[', but it is a bit confusing. You don't actually need the 'x' because the quotes take care of it, but the rules are so complicated people write it as a superstition.
 
-Once again, understanding how quotes work is critical to bash mastery!
-
-NOTE: If you want to understand more, follow [this link](http://serverfault.com/questions/52034/what-is-the-difference-between-double-and-single-square-brackets-in-bash)
+Once again, you can see understanding how quotes work is critical to bash mastery!
 
 Oh, and '[[' doesn't like the '-a' (and) and '-o' (or) operators.
+
+====
+If you want to understand more, follow [this link](http://serverfault.com/questions/52034/what-is-the-difference-between-double-and-single-square-brackets-in-bash)
 
 
 ==== Confused?
 
 You're not alone. In practice, I follow most style guides and always use '[[' until there is a good reason not to.
 
-If I come across some tricky logic in code I need to understand, I just look it up then.
+If I come across some tricky logic in code I need to understand, I just look it up there and then.
 
 ==== -a etc
 

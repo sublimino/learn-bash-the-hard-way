@@ -6,7 +6,3 @@ include::2.intro.asciidoc[]
 
 include::2.1.command_substitution.asciidoc[]
 
-include::2.summary.asciidoc[]
-
-
-// Parameter expansion?
