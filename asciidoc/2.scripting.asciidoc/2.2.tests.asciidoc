@@ -8,28 +8,30 @@ The subject is very fiddly and confusing. In this section I'll show you some pit
 
 Tests in bash are constructs that allow you to do conditional expressions. They use the square brackets to enclose what is being tested.
 
-For example, the simplest test might be:
+For example, the simplest tests might be:
 
 ----
-1$ [ /bin/false ]
+1$ [ false = true ]
 2$ echo $?
+3$ [ true = true ]
+4$ echo $?
 ----
 
 ====
-The second command above is a little mystifying at this stage if you've not seen it before. We will cover it in more depth in a section later in this part. For now, all you need to understand is this: the '$?' variable is a special variable that gives you a number telling you whether the last-executed command succeeded or not. If it succeeded, the number will be '0'. If it failed, the number will _not_ be '0'.
+The 'echo $?' command above is a little mystifying at this stage if you've not seen it before. We will cover it in more depth in a section later in this part. For now, all you need to understand is this: the '$?' variable is a special variable that gives you a number telling you whether the last-executed command succeeded or not. If it succeeded, the number will be '0'. If it failed, the number will _not_ be '0'.
 
-'/bin/false' is a program that has one job: to produce a 'failing' exit code. Why would such a thing exist? Well, it's often useful to have a command that you know will fail when you are building or testing a script.
+'false' is a program that has one job: to produce a 'failing' exit code. Why would such a thing exist? Well, it's often useful to have a command that you know will fail when you are building or testing a script.
 
 Things get more interesting if you try and compare values in your tests. Think about what this will output before typing it in:
 
 ----
-3$ A=1
-4$ [ $A = 1 ]
-5$ echo $?
-6$ [ $A == 1 ]
+5$ A=1
+6$ [ $A = 1 ]
 7$ echo $?
-8$ [ $A = 2 ]
+8$ [ $A == 1 ]
 9$ echo $?
+10$ [ $A = 2 ]
+11$ echo $?
 ----
 
 A single equals sign works just the same as a double equals sign. Generally I prefer the double one so it does not get confused with variable assignment. TODO TEST THAT
@@ -39,15 +41,15 @@ A single equals sign works just the same as a double equals sign. Generally I pr
 It is worth noting that '[' is in fact a builtin, as well as (very often) a program.
 
 ----
-10$ which [
-11$ builtin [
+12$ which [
+13$ builtin [
 ----
 
 ... and that '[' and 'test' are synonymous
 
 ----
-12$ which test
-13$ builtin test
+14$ which test
+15$ builtin test
 ----
 
 ====
@@ -60,32 +62,32 @@ This is why a space is required after the '['. It's a separate command and spaci
 What do you expect the output of this to be?
 
 ----
-14$ ( [ 1 = 1 ] || [ ! '0' = '0' ] ) && [ '2' = '2' ]
-15$ echo $?
+16$ ( [ 1 = 1 ] || [ ! '0' = '0' ] ) && [ '2' = '2' ]
+17$ echo $?
 ----
 
 Similar to other languages, '!' means 'not', '||' means 'or', '&&' means 'and' and items within '()' are evaluated first.
 
-Note that to combine the  TODO
+Note that to combine the binary operators '||' and '&&' you need to have separate '[' and ']' pairs.
 
-If you want to do everything in one set of braces, you can run:
+If you want to do everything in _one_ set of braces, you can run:
 
 ----
-16$ [  1 = 1 -o  ! '0' = '0'  -a  '2' = '2' ]
-17$ echo $?
+18$ [  1 = 1 -o  ! '0' = '0'  -a  '2' = '2' ]
+19$ echo $?
 ----
 
-You can use '-o' as an 'or' operator within the square brackets, but you can't use '(' grouping within them.
+You can use '-o' as an 'or' operator within the square brackets, -a for 'and' and so on. But you can't use '(' grouping within them.
 
 If you're not confused yet, you might be soon!
 
 ==== [[
 
-There is another very similar operator to the 'test' one that has two angle brackets:
+There is another very similar operator to the 'test' one that has _two_ angle brackets:
 
 ----
-18$ [[ 1 = 1 ]]
-19$ echo $?
+20$ [[ 1 = 1 ]]
+21$ echo $?
 ----
 
 This confused me a lot for some time! What's the difference between then?
@@ -93,27 +95,40 @@ This confused me a lot for some time! What's the difference between then?
 The differences between '[[' and '[' are relatively subtle. Type these lines to see examples: TODO
 
 ----
-21$ [ ${DOESNOTEXIST} = '' ]
-22$ echo $?
-23$ [[ ${DOESNOTEXIST} = '' ]]
-24$ echo $?
-25$ [ x${DOESNOTEXIST} = 'x' ]
-26$ echo $?
+TODO$ unset DOESNOTEXIST
+22$ [ ${DOESNOTEXIST} = '' ]
+23$ echo $?
+24$ [[ ${DOESNOTEXIST} = '' ]]
+25$ echo $?
+26$ [ x${DOESNOTEXIST} = x ]
+27$ echo $?
 ----
 
-TODO: elucidate
+The first command (22) errors because the variable 'DOESNOTEXIST'... does not exist. So bash processes that variable and ends up running:
+
+----
+[ = '' ]
+----
+
+which makes no sense, so it complains!
+
+The second command (24), which uses the double brackets, tolerates the fact that the variable does not exist, and treats it as the empty string.
+
+The third command acts as a workaround, by placing an 'x' on both sides of the equation to ensure that _something_ gets 
 
 You frequently come across code like this:
 
 ----
-27$ [ "x$DOESNOTEXIST" = "x" ]
+28$ [[ "x$DOESNOTEXIST" = "x" ]]
 ----
 
-So '[[' can handle some edge cases when using '[', but it is a bit confusing. You don't actually need the 'x' because the quotes take care of it, but the rules are so complicated people write it as a superstition.
+where users have put quotes on both sides as well as an x and put in double brackets. Only one of these protections is needed, but people get used to adding them on as superstitions to their bash scripts.
 
 Once again, you can see understanding how quotes work is critical to bash mastery!
 
 Oh, and '[[' doesn't like the '-a' (and) and '-o' (or) operators.
+
+So '[[' can handle some edge cases when using '['. There are some other differences, but I won't cover them here.
 
 ====
 If you want to understand more, follow [this link](http://serverfault.com/questions/52034/what-is-the-difference-between-double-and-single-square-brackets-in-bash)
@@ -125,9 +140,44 @@ You're not alone. In practice, I follow most style guides and always use '[[' un
 
 If I come across some tricky logic in code I need to understand, I just look it up there and then.
 
-==== -a etc
+==== Unary and Binary Operators
 
-TODO
+There are other shortcuts to test that it's worth knowing about. These take a single argument:
+
+----
+TODO$ echo $PWD
+TODO$ [ -z "$PWD" ]
+TODO$ echo $?
+TODO$ unset DOESNOTEXIST
+TODO$ [ -z "$DOESNOTEXIST" ]
+TODO$ echo $?
+TODO$ [ -z ]
+TODO$ echo $?
+----
+
+If your $PWD environment variable is set (it usually is), then the -z will return 'false'. This is because '-z' returns true only if the argument is an empty string. Interestingly, this test is OK with no argument! Just another confusing point about tests...
+
+There are quite a few unary operators so I won't cover them all here. The ones I use most often are '-a' and '-d':
+
+----
+TODO$ mkdir lbthw_tmp_dir
+TODO$ touch lbthw_tmp_file
+TODO$ [ -a lbthw_tmp_file ]
+TODO$ echo $?
+TODO$ [ -d lbthw_tmp_file ]
+TODO$ echo $?
+TODO$ [ -a lbthw_tmp_dir ]
+TODO$ echo $?
+TODO$ [ -d lbthw_tmp_dir ]
+TODO$ echo $?
+TODO$ rm lbthw_tmp_dir lbthw_tmp_file
+----
+
+These are called 'unary operators' (because they take one argument).
+
+There are TODO
+
+'binary operators'
 
 ==== Types
 
@@ -146,4 +196,6 @@ TODO
 
 ==== Exercises
 
-1) TODO
+1) Research all the unary operators, and try using them (see 'man bash')
+
+2) TODO
