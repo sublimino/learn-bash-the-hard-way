@@ -95,13 +95,13 @@ This confused me a lot for some time! What's the difference between then?
 The differences between '[[' and '[' are relatively subtle. Type these lines to see examples: TODO
 
 ----
-TODO$ unset DOESNOTEXIST
-22$ [ ${DOESNOTEXIST} = '' ]
-23$ echo $?
-24$ [[ ${DOESNOTEXIST} = '' ]]
-25$ echo $?
-26$ [ x${DOESNOTEXIST} = x ]
-27$ echo $?
+22$ unset DOESNOTEXIST
+23$ [ ${DOESNOTEXIST} = '' ]
+24$ echo $?
+25$ [[ ${DOESNOTEXIST} = '' ]]
+26$ echo $?
+27$ [ x${DOESNOTEXIST} = x ]
+28$ echo $?
 ----
 
 The first command (22) errors because the variable 'DOESNOTEXIST'... does not exist. So bash processes that variable and ends up running:
@@ -119,7 +119,7 @@ The third command acts as a workaround, by placing an 'x' on both sides of the e
 You frequently come across code like this:
 
 ----
-28$ [[ "x$DOESNOTEXIST" = "x" ]]
+29$ [[ "x$DOESNOTEXIST" = "x" ]]
 ----
 
 where users have put quotes on both sides as well as an x and put in double brackets. Only one of these protections is needed, but people get used to adding them on as superstitions to their bash scripts.
@@ -145,14 +145,14 @@ If I come across some tricky logic in code I need to understand, I just look it 
 There are other shortcuts to test that it's worth knowing about. These take a single argument:
 
 ----
-TODO$ echo $PWD
-TODO$ [ -z "$PWD" ]
-TODO$ echo $?
-TODO$ unset DOESNOTEXIST
-TODO$ [ -z "$DOESNOTEXIST" ]
-TODO$ echo $?
-TODO$ [ -z ]
-TODO$ echo $?
+30$ echo $PWD
+31$ [ -z "$PWD" ]
+32$ echo $?
+33$ unset DOESNOTEXIST
+34$ [ -z "$DOESNOTEXIST" ]
+35$ echo $?
+36$ [ -z ]
+37$ echo $?
 ----
 
 If your $PWD environment variable is set (it usually is), then the -z will return 'false'. This is because '-z' returns true only if the argument is an empty string. Interestingly, this test is OK with no argument! Just another confusing point about tests...
@@ -160,30 +160,71 @@ If your $PWD environment variable is set (it usually is), then the -z will retur
 There are quite a few unary operators so I won't cover them all here. The ones I use most often are '-a' and '-d':
 
 ----
-TODO$ mkdir lbthw_tmp_dir
-TODO$ touch lbthw_tmp_file
-TODO$ [ -a lbthw_tmp_file ]
-TODO$ echo $?
-TODO$ [ -d lbthw_tmp_file ]
-TODO$ echo $?
-TODO$ [ -a lbthw_tmp_dir ]
-TODO$ echo $?
-TODO$ [ -d lbthw_tmp_dir ]
-TODO$ echo $?
-TODO$ rm lbthw_tmp_dir lbthw_tmp_file
+38$ mkdir lbthw_tmp_dir
+39$ touch lbthw_tmp_file
+40$ [ -a lbthw_tmp_file ]
+41$ echo $?
+42$ [ -d lbthw_tmp_file ]
+43$ echo $?
+44$ [ -a lbthw_tmp_dir ]
+45$ echo $?
+46$ [ -d lbthw_tmp_dir ]
+47$ echo $?
+48$ rm lbthw_tmp_dir lbthw_tmp_file
 ----
 
 These are called 'unary operators' (because they take one argument).
 
-There are TODO
+There are many of these unary operators, but the differences between them are useful only in the rare cases when you need them. Generally I just use '-d', '-a', and '-z' and look up the others when I need something else.
 
-'binary operators'
+We'll cover 'binary operators', which work on two arguments, while covering types in bash.
 
 ==== Types
 
-NUMBERS vs STRINGS
+Type-safety (if you're familiar with that from other languages) does not come up often in bash as an issue. But it is still significant. Try and work out what's going on here:
+
+----
+49$ [ 10 < 2 ]
+50$ echo $?
+51$ [ '10' < '2' ]
+52$ echo $?
+53$ [[ 10 < 2 ]]
+54$ echo $?
+55$ [[ '10' < '2' ]]
+56$ echo $?
+----
+
+From this you can work out that  TODO
+
+
+
+
 
 ==== if
+
+Now you understand tests, if statements will be easy:
+
+----
+TODO$ if [[ 10 -lt 2 ]]
+then
+  echo 'does not compute'
+elif [[ 10 -gt 2 ]]
+then
+  echo 'computes'
+else
+  echo 'does not compute'
+fi
+----
+
+'if' statements consist of a test, followed by the word 'then', the commands to run if that if returned 'true'. If it returned false, it will drop to the next 'elif' statement if there is another test, or 'else' if there are no more tests. Finally, the if block is closed with the 'fi' string.
+
+The 'else' or 'elif' blocks are not required. For example, this will also work:
+
+----
+TODO$ if [[ 10 -lt 2 ]]; then echo 'does not compute'; fi
+----
+
+as the newline can be replaced by a semi-colon, which indicates the end of the expression.
 
 
 ==== What You Learned
