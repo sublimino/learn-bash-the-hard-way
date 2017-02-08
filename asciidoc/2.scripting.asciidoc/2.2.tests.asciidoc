@@ -34,7 +34,7 @@ Things get more interesting if you try and compare values in your tests. Think a
 11$ echo $?
 ----
 
-A single equals sign works just the same as a double equals sign. Generally I prefer the double one so it does not get confused with variable assignment. TODO TEST THAT
+A single equals sign works just the same as a double equals sign. Generally I prefer the double one so it does not get confused with variable assignment.
 
 ==== What is '[', Really?
 
@@ -92,7 +92,7 @@ There is another very similar operator to the 'test' one that has _two_ angle br
 
 This confused me a lot for some time! What's the difference between then?
 
-The differences between '[[' and '[' are relatively subtle. Type these lines to see examples: TODO
+The differences between '[[' and '[' are relatively subtle. Type these lines to see examples:
 
 ----
 22$ unset DOESNOTEXIST
@@ -194,9 +194,26 @@ Type-safety (if you're familiar with that from other languages) does not come up
 56$ echo $?
 ----
 
-From this you can work out that  TODO
+From this you should be able to work out that the '<' operator expects strings, and that this is another way '[[' protects you from the dangers of using '['.
 
+If you can't work it out, then re-run the above and play with it until it makes sense to you!
 
+Then run this
+
+----
+57$ [ 10 -lt 2 ]
+58$ echo $?
+59$ [ 1 -lt 2 ]
+60$ echo $?
+61$ [ 10 -gt 1 ]
+62$ echo $?
+63$ [ 1 -eq 1 ]
+64$ echo $?
+65$ [ 1 -ne 1 ]
+66$ echo $?
+----
+
+The binary operators used above are: '-lt' (less than), '-gt' (greater than), '-eq' (equals), and '-ne' (not equals). They deal happily with integers in single bracket tests.
 
 
 
@@ -205,7 +222,7 @@ From this you can work out that  TODO
 Now you understand tests, if statements will be easy:
 
 ----
-TODO$ if [[ 10 -lt 2 ]]
+67$ if [[ 10 -lt 2 ]]
 then
   echo 'does not compute'
 elif [[ 10 -gt 2 ]]
@@ -221,7 +238,7 @@ fi
 The 'else' or 'elif' blocks are not required. For example, this will also work:
 
 ----
-TODO$ if [[ 10 -lt 2 ]]; then echo 'does not compute'; fi
+68$ if [[ 10 -lt 2 ]]; then echo 'does not compute'; fi
 ----
 
 as the newline can be replaced by a semi-colon, which indicates the end of the expression.
