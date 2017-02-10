@@ -132,19 +132,22 @@ The 'unset' throws an error if a variable is unset when referenced. (The special
 
 ==== The 'pipefail' Option, Exit Codes and Pipelines
 
-TODO
+One option worth mentioning (as it is frequently referred to) is the pipefail option:
 
 ----
+18$ set -o pipefail
 18$ grep notthere afile.txt | xargs echo
 19$ echo $?
-----
-
-
-----
 20$ set +o pipefail
 21$ grep notthere afile.txt | xargs echo
 22$ echo $?
 ----
+
+One of the above yields a '0' exit code, and the other does not. The only difference is the pipefail setting.
+
+When switched on (remember, '-o' is on, '+o' is off - yes, I find it confusing too), the pipefail returns the error code of the last command to return a non-zero status. Since grep returns non-zero even when there's no 'error' as such, you can get surprising behaviour when using pipes and exit codes.
+
+By default, pipefail is off, so the second outcome is the default one.
 
 ===== Cleanup
 
@@ -157,11 +160,16 @@ Now clean up what you just did:
 
 ==== What You Learned
 
-- TODO
+- What the 'set' builtin is
+- How to set an option
+- The difference between -o (on) and +o (off)
+- Some of the most-used and useful options
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+==== What Next?
+
+Well done! You've made it to the end of the scripting section. Now you are fully equipped to write and read useful shell scripts.
+
+The next part looks at the most-frequently used idioms and tricks commonly-seen in bash scripts.
 
 ==== Exercises
 

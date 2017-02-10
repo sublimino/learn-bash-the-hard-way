@@ -217,7 +217,7 @@ The binary operators used above are: '-lt' (less than), '-gt' (greater than), '-
 
 
 
-==== if
+==== if statements
 
 Now you understand tests, if statements will be easy:
 

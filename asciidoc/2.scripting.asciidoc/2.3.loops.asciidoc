@@ -1,78 +1,135 @@
 === Loops
 
-Like almost any programming language, bash has loops. 
+Like almost any programming language, bash has loops.
 
 In this section you will cover for loops, case statements, and while loops in bash.
 
+This section will quickly take you through the various forms of looping that you might come across.
+
 
 ==== 'for' Loops
-//TODO
-// for name [ in word ] ; do list ; done
-//The list of words following in is expanded, generating a list of items. The variable name is set to each element of this list in turn, and list is executed each time. If the in word is omitted, the for command executes list once for each positional parameter that is set (see PARAMETERS below). The return status is the exit status of the last command that executes. If the expansion of the items following in results in an empty list, no commands are executed, and the return status is 0.
+
+First you're going to run TODO
 
 ----
-TODO$ for (( i=0; i < 20; i++ ))
+1$ for (( i=0; i < 20; i++ ))
 do
   echo $i
   echo $i > file${i}.txt
 done
-TODO$ ls
+2$ ls
 ----
 
 You just created twenty files, each with a number in them using a 'for' loop in the 'C' language style. Note there's no '$' sign involved in the variable when it's in the double parentheses!
 
-
 ----
-TODO$ for f in $(ls *txt)
+3$ for f in $(ls *txt)
 do
   echo "File $f contains: $(cat $f)"
 done
 ----
 
-It's our old friend the 
+It's our old friend the subshell! The subshell lists all the files we have.
 
 This for loop uses the 'in' keyword to separate the variable each iteration will assign to ('f') and the list to take items from. Here bash evaluates the output of the 'ls' command and uses that as the list, but we could have written something like:
 
 ----
-TODO$ for f in file1.txt file2.txt file3.txt
-do 
+4$ for f in file1.txt file2.txt file3.txt
+do
   echo "File $f contains: $(cat $f)"
 done
 ----
 
 with a similar effect.
 
-There are some shortcuts it's worth knowing about also:
-
-
-
-==== 'case' Statements
-
-TODO
- case word in [ [(] pattern [ | pattern ] ... ) list ;; ] ... esac
-A case command first expands word, and tries to match it against each pattern in turn, using the same matching rules as for pathname expansion (see Pathname Expansion below). The word is expanded using tilde expansion, parameter and variable expan- sion, arithmetic substitution, command substitution, process substitution and quote removal. Each pattern examined is expanded using tilde expansion, parameter and variable expansion, arithmetic substitution, command substitution, and process substitution. 
-
-If the shell option nocasematch is enabled, the match is performed without regard to the case of alphabetic characters.
-
-When a match is found, the corresponding list is executed. After the first match, no subsequent matches are attempted.
-
-The exit status is zero if no pattern matches. Otherwise, it is the exit status of the last command executed in list.
-
 
 
 ==== 'while' and 'until'
 
+While loops also exist in bash. Try and work out what's going on in this trivial example:
+
+----
+TODO$ n=0
+TODO$ while [[ ! -a newfile ]]
+do
+	echo "In iteration $n"
+    if [[ $(cat file${n}.txt) == 15 ]]
+	then
+		touch newfile
+	fi
+done
+TODO$ echo "done"
+----
+
+I often use while loops in this 'infinite loop' form when running quick scripts on the command line:
+
+----
+TODO$ n=0
+TODO$ while true
+do
+	echo $n seconds have passed
+    sleep 1
+	if [[ $n -eq 60 ]]
+	then
+		break
+	fi
+done
+----
+
+
+==== 'case' Statements
+
+Case statements may also be familiar from other languages. In bash, they're most frequently used when processing command-line arguments within a script.
+
+Before you look at a realistic case statement, type in this trivial one:
+
+----
+TODO$ a=1
+TODO$ case "$a" in
+1) echo 'a is 1'; echo 'ok';;
+2) echo 'a is 2'; echo 'ok';;
+*) echo 'a is unmatched'; echo 'failure';;
+esac
+----
+
+Try triggering the 'a is 2' case, and the 'a is unmatched' case.
+
+There are a few of new bits of syntax you may not have seen before.
+
+First, the double semi-colons ';;' indicate that the next matching case is coming (rather than just another statement, as indicated by a single semi-colon).
+
+Next, the '1)' indicates what the 'case' value ("$a") should match. These values follow the globbing rules (so '*' will match anything). Try adding quotes around the values, or glob values, or matching a longer string with spaces.
+
+Finally, the 'esac' indicates the case statement is finished.
+
+==== 'case' Statements and Command Line Options
+
 TODO
- while list; do list; done
- The while command continuously executes the do list as long as the last command in list returns an exit status of zero. The until command is identical to the while command, except that the test is negated; the do list is executed as long as the last command in list returns a non-zero exit status. The exit status of the while and until commands is the exit status of the last do list command executed, or zero if none was executed.
+
+Now a more realistic example, and one more like what is seen in 'real' shell scripts:
+
+//while getopts "i:c:a:" opt
+//do
+//done
+//    case "$opt" in
+//    i)
+//        IMAGE_NAME=$OPTARG
+//        ;;
+//    c)
+//        CONTAINER_NAME=$OPTARG
+//        ;;
+//    a)
+//        DOCKER_ARGS=$OPTARG
+//        ;;
+//    esac
 
 ==== What You Learned
 
-TODO
+You've now covered the main methods of looping in bash. Nothing about looping in bash should come as a big surprise in future!
 
 ==== What Next?
 
-TODO
+Next you will learn about exit codes, which will power up your ability to write neater bash code and better scripts.
 
 ==== Exercises
 

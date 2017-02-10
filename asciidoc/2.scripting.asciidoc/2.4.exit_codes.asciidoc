@@ -49,7 +49,7 @@ http://www.tldp.org/LDP/abs/html/exitcodes.html
 
 and write up.
 
-==== Tests and Exit Codes
+==== Exit Codes and if Statements
 
 So far so simple, but unfortunately (and because they are useful) exit codes can
 be used for many different reasons, not just to tell you whether the command
@@ -69,10 +69,10 @@ Did you expect that? grep finished successfully (there was no segmentation
 fault, memory, it was not killed etc..) but no lines were matched to it returned
 '1' as an exit code.
 
-In one way this is great because you can write tests like this:
+In one way this is great because you can write if statements like this:
 
 ----
-13$ if [[ grep grepme afile.txt ]]
+13$ if grep grepme afile.txt
 then
 	echo 'matched!'
 fi
