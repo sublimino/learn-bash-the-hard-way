@@ -43,6 +43,10 @@ You can easily write tests to use exit codes for various ends like this.
 
 There are guidelines for exit codes for those that want to follow standards.
 
+Some key ones are:
+
+
+
 TODO Have a look at:
 
 http://www.tldp.org/LDP/abs/html/exitcodes.html

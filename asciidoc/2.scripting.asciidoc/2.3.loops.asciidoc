@@ -9,7 +9,7 @@ This section will quickly take you through the various forms of looping that you
 
 ==== 'for' Loops
 
-First you're going to run TODO
+First you're going to run a for loop in a 'traditional way':
 
 ----
 1$ for (( i=0; i < 20; i++ ))
@@ -49,8 +49,8 @@ with a similar effect.
 While loops also exist in bash. Try and work out what's going on in this trivial example:
 
 ----
-TODO$ n=0
-TODO$ while [[ ! -a newfile ]]
+5$ n=0
+6$ while [[ ! -a newfile ]]
 do
 	echo "In iteration $n"
     if [[ $(cat file${n}.txt) == 15 ]]
@@ -58,14 +58,14 @@ do
 		touch newfile
 	fi
 done
-TODO$ echo "done"
+7$ echo "done"
 ----
 
 I often use while loops in this 'infinite loop' form when running quick scripts on the command line:
 
 ----
-TODO$ n=0
-TODO$ while true
+8$ n=0
+9$ while true
 do
 	echo $n seconds have passed
     sleep 1
@@ -84,8 +84,8 @@ Case statements may also be familiar from other languages. In bash, they're most
 Before you look at a realistic case statement, type in this trivial one:
 
 ----
-TODO$ a=1
-TODO$ case "$a" in
+10$ a=1
+11$ case "$a" in
 1) echo 'a is 1'; echo 'ok';;
 2) echo 'a is 2'; echo 'ok';;
 *) echo 'a is unmatched'; echo 'failure';;
@@ -104,24 +104,50 @@ Finally, the 'esac' indicates the case statement is finished.
 
 ==== 'case' Statements and Command Line Options
 
-TODO
+Case statements are most often seen in the context of processing command-line options within shell scripts. There is a helper builtin just for this purpose: getopts.
 
-Now a more realistic example, and one more like what is seen in 'real' shell scripts:
+Now you will write a more realistic example, and more like what is seen in 'real' shell scripts that uses getopts. Create and move into the folder:
 
-//while getopts "i:c:a:" opt
-//do
-//done
-//    case "$opt" in
-//    i)
-//        IMAGE_NAME=$OPTARG
-//        ;;
-//    c)
-//        CONTAINER_NAME=$OPTARG
-//        ;;
-//    a)
-//        DOCKER_ARGS=$OPTARG
-//        ;;
-//    esac
+----
+11$ mkdir lbthw_loops
+12$ cd lbthw_loops
+----
+
+Now create a file (case.sh) to try out a case statement with getopts:
+
+----
+13$ cat > case.sh << 'EOF'
+#!/bin/bash
+while getopts "ab:c" opt
+do
+    case "$opt" in
+    a) echo '-a invoked';;
+    b) echo "-b invoked with argument: ${OPTARG}";;
+    c) echo '-c invoked';;
+    esac
+done
+EOF
+14$ chmod +x case.sh
+----
+
+Run the above with various combinations and try and understand what's happening:
+
+----
+15$ ./case.sh -a
+16$ ./case.sh -b
+17$ ./case.sh -b "an argument"
+18$ ./case.sh -a -b -c
+19$ ./case.sh
+----
+
+This is how many bash scripts pick up arguments from the command line and process them.
+
+==== Cleanup
+
+----
+20$ cd ..
+21$ rm -rf lbthw_loops
+----
 
 ==== What You Learned
 
@@ -133,4 +159,6 @@ Next you will learn about exit codes, which will power up your ability to write 
 
 ==== Exercises
 
-1) TODO
+1) Find a real program that uses getopts to process arguments and figure out what it's doing.
+
+2) TODO

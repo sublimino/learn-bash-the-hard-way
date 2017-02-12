@@ -18,7 +18,7 @@ For example, the simplest tests might be:
 ----
 
 ====
-The 'echo $?' command above is a little mystifying at this stage if you've not seen it before. We will cover it in more depth in a section later in this part. For now, all you need to understand is this: the '$?' variable is a special variable that gives you a number telling you whether the last-executed command succeeded or not. If it succeeded, the number will be '0'. If it failed, the number will _not_ be '0'.
+The 'echo $?' command above is a little mystifying at this stage if you've not seen it before. We will cover it in more depth in a section later in this part. For now, all you need to understand is this: the '$?' variable is a special variable that gives you a number telling you whether the last-executed command succeeded or not. If it succeeded, the number will (usually) be '0'. If it failed, the number will (usually) _not_ be '0'.
 
 'false' is a program that has one job: to produce a 'failing' exit code. Why would such a thing exist? Well, it's often useful to have a command that you know will fail when you are building or testing a script.
 
@@ -246,11 +246,21 @@ as the newline can be replaced by a semi-colon, which indicates the end of the e
 
 ==== What You Learned
 
-1) TODO
+We covered quite a lot in this section!
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+- What a 'test' is in bash
+- How to compare values within a test
+- What the program '[' is
+- How to perform logic operations with tests
+- Some differences between '[' and '[['
+- The difference between unary and binary operators
+- How types can matter in bash, and how to compare them
+- 'if' statements and tests
+
+
+==== What Next?
+
+Next you will cover another fundamental aspect of bash programming: loops.
 
 ==== Exercises
 

@@ -205,19 +205,15 @@ To check whether you have version 4+, run:
 
 With associative arrays, you use a string instead of a number to reference the value:
 
-TODO: test
 ----
-40$ declare -A MYAA=( [one]=1 [two]=2 [three]=3 )
+40$ declare -A MYAA=([one]=1 [two]=2 [three]=3)
 41$ MYAA[one]="1"
 42$ MYAA[two]="2"
 43$ echo $MYAA
 44$ echo ${MYAA[one]}
-45$ MYAA[three]="3"
-46$ echo $MYAA
-4$ MYAA[one]="1"
-483$ echo $MYAA
-49$ WANT=two
-50$ echo ${MYAA[$WANT]} 
+45$ MYAA[one]="1"
+46$ WANT=two
+47$ echo ${MYAA[$WANT]} 
 ----
 
 As well as not being compatible with versions less than 4, associative arrays are quite fiddly to create and use, so I don't see them very often. 
