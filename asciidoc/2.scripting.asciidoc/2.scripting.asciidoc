@@ -1,8 +1,0 @@
-:chapter: 2
-
-== Scripting
-
-include::2.intro.asciidoc[]
-
-include::2.1.command_substitution.asciidoc[]
-

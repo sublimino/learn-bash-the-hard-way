@@ -4,7 +4,7 @@ immediately, but you will be more confident about using bash for more tasks than
 just one-off commands.
 
 
-==== Why learn bash?
+=== Why learn bash?
 
 There are a few reasons to learn bash in a structured way:
 
@@ -16,7 +16,7 @@ You often use bash without realising it, and people often get confused by why th
 It doesn't take long to get a better understanding of bash, and once you have the basics, its power and ubiquity mean that you can be useful in all sorts of contexts.
 
 
-==== What You Will Get
+=== What You Will Get
 
 This course aims to give students:
 
@@ -35,7 +35,7 @@ You are going to have to think sometimes to understand what is happening. This i
 Sometimes the course will go into other areas closely associated with bash, but not directly bash-related, eg specific tools, terminal knowledge. Again, this is always oriented around my decades of experience using bash and other shells.
 
 
-==== Assumptions
+=== Assumptions
 
 It assumes some familiarity with _very_ basic shell usage and commands. For those looking to get to that point, I recommend following this set of mini-tutorials:
 
@@ -49,7 +49,7 @@ echo $BASH_VERSION
 
 into your terminal. If you get a bash version string output then you in bash.
 
-==== How The Course Works
+=== How The Course Works
 
 The course _demands_ that you type out all the exercises to follow it.
 
@@ -73,23 +73,23 @@ want to use them.
 
 
 
-==== Structure
+=== Structure
 
 This book is structured into four parts:
 
-===== Core Bash
+==== Core Bash
 
 Core foundational concepts essential for understanding bash on the command line.
 
-===== Scripting Bash
+==== Scripting Bash
 
 Gets your bash scripting skills up to a proficient point.
 
-===== Tips
+==== Tips
 
 A primer on commonly-used techniques and features that are useful to know about.
 
-===== Advanced Bash
+==== Advanced Bash
 
 Building on the first three chapters, and introducing some more advanced
 features, this chapters takes your bash skills beyond the norm.

@@ -1,0 +1,15 @@
+:chapter: 2
+
+== Scripting
+
+include::2.intro.asciidoc[]
+
+include::2.1.command_substitution.asciidoc[]
+
+include::2.2.tests.asciidoc[]
+
+include::2.3.loops.asciidoc[]
+
+include::2.4.exit_codes.asciidoc[]
+
+include::2.5.set.asciidoc[]

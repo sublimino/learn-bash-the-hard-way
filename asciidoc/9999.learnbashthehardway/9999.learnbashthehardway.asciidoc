@@ -10,4 +10,4 @@ include::../2.scripting/2.scripting.asciidoc[]
 
 include::../3.tips/3.tips.asciidoc[]
 
-include::../4.advanced/4.advanced.asciidoc[]
+include::../4.advanced_bash/4.advanced_bash.asciidoc[]
