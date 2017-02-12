@@ -2,7 +2,9 @@
 
 Here documents are one of the handiest tricks you will have at your disposal. They allow you to embed content directly in your script.
 
-NOTE: In this section, leading spaces are tabs. We have covered this in a previous section, but as a reminder: to get a tab character in your shell, type 'CTRL+v', and then hit the 'tab' button.
+====
+In this section, leading spaces are tabs. We have covered this in a previous section, but as a reminder: to get a tab character in your shell, type 'CTRL+v', and then hit the 'tab' button.
+====
 
 ==== Basic Here Docs
 
@@ -117,11 +119,15 @@ Related to the 'here doc', a 'here string' can be applied in the same way with t
 
 ==== What You Learned
 
-TODO
+- What 'here documents' are
+- What 'here strings' are
+- How to create a 'here document'
+- How here docs and variables can be appropriately handled
+- How to use here docs in a way that looks neat in a shell script
 
-==== What Next?                                                                                                                                             
-                                                                                                                                                            
-TODO
+==== What Next?
+
+Next we look at how bash maintains and uses a history of the commands run within it.
 
 ==== Exercises
 

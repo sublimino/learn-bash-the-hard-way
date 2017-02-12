@@ -167,11 +167,17 @@ If you want to cycle forward (if you hit CTRL+r too many times and go past the o
 
 ==== What You Learned
 
-TODO
+- Where bash keeps a history of commands
+- How to refer to previous commands
+- How to re-run a previous command with simple adjustments
+- How to pick out specific arguments from the previous command
+- How to control the history output
+- How to control the commands that are added to the history
+- How to search through your history dynamically
 
 ==== What Next?
 
-TODO
+Next you will tie these things together in a series of miscellaneous tips that finish off this part.
 
 ==== Exercises
 

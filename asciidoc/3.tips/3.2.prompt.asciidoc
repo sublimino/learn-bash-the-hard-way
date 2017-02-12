@@ -112,18 +112,23 @@ You can use this for all sorts of neat tricks!
 
 ==== What You Learned
 
-TODO
+- What the PS variables are
+- Where each PS variable is used one 
+- How to augment your prompts to give you useful information
+- How to automatically run commands before each prompt is shown
 
 ==== What Next? 
 
-TODO
+Next you will learn a very useful technique for quickly creating files: the so-called 'here doc'.
 
 ==== Cleanup
 
-TODO
+No cleanup is required here, though you may want to set up a fresh bash session in case your prompt has been changed.
 
 ==== Exercises
 
 1) Look up the other prompt escape characters and use them.
 
-2) TODO
+2) Update your bash startup files so that the prompt tells you useful information when you log in
+
+3) Create your own version of the 'history' command by using the 'PROMPT_COMMAND' variable.

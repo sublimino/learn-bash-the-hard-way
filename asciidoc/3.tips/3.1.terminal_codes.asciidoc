@@ -12,11 +12,13 @@ In this section you'll:
 - Learn how to use hexdump
 - Learn about standard terminal escape codes
 
-NOTE: Focus here is on ANSI-standard escapes. Rarely, you might come across more complex escapes for specific terminal contexts, but this is beyond the scope of a 'practical' guide.
+====
+Focus here is on ANSI-standard escapes. Rarely, you might come across more complex escapes for specific terminal contexts, but this is beyond the scope of a 'practical' guide.
+====
 
-==== Non-Standard Characters
+==== Non-Printable Characters
 
-The terminal you use has what are described as 'printable' characters, non-printable (or control?) (CHECK THIS TODO).
+The terminal you use has what are described as 'printable' characters, and non-printable characters.
 
 For example, typing a character like 'a' (normally) results in the terminal adding an 'a' to the screen. But there are other characters that tell the terminal to do different things.
 
@@ -260,11 +262,16 @@ done
 
 ==== What You Learned
 
-TODO
+- What terminal codes are
+- What printable and non-printable characters are
+- How to output any arbitrary item
+- How to prevent the terminal from interpreting the character using CTRL-v
+- The difference between '\n' and '\r\n'
+- What terminal escape codes are
 
 ==== What Next?
 
-TODO
+Building on this knowledge, next you will learn how to set up your prompt so that it can show you (and even do) useful things.
 
 ==== Cleanup
 
