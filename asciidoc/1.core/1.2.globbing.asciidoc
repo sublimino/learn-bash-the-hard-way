@@ -94,6 +94,7 @@ have a different significance depending on whether it is being treated as a glob
 
 ====
 This assumes you have the program 'rename' installed.
+====
 
 Again, the key takeaway here is that context is key.
 

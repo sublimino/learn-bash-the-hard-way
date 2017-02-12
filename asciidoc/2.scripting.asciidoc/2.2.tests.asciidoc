@@ -19,6 +19,7 @@ For example, the simplest tests might be:
 
 ====
 The 'echo $?' command above is a little mystifying at this stage if you've not seen it before. We will cover it in more depth in a section later in this part. For now, all you need to understand is this: the '$?' variable is a special variable that gives you a number telling you whether the last-executed command succeeded or not. If it succeeded, the number will (usually) be '0'. If it failed, the number will (usually) _not_ be '0'.
+====
 
 'false' is a program that has one job: to produce a 'failing' exit code. Why would such a thing exist? Well, it's often useful to have a command that you know will fail when you are building or testing a script.
 
@@ -54,6 +55,7 @@ It is worth noting that '[' is in fact a builtin, as well as (very often) a prog
 
 ====
 'which' is a program (not a builtin!) that tells you where a program can be found on the system.
+====
 
 This is why a space is required after the '['. It's a separate command and spacing is how bash determines where one command ends and another begins.
 
@@ -132,6 +134,7 @@ So '[[' can handle some edge cases when using '['. There are some other differen
 
 ====
 If you want to understand more, follow [this link](http://serverfault.com/questions/52034/what-is-the-difference-between-double-and-single-square-brackets-in-bash)
+====
 
 
 ==== Confused?

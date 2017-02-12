@@ -23,6 +23,7 @@ ____
 
 ====
 The **Portable Operating System Interface**(**POSIX**) is a family of https://en.wikipedia.org/wiki/Standardization[standards] specified by the https://en.wikipedia.org/wiki/IEEE_Computer_Society[IEEE Computer Society] for maintaining compatibility between https://en.wikipedia.org/wiki/Operating_system[operating systems].
+====
 
 Can you work out from your 'set' output whether you are in posix mode?
 
@@ -39,6 +40,7 @@ and you will observe that the output no longer has functions in it. The '-o' swi
 
 ====
 If you did not have functions, then either no functions were set, or you were in posix mode already!
+====
 
 The commands above put you in a fresh bash shell so that we would revert to the previous state.
 

@@ -24,6 +24,7 @@ Type this in:
 
 ====
 If you don't know what grep is, you will need to learn. This is a good place to start: https://en.wikipedia.org/wiki/Grep
+====
 
 Normally you'd run a grep with the filename as the last argument, but instead here we 'pipe' the contents of file into the grep command by using the 'pipe' operator: '|'.
 

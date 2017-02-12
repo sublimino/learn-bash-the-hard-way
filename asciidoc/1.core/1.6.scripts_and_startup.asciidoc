@@ -63,6 +63,7 @@ The chmod program changes the
 
 ====
 The subject of file permissions and ownership can get complex and is not covered in full here. 'man chmod' is a good place to start if you are interested.
+====
 
 ===== The PATH variable
 
@@ -161,6 +162,7 @@ I'm sure you can figure out from that that source runs the script from within
 
 ====
 Most shell scripts have a '.sh' suffix, but this is not required - the OS does not care or take any notice of the suffix.
+====
 
 
 ===== Cleanup

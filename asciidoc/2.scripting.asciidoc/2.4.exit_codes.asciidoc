@@ -46,12 +46,24 @@ There are guidelines for exit codes for those that want to follow standards.
 Some key ones are:
 
 
+[width="100%",options="header,footer"]
+|====================
+| Number | Meaning | Notes
+| 0 | OK | Command successfully run 
+| 1 | General error | Used when there is an error but no specific number reserved to indicate what it was 
+| 2 | Misuse of shell builtin |  
+| 126 | Cannot execute | Permission problem or command is not executable 
+| 127 | Command not found | No file found matching the command 
+| 128 | Invalid exit value | Exit argument given (eg 'exit 1.76') 
+| 128+n | Signal 'n' | Process killed with signal 'n', eg 130 = terminated with CTRL-c (signal 2)
+| 255 | Exit code out of range |  
+|====================
 
-TODO Have a look at:
+====
+Signals will be covered in part 4
+====
 
-http://www.tldp.org/LDP/abs/html/exitcodes.html
-
-and write up.
+Since codes 3-125 are not generally reserved, you might use them for your own purposes in your application.
 
 ==== Exit Codes and if Statements
 
