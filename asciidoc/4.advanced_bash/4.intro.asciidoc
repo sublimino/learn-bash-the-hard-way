@@ -9,6 +9,7 @@
 //command
 //dev/tcp
 //key variables: TERM, USER, DISPLAY
+//http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
 
 
 Putting it all together:

@@ -269,4 +269,6 @@ Next you will cover another fundamental aspect of bash programming: loops.
 
 1) Research all the unary operators, and try using them (see 'man bash')
 
-2) TODO
+2) Write a script to check whether key files and directories are in their correct place
+
+3) Use the 'find' and 'wc' to count the number of files on your system and perform different actions if the number is higher or lower than what you expect

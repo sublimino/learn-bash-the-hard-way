@@ -159,6 +159,6 @@ Next you will learn about exit codes, which will power up your ability to write 
 
 ==== Exercises
 
-1) Find a real program that uses getopts to process arguments and figure out what it's doing.
+1) Find a real program that uses getopts to process arguments and figure out what it's doing
 
-2) TODO
+2) Write a while loop to check where a file exists every few seconds. When it does, break out of the loop with a message
