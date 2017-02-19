@@ -1,12 +1,18 @@
-TODO
+== Bash in Practice
 
-Misc
+So far we've been learning about bash in relatively abstract ways.
 
-Get a date on the script: (read)
--------------------------
+In this section you're going to see many of the ideas you've learned put together in more realistic contexts, so you can get a flavour for what bash can do.
+
+You can easily skip this section if you want as nothing here is new, but following this can embed some concepts and keep your motivation going before the final part!
+
+
+=== Output With Time
+
+Frequently, I want to get the output of a command along with the time. Let's say I'm running vmstat while a server is having problems, and I want to ensure that I've logged the time that vmstat relates to.
 
 ----
-[metcalfs@gueabetapp37 ~]$
+TODO$
 function dateit {
    while read line
    do
@@ -14,20 +20,42 @@ function dateit {
      date '+ %m-%d-%Y %H:%M:%S'
    done
 }
-[metcalfs@gueabetapp37 ~]$ vmstat 1 | dateit
+TODO$ vmstat 1 | dateit
 ----
 
 
-Directory of script
--------------------
+====
+'vmstat' is a program available on most Linux flavours that gives you a view of what TODO.
+It is not available on Mac OSes. If vmstat does not exist for you, then replace with top.
+====
+
+TODO
+
+=== Where Am I?
+
+You're probably familiar with the 'pwd' builtin, which gives you your current working directory (cwd). Similarly, there is an environment variable (PWD) that bash normally sets that stores the cwd.
 
 ----
-$(dirname ${BASH_SOURCE[0]})
+TODO$ pwd
+TODO$ echo $PWD
 ----
 
-http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+Very often in scripts, you will want to know where the cwd is.
 
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+But also (very often) you will want to know where _the script you are running_ is located. If your PATH variable has the script in it, and  TODO
+
+----
+TODO$ cat > /tmp/lbthwscript.sh << 'EOF'
+echo My pwd is: $PWD
+echo I am running in: $(dirname ${BASH_SOURCE[0]})
+EOF
+TODO$ chmod +x /tmp/lbthwscript.sh
+TODO$ /tmp/lbthwscript.sh
+----
+
+What happens if you cd to /tmp and run it from there? Do you get an absolute path in the second line?
+
+TODO
 
 
 Is a useful one-liner which will give you the full directory name of the script no matter where it is being called from
@@ -41,3 +69,75 @@ These will work as long as the last component of the path used to find the scrip
       [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
     done
     DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+=== Generic Extract Function
+
+TODO describe
+
+TODO put it in your bash startup files
+
+----
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+ else
+    if [ -f $1 ] ; then
+        # NAME=${1%.*}
+        # mkdir $NAME && cd $NAME
+        case $1 in
+          *.tar.bz2)   tar xvjf ../$1    ;;
+          *.tar.gz)    tar xvzf ../$1    ;;
+          *.tar.xz)    tar xvJf ../$1    ;;
+          *.lzma)      unlzma ../$1      ;;
+          *.bz2)       bunzip2 ../$1     ;;
+          *.rar)       unrar x -ad ../$1 ;;
+          *.gz)        gunzip ../$1      ;;
+          *.tar)       tar xvf ../$1     ;;
+          *.tbz2)      tar xvjf ../$1    ;;
+          *.tgz)       tar xvzf ../$1    ;;
+          *.zip)       unzip ../$1       ;;
+          *.Z)         uncompress ../$1  ;;
+          *.7z)        7z x ../$1        ;;
+          *.xz)        unxz ../$1        ;;
+          *.exe)       cabextract ../$1  ;;
+          *)           echo "extract: '$1' - unknown archive method" ;;
+        esac
+    else
+        echo "$1 - file does not exist"
+    fi
+fi
+}
+----
+
+
+
+=== Output Absolute File Path
+
+Quite often I want to give  TODO
+
+----
+TODO$ function abspath() {
+	for file in $(ls "$@"); do
+	        echo -n $(pwd)
+	        [[ $(pwd) != "/" ]] && echo -n /
+	        echo $file
+	done
+}
+----
+
+TODO Test and write up.
+
+=== Cleanup
+
+----
+TODO$ rm /tmp/lbthwscript.sh
+----
+
+=== Exercises
+
+1) Look at your history to work out what you do most often at the terminal. Write a function to make these tasks quicker.
+
+2) Change the dateit function so that it outputs the hostname, username of the running user, and the time to millisecond granularity.
+
+3) TODO

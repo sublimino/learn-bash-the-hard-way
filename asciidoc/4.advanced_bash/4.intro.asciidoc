@@ -1,16 +1,11 @@
 //ADVANCED
 
-//file substitution <()
-//traps!
-//signals
-//auto-completion
-//https://google.github.io/styleguide/shell.xml
-//getopts
 //command
-//dev/tcp
 //key variables: TERM, USER, DISPLAY
-//http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
 
+//auto-completion?
+
+//debugging?
 
 Putting it all together:
 https://github.com/ianmiell/cheapci/blob/master/cheapci

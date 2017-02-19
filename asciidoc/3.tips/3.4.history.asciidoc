@@ -165,7 +165,7 @@ Let go. Now type 'grep'. You should see a previous grep command. If you keep hit
 
 If you want to cycle forward (if you hit CTRL+r too many times and go past the one you want (I do this a lot)), hit CTRL+s.
 
-==== What You Learned
+=== What You Learned
 
 - Where bash keeps a history of commands
 - How to refer to previous commands
@@ -175,11 +175,11 @@ If you want to cycle forward (if you hit CTRL+r too many times and go past the o
 - How to control the commands that are added to the history
 - How to search through your history dynamically
 
-==== What Next?
+=== What Next?
 
 Next you will tie these things together in a series of miscellaneous tips that finish off this part.
 
-==== Exercises
+=== Exercises
 
 1) Remember to use one of the above practical tips every day until you don't think about using it. Then learn another one.
 
