@@ -23,7 +23,7 @@ Frequently, I want to get the output of a command along with the time. Let's say
 
 
 ====
-'vmstat' is a program available on most Linux flavours that gives you a view of what TODO.
+'vmstat' is a program available on most Linux flavours that gives you a view of what the system resource usage looks like.
 It is not available on Mac OSes. If vmstat does not exist for you, then replace with 'top -s 2' or a similar command.
 ====
 
@@ -40,7 +40,9 @@ You're probably familiar with the 'pwd' builtin, which gives you your current wo
 
 Very often in scripts, you will want to know where the cwd of the process is.
 
-But also (very often) you will want to know where _the script you are running_ is located. If your PATH variable has the script in it, and  TODO
+But also (very often) you will want to know where _the script you are running_ is located _from within the script_.
+
+For example, if you are running a script that is found in your PATH (ie not in your local folder), and you want to refer to another file relative to that script from within that script, then you will need to know where that script is located.
 
 ----
 5$ cat > /tmp/lbthwscript.sh << 'EOF'
@@ -51,19 +53,18 @@ EOF
 7$ /tmp/lbthwscript.sh
 ----
 
-What happens if you cd to /tmp and run it from there? Do you get an absolute path in the second line?
+Have a play with this function to see what it does.
+
+What happens if you cd to /tmp and run it from there? Do you get an absolute path in the second line? What can you do about this?
 
 === Generic Extract Function
 
 There are a bewildering number of archiving tools. To name a few of the most popular: tarred, zipped, bzipped, gzipped, and compressed.
-TODO describe
 
-TODO put it in your bash startup files
-
-TODO: do you need to put the name before the suffix in only?
+If you spend any time dealing with these files, then it's a candidate for a time-saving function to put into your startup files.
 
 ----
-function extract() {
+8$ function extract() {
   if [ -z "$1" ]
   then
     echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
@@ -92,7 +93,15 @@ function extract() {
     fi
   fi
 }
+9$ mkdir lbthwmisc
+10$ cd lbthwmisc
+11$ touch a b c
+12$ tar cvfz test.tgz a b c
+13$ extract test.tgz
 ----
+
+TODO Test above
+
 
 
 
@@ -103,14 +112,14 @@ Quite often I want to give co-workers an absolute reference on a server to a fil
 This takes a few seconds to achieve, and since it happens regularly, it's a great candidate for a time-saving function:
 
 ----
-TODO$ function sharefiles() {
+14$ function sharefiles() {
 	for file in $(ls "$@"); do
 	        echo -n $(pwd)
 	        [[ $(pwd) != "/" ]] && echo -n /
 	        echo $file
 	done
 }
-TODO$ sharefiles
+15$ sharefiles
 ----
 
 //TESTED
@@ -134,7 +143,9 @@ Think about what you could automate today (see exercises)!
 === Cleanup
 
 ----
-TODO$ rm /tmp/lbthwscript.sh
+16$ cd ..
+17$ rm -rf lbthwmisc
+18$ rm /tmp/lbthwscript.sh
 ----
 
 === Exercises
@@ -146,3 +157,4 @@ TODO$ rm /tmp/lbthwscript.sh
 3) Extend the 'Where Am I?' function to handle symbolic links. If you don't know what symbolic links are, research them!
 
 4) Extend the archive script to handle files that do not have the appropriate suffix. Hint: you may want to research the 'file' command to achieve this.
+
