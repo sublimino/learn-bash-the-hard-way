@@ -1,0 +1,21 @@
+
+
+
+              /dev/fd/fd
+                     If fd is a valid integer, file descriptor fd is duplicated.
+              /dev/tcp/host/port
+                     If  host is a valid hostname or Internet address, and port is an integer port number or service name, bash attempts to open a TCP connection to the corresponding
+                     socket.
+              /dev/udp/host/port
+                     If host is a valid hostname or Internet address, and port is an integer port number or service name, bash attempts to open a UDP connection to the  corresponding
+                     socket.
+
+
+
+
+              /dev/stdin
+                     File descriptor 0 is duplicated.
+              /dev/stdout
+                     File descriptor 1 is duplicated.
+              /dev/stderr
+                     File descriptor 2 is duplicated.

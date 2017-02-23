@@ -1,0 +1,22 @@
+== Traps
+
+===
+
+sleep 100
+CTRL-c
+echo $?
+
+
+exit code is 130. Remember that exit codes over 128 are 128 + signal number, so signal number is 2.
+
+
+trap?
+
+
+advanced traps - trap all
+
+
+
+                                                                                                                                
+//traps and signals                                                                                                                                                                                 
+    http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html   
