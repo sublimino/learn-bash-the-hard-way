@@ -16,16 +16,6 @@ $ echo $#a
 ----
 
 
-ATTEMPTS:  TODO
-b="	                 asd asd 	 "
-echo ${b}
-echo "|${b}|"
-echo "|${b/*( )/}|"
-echo "|${b//*( )//}|"
-
-
-
-
 Bash provides a way to extract a substring from a string. The following example expains how to parse n characters starting from a particular position.
 
 ${string:position}
@@ -43,22 +33,71 @@ ${string/#pattern/replacement}
 
 
 === Extglobs
+http://www.linuxjournal.com/content/bash-extended-globbing
 
+----
+#!/bin/bash
 shopt -s extglob
+b=" 	 asd asd "
+echo ${b}
+echo "|${b}|"
+
+# Single character (space)
+echo "|${b/+( )/}|"
+echo "|${b//+( )/}|"
+          
+# Multiple characters (space and tab)
+echo "|${b/+([ 	])/}|"
+echo "|${b//+([ 	])/}|"
+
+# Character class
+echo "|${b/+([[:space:]])/}|"
+echo "|${b//+([[:space:]])/}|"
+
+# Beginning
+echo "|${b/#+([[:space:]])/}|"
+# End
+echo "|${b/%+([[:space:]])/}|"
+----
 
 
-If the extglob shell option is enabled using the shopt builtin, several extended pattern matching operators are recognized.  In the following description, a pattern-list is  a list of one or more patterns separated by a |.  Composite patterns may be formed using one or more of the following sub-patterns:
 
-              ?(pattern-list) Matches zero or one occurrence of the given patterns
-              *(pattern-list) Matches zero or more occurrences of the given patterns
-              +(pattern-list) Matches one or more occurrences of the given patterns
-              @(pattern-list) Matches one of the given patterns
-              !(pattern-list) Matches anything except one of the given patterns
+//${!name[@]}
+//${!name[*]}
+// If name is an array variable, expands to the list of array indices (keys) assigned in name. If name is not an array, expands to 0 if name is set and null otherwise. When @ is used and the expansion appears within double quotes, each key expands to a separate word.
+//
+//${#parameter}
+// The length in characters of the value of parameter is substituted. If parameter is * or @, the value substituted is the number of positional parameters. If parameter is an array name subscripted by * or @, the value substituted is the number of elements in the array.
+//
+//${parameter#word}
+//${parameter##word}
+// The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches the beginning of the value of parameter, then the result of the expan- sion is the expanded value of parameter with the shortest matching pattern (the ``#'' case) or the longest matching pattern (the ``##'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable sub- scripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
+//
+//${parameter%word}
+//${parameter%%word}
+// The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches a trailing portion of the expanded value of parameter, then the result of the expansion is the expanded value of parameter with the shortest matching pattern (the ``%'' case) or the longest matching pattern (the ``%%'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable subscripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
+//
+//${parameter/pattern/string}
+// The pattern is expanded to produce a pattern just as in pathname expansion. Parameter is expanded and the longest match of pattern against its value is replaced with string. If Ipattern begins with /, all matches of pattern are replaced with string. Normally only the first match is replaced. If pattern begins with #, it must match at the beginning of the expanded value of parameter. If pattern begins with %, it must match at the end of the expanded value of parameter. If string is null, matches of pattern are deleted and the / following pattern may be omitted. If parameter is @ or *, the substitution operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable subscripted with @ or *, the substitution operation is applied to each member of the array in turn, and the expansion is the resultant list.
+
+
+
+
+
+
+
+If the extglob shell option is enabled using the shopt builtin, several extended pattern matching operators are recognized. In the following description, a pattern-list is a list of one or more patterns separated by a |. Composite patterns may be formed using one or more of the following sub-patterns:
+
+ ?(pattern-list) Matches zero or one occurrence of the given patterns
+ *(pattern-list) Matches zero or more occurrences of the given patterns
+ +(pattern-list) Matches one or more occurrences of the given patterns
+ @(pattern-list) Matches one of the given patterns
+ !(pattern-list) Matches anything except one of the given patterns
 
 http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
 
 Replace leading zeroes
-TODAY=$(date +%j)                                                                                                                                                                                          
+TODAY=$(date +%j)            
 TODAY=${TODAY##+(0)}
 
 
