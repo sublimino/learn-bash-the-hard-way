@@ -6,6 +6,10 @@
 //auto-completion?
 
 //debugging?
+//profiling PS4='$(date "+%s.%N ($LINENO) + ")'
 
-Putting it all together:
-https://github.com/ianmiell/cheapci/blob/master/cheapci
+//eval
+
+// Advanced
+http://www.tldp.org/LDP/abs/html/part5.html
+
