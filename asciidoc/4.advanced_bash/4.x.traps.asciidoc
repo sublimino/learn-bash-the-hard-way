@@ -59,7 +59,7 @@ come across: the 'kill' command.
 
 The 'kill' command is misnamed, because it needn't be used to terminate a
 process. By default, it sends the signal 15 (TERM), which (similar to 2) usually
-has the effect of terminating the program, but as the name suggests, is a 
+has the effect of terminating the program, but as the name suggests, is a
 stronger signal to terminate than 'INT'errupt.
 
 ----
@@ -79,12 +79,28 @@ get into the habit of putting curly braces around your variable names in bash.
 
 Can you explain why the final echo outputs 0 and not 130?
 
-TODO: Can we get the 
+TODO: Can we get the background processes exit code?
+
+TODO: explain about signal names as well as numbers, eg INT, TERM
 
 
 === Trapping Signals
 
-TODO advanced traps - trap all
+TODO: Difference between kill and CTRL-c in the foreground when running a script. kill is processed when the command is finished, while CTRL-c affects all processes owned by the terminal.
+
+
+----
+$ mkdir -p lbthw_traps
+$ cd lbthw_traps
+$ cat > trap_exit.sh << END
+#!/bin/bash
+trap "echo trapped" INT TERM
+while :; do sleep 5; done
+END
+$ TODO
+----
+
+TODO: If this seems complicated, just remember: CTRL-c kills all the processes going on in the foreground, while 'kill' sends a message to get trapped once the message it was sent to takes control again.
 
 
 
@@ -94,9 +110,31 @@ TODO advanced traps - trap all
 
 TODO trap EXIT and kill -9
 
-//traps and signals                                                                                                                                                                                 
-// http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html   
+----
+$ cat > trap_exit.sh << END
+#!/bin/bash
+trap "echo trapped" EXIT
+sleep 999
+END
+$ trap_exit.sh &
+$ TRAP_EXIT_PID=$(echo ${!})
+$ kill -15 $TRAP_EXIT_PID
+$ trap_exit.sh &
+$ TRAP_EXIT_PID=$(echo ${!})
+$ kill -9 $TRAP_EXIT_PID
+----
 
+Experiment with some other signals to determine how EXIT handled them
+
+//traps and signals
+// http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+
+=== Cleanup
+
+----
+$ cd ..
+$ rm -rf lbthw_traps
+----
 
 === What You Learned
 

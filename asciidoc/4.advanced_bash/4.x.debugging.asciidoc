@@ -1,3 +1,6 @@
+
+
+
 Setting option flags -n -v -x
 
 sh -n scriptname checks for syntax errors without actually running the script. This is the equivalent of inserting set -n or set -o noexec into the script. Note that certain types of syntax errors can slip past this check.
@@ -29,3 +32,13 @@ http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell
 
 Options
 http://www.tldp.org/LDP/abs/html/options.html
+
+
+
+
+
+trace for variables:
+
+declare -t VARIABLE=value
+trap "echo VARIABLE is being used here." DEBUG
+# rest of the script
