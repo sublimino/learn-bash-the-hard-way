@@ -10,7 +10,7 @@ Any easy way to trigger a signal is one you will likely already have used.
 Follow the instructions here:
 
 ----
-$ sleep 100
+$ sleep 999
 [NOW HIT CTRL, HOLD IT DOWN AND THEN HIT C (CTRL-c)]
 $ echo $?
 ----
@@ -45,7 +45,7 @@ Now figure out what the signal was, what the default action is for that signal
 and the signal name that is triggered when you git CTRL-c.
 
 ----
-$ sleep 100
+$ sleep 999
 [NOW HIT CTRL, HOLD IT DOWN AND THEN HIT Z (CTRL-z)]
 $ echo $?
 ----
@@ -63,71 +63,150 @@ has the effect of terminating the program, but as the name suggests, is a
 stronger signal to terminate than 'INT'errupt.
 
 ----
-$ sleep 100 &
+$ sleep 999 &
 $ KILLPID=$(echo ${!})
-$ echo $KILLPID
-$ kill -2 $KILLPID
-$ echo $?
+$ echo ${KILLPID}
+$ kill -2 ${KILLPID}
+$ echo ${?}
+$ wait ${KILLPID}
+$ echo ${?}
 ----
 
 ====
-The curly braces are required here (which surprised me!), otherwise bash
-interprets the '!' as being a history command (try it!). I'm not sure why (it
-works fine outside the '$()'), but it is an indication that it's perhaps wise to
-get into the habit of putting curly braces around your variable names in bash.
+The curly braces are required with the '${!}' (which surprised me!).
+Bash interprets the '!' as being a history command (try it!). I'm not sure why
+(it works fine outside the '$()'), but it is an indication that it's perhaps
+wise to get into the habit of putting curly braces around your variable names in
+bash.
 ====
 
-Can you explain why the final echo outputs 0 and not 130?
+Can you explain why the echo after the kill outputs 0 and not 130?
 
-TODO: Can we get the background processes exit code?
-
-TODO: explain about signal names as well as numbers, eg INT, TERM
+Instead of '-2' in the above listing, you can use the signal name. Either '-INT'
+or '-SIGINT' will work. Try them.
 
 
 === Trapping Signals
 
-TODO: Difference between kill and CTRL-c in the foreground when running a script. kill is processed when the command is finished, while CTRL-c affects all processes owned by the terminal.
+Type out this first and follow the instruction:
 
+----
+$ while :; do sleep 5; done
+[NOW HIT CTRL-c]
+----
+
+Now type out this one and follow the instruction:
 
 ----
 $ mkdir -p lbthw_traps
 $ cd lbthw_traps
 $ cat > trap_exit.sh << END
 #!/bin/bash
-trap "echo trapped" INT TERM
+trap "echo trapped" INT
 while :; do sleep 5; done
 END
-$ TODO
+$ chmod +x trap_exit.sh
+$ ./trap_exit.sh
+[NOW HIT CTRL-c]
 ----
 
-TODO: If this seems complicated, just remember: CTRL-c kills all the processes going on in the foreground, while 'kill' sends a message to get trapped once the message it was sent to takes control again.
+What's going on? In the second listing you used the 'trap' builtin to inhibit
+the default response of the trap_exit process in the bash process and replace
+it with another response. In this case, the first argument to the 'trap'
+builtin is evalatuated and run as a command ("echo trapped").
+
+So how to get out of it and kill off the process?
+
+----
+[HIT CTRL-z]
+$ kill %1
+----
 
 
 
 === Trap Exit
 
-TODO advanced traps - trap all
+In addition to the normal signal name traps, there is some special ones.
 
-TODO trap EXIT and kill -9
+Type this out:
 
 ----
 $ cat > trap_exit.sh << END
 #!/bin/bash
 trap "echo trapped" EXIT
-sleep 999
+sleep 999 &
+wait ${!}
 END
 $ trap_exit.sh &
 $ TRAP_EXIT_PID=$(echo ${!})
-$ kill -15 $TRAP_EXIT_PID
-$ trap_exit.sh &
-$ TRAP_EXIT_PID=$(echo ${!})
-$ kill -9 $TRAP_EXIT_PID
+$ kill -15 ${TRAP_EXIT_PID}
 ----
 
-Experiment with some other signals to determine how EXIT handled them
+Which signal did we use there?
 
-//traps and signals
-// http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_02.html
+The 'EXIT' trap catches the termination of the script and runs. Try it with 
+'-2' as well.
+
+Now run this:
+
+----
+$ trap_exit.sh &
+$ TRAP_EXIT_PID=$(echo ${!})
+$ kill -9 ${TRAP_EXIT_PID}
+----
+
+Some of the signals are not trap-able! Why do you think this is?
+
+Experiment with some other signals to determine how EXIT handles them.
+
+What is the name of the '-9' signal? Is this the default that the 'kill' command
+uses?
+
+
+=== A Note About Process Groups
+
+You may have noticed that in the above script you used the 'wait' command
+after putting the process in the background.
+
+The wait command is a bash builtin that returns when the child processes of the
+bash process completes.
+
+This illustrates a subtle point about signals. They act on the _currently
+running_ process, and not on their children.
+
+Repeat the above section, but rather than having:
+
+----
+sleep 999 &
+wait ${!}
+----
+
+type:
+
+----
+sleep 999
+----
+
+What do you notice about the behaviour of the EXIT and INT signals?
+
+How do you explain the fact that running this:
+
+----
+$ ./trap_exit.sh
+[CTRL-c]
+----
+
+works to kill the sleep process and output 'trapped', where sending the signal
+-2 before did not?
+
+The answer is that foregrounded processes are treated differently - they form
+part of a 'process group' that gets any signals received on the terminal.
+
+If this seems complicated, just remember: CTRL-c kills all the processes 'going
+on' in the foreground of the terminal the 2/INT signal, while 'kill' sends a
+message to a specific process, which may or may not be running at the time.
+
+If this seems complicated, just remember: signals can get complicated!
 
 === Cleanup
 
