@@ -217,8 +217,22 @@ $ rm -rf lbthw_traps
 
 === What You Learned
 
-TODO
+In this section you have learned:
+
+- What a signal is
+- What a trap is
+- What the 'kill' program does, and that it doesn't send KILL by default
+- What an INT and TERM signal is
+- How to trap exiting bash processes
+- What a process group is, and its significance for signals
 
 === Exercises
 
-1) TODO
+1) Write a shell script that you can't escape from (the machine it runs on must
+not be overloaded as a result!) in the terminal
+
+2) Try and escape from the shell script you created in 1)
+
+3) Ask everyone you know if they can escape the shell script
+
+4) If no-one can escape it, send it to the author :)

@@ -1,5 +1,9 @@
-TODO
+== Debugging Bash Scripts
 
+=== Syntax Checking
+
+Options
+http://www.tldp.org/LDP/abs/html/options.html
 
 Setting option flags -n -v -x
 
@@ -7,10 +11,18 @@ sh -n scriptname checks for syntax errors without actually running the script. T
 
 sh -v scriptname echoes each command before executing it. This is the equivalent of inserting set -v or set -o verbose in the script.
 
-The -n and -v flags work well together. sh -nv scriptname gives a verbose syntax check.
+The -n and -v flags work well together.
+
+sh -nv scriptname gives a verbose syntax check.
+
+
+=== Tracing
 
 sh -x scriptname echoes the result each command, but in an abbreviated manner. This is the equivalent of inserting set -x or set -o xtrace in the script.
 
+
+
+=== Managing Variables
 
 Inserting set -u or set -o nounset in the script runs it, but gives an unbound variable error message and aborts the script.
 set -u   # Or   set -o nounset
@@ -25,20 +37,30 @@ echo "Should not echo!"
 # sh t2.sh
 # t2.sh: line 6: unset_var: unbound variable
 
-http://www.tldp.org/LDP/abs/html/debugging.html
+//http://www.tldp.org/LDP/abs/html/debugging.html
 
-Profiling:
-http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
-
-Options
-http://www.tldp.org/LDP/abs/html/options.html
-
-
-
-
+=== Tracing Variables
 
 trace for variables:
 
 declare -t VARIABLE=value
 trap "echo VARIABLE is being used here." DEBUG
-# rest of the script
+
+=== Profiling Bash Scripts
+
+Profiling:
+http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
+//profiling PS4='$(date "+%s.%N ($LINENO) + ")'
+
+
+=== Cleanup
+
+TODO
+
+=== What You Learned
+
+TODO
+
+=== Exercises
+
+TODO

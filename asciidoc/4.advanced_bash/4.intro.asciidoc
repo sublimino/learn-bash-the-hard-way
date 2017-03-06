@@ -5,9 +5,6 @@
 
 //auto-completion?
 
-//debugging?
-//profiling PS4='$(date "+%s.%N ($LINENO) + ")'
-
 //eval
 
 // Advanced
