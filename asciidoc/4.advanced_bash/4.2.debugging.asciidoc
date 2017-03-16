@@ -1,0 +1,131 @@
+== Debugging Bash Scripts
+
+There are a few useful techniques worth knowing to help debug your bash scripts.
+While covering some of these here, you will also learn how to make your bash
+scripts more robust and less prone to failure.
+
+=== Syntax Checking Options
+
+----
+$ mkdir -p lbthw_debugging
+$ de lbthw_debugging
+$ cat > debug_script.sh << 'END'
+#!/bin/bash
+
+A=some value
+echo "${A}
+echo "${B}"
+END
+$ bash -n debug_script.sh
+----
+
+Fix it
+
+----
+$ bash debug_script.sh
+----
+
+
+----
+$ bash -v debug_script.sh
+----
+
+Try tracing to see more details about what's going on. Each statement gets a new line.
+
+----
+$ bash -x debug_script.sh
+----
+
+Now fix the script.
+
+Using these together can help debug scripts where there is an elementary error.
+
+
+=== Managing Variables
+
+Variables are a core part of most serious bash scripts (and even one-liners!),
+so managing them is another important way to reduce the possibility of your
+script breaking.
+
+Change your script to add the 'set' line immediately after the first line and
+see what happens.
+
+----
+#!/bin/bash
+set -o nounset
+
+A="some value"
+echo "${A}
+echo "${B}"
+----
+
+Now research what the 'nounset' option does. Which 'set' flag does this 
+correspond to?
+
+Without running this, try and figure out what this script will do. Will it
+run?
+
+----
+#!/bin/bash
+set -o nounset
+
+A="some value"
+B=
+echo "${A}"
+echo "${B}"
+----
+
+I always set 'nounset' on my scripts as a habit. It can catch many problems
+before they become serious.
+
+=== Tracing Variables
+
+If you are working with a particularly complex script, then you can get to the
+point where you are unsure what happened to a variable.
+
+TODO
+
+----
+declare -t VARIABLE=value
+trap "echo VARIABLE is being used here." DEBUG
+----
+
+=== Profiling Bash Scripts
+
+Profiling:
+http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
+//profiling PS4='$(date "+%s.%N ($LINENO) + ")'
+
+
+=== Shellcheck
+
+Finally, here is a very useful  TODO
+
+If you go to  TODO
+
+http://www.shellcheck.net/ - also available as a package.
+
+TODO: example output
+
+
+
+
+
+=== Cleanup
+
+To clean up the above work:
+
+----
+$ cd ..
+$ rm -rf lbthw_debugging
+----
+
+=== What You Learned
+
+TODO
+
+=== Exercises
+
+1) Find a large bash script on a social coding site such as GitHub, and run shellcheck over it. Contribute back any 
+
+2) TODO
