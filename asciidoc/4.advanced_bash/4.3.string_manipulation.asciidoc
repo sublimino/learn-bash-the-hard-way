@@ -44,17 +44,7 @@ $ echo "${A/234/432}"
 $ echo "${A//234/432}"
 ----
 
-What's going on in the TODO
-
-
-TODO
-
-Trim?
-Replace beginning and end
-
-----
-${string/#pattern/replacement}
-----
+What's going on in the second command above? How does it differ from the first?
 
 
 === Extglobs
@@ -63,7 +53,7 @@ A more advanced means of working with strings is possible by using bash's
 extglobs functionality.
 
 A word of warning here: although this functionality is useful to know, it is
-arguably less useful than the 
+arguably less useful than the
 
 
 ----
@@ -76,7 +66,7 @@ echo "|${b}|"
 # Single character (space)
 echo "|${b/+( )/}|"
 echo "|${b//+( )/}|"
-          
+
 # Multiple characters (space and tab)
 echo "|${b/+([ 	])/}|"
 echo "|${b//+([ 	])/}|"
@@ -114,23 +104,42 @@ If the extglob shell option is enabled using the shopt builtin, several extended
 http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
 
 Replace leading zeroes
-TODAY=$(date +%j)            
+TODAY=$(date +%j)
 TODAY=${TODAY##+(0)}
 
 
 
-Replace leading spaces
 
 
 
-${string:position:length}
+
 
 === Removing text
 
-TODO
-//${parameter#word}
-//${parameter##word}
-// The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches the beginning of the value of parameter, then the result of the expan- sion is the expanded value of parameter with the shortest matching pattern (the ``#'' case) or the longest matching pattern (the ``##'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable sub- scripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
+TEST SCRIPT
+//cat a.sh
+//#!/bin/bash
+//shopt -s extglob
+//
+//A='12345678901234567890'
+//echo "$#A"
+//echo "${#A}"
+//echo "${A:2}"
+//echo "${A:2:3}"
+//echo "${A/234/432}"
+//echo "${A//234/432}"
+//B="   ${A}    "
+//echo "${B# }"
+//echo "${B#?( )}"
+//echo "${B#+( )}"
+//echo "${B##+( )}"
+//Trim?
+//Replace beginning and end
+//C="${B##+( )}"
+//echo "|${C}|"
+//D="${C%%+( )}"
+//echo "|${D}|"
+
 
 Following syntax deletes the shortest match of $substring from front of $string
 
@@ -145,13 +154,22 @@ ${string%%substring}
 ----
 
 
+Remember: # to the left, % to the right on a (US) keyboard. Or 'hash' is before 'per cent' in the alphabet.
+
+
 Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
 ${string/%pattern/replacement}
 
 
+
+
 === Quoting Hell
 
-echo 'asdasd'''asdasd' ?
+TODO
+
+----
+$ echo 'asdasd'''asdasd'
+----
 
 
 === Arrays
@@ -185,14 +203,14 @@ TODO
 // From regexps file
 //eg - BASH_REMATCH
 //
-//read line <&0                                                                                                                                                                     
-//regexp='([^ ]*) ([A-Z0-9_]*) (.*)'                                                                                                                                                
-//if [[ $line =~ $regexp ]]                                                                                                                                                         
-//then                                                                                                                                                                              
-//    FILENAME_STRING=${BASH_REMATCH[1]}                                                                                                                                            
-//    TEMPLATE_STRING=${BASH_REMATCH[2]}                                                                                                                                            
-//    REPLACE_STRING=${BASH_REMATCH[3]}                                                                                                                                             
-//    sed -i "s/$TEMPLATE_STRING/$REPLACE_STRING/g" $FILENAME_STRING                                                                                                                
-//else                                                                                                                                                                              
-//    echo $0: not matched: $line                                                                                                                                                   
-//fi                         
+//read line <&0
+//regexp='([^ ]*) ([A-Z0-9_]*) (.*)'
+//if [[ $line =~ $regexp ]]
+//then
+//    FILENAME_STRING=${BASH_REMATCH[1]}
+//    TEMPLATE_STRING=${BASH_REMATCH[2]}
+//    REPLACE_STRING=${BASH_REMATCH[3]}
+//    sed -i "s/$TEMPLATE_STRING/$REPLACE_STRING/g" $FILENAME_STRING
+//else
+//    echo $0: not matched: $line
+//fi
