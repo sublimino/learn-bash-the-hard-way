@@ -6,9 +6,11 @@ scripts more robust and less prone to failure.
 
 === Syntax Checking Options
 
+Start by creating this simple script:
+
 ----
 $ mkdir -p lbthw_debugging
-$ de lbthw_debugging
+$ cd lbthw_debugging
 $ cat > debug_script.sh << 'END'
 #!/bin/bash
 
@@ -16,29 +18,37 @@ A=some value
 echo "${A}
 echo "${B}"
 END
+----
+
+Now run it with the -n flag. This flag only parses the script, rather than
+running it. It's useful for detecting basic syntax errors.
+
+----
 $ bash -n debug_script.sh
 ----
 
-Fix it
+You can see it's broken. Fix it. Then run it:
 
 ----
 $ bash debug_script.sh
 ----
 
+Now run with '-v' to see the verbose output.
 
 ----
 $ bash -v debug_script.sh
 ----
 
-Try tracing to see more details about what's going on. Each statement gets a new line.
+Try tracing to see more details about what's going on. Each statement gets a
+new line.
 
 ----
 $ bash -x debug_script.sh
 ----
 
-Now fix the script.
-
-Using these together can help debug scripts where there is an elementary error.
+Using these flags together can help debug scripts where there is an elementary
+error, or even just working out what's going on when a script runs. I used it
+only yesterday to figure out why a systemctl service wasn't running or logging.
 
 
 === Managing Variables
@@ -83,32 +93,108 @@ before they become serious.
 If you are working with a particularly complex script, then you can get to the
 point where you are unsure what happened to a variable.
 
-TODO
+Try running this script and see what happens:
 
 ----
-declare -t VARIABLE=value
-trap "echo VARIABLE is being used here." DEBUG
+#!/bin/bash
+set -o nounset
+
+trap 'echo "${BASH_SOURCE}>A \$A= \"${A}\" ${LINENO}"' DEBUG
+declare -t A="some value"
+B=
+echo "${A}"
+A="another value"
+echo "${A}"
+echo "${B}"
 ----
+
+Now fix it.
+
+Can you work out what is going on? You may need to refer to the bash man page,
+and make sure you understand quoting in bash properly.
+
+The '-t' flag to declare 'traps' when the variable is referenced or assigned to.
+
+
 
 === Profiling Bash Scripts
 
-Profiling:
-http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
-//profiling PS4='$(date "+%s.%N ($LINENO) + ")'
+Returning to the 'xtrace' (or set -x) flag, we can exploit its use of a PS
+variable to implement the profiling of a script:
+
+----
+#!/bin/bash
+set -o nounset
+set -o xtrace
+declare A="some value"
+PS4='$(date "+%s%N")'
+B=
+echo "${A}"
+A="another value"
+echo "${A}"
+echo "${B}"
+ls
+pwd
+curl -q bbc.co.uk
+----
+
+----
+NOTE: If you are on a Mac, then you might only get second-level granularity TODO
+
+
+
+
+
+//http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
 
 
 === Shellcheck
 
-Finally, here is a very useful  TODO
+Finally, here is a very useful tip for understanding bash more deeply and
+improving any bash scripts you come across. Shellcheck is a website
+(http://www.shellcheck.net/) and a package that gives you advice to help fix
+and improve your shell scripts. Very often, its advice has prompted me to
+research more deeply and understand bash better.
 
-If you go to  TODO
+Here is some example output from a script I found on my laptop:
 
-http://www.shellcheck.net/ - also available as a package.
+----
+$ shellcheck shrinkpdf.sh
+In shrinkpdf.sh line 44:
+	  -dColorImageResolution=$3		\
+                                 ^-- SC2086: Double quote to prevent globbing and word splitting.
 
-TODO: example output
+
+In shrinkpdf.sh line 46:
+	  -dGrayImageResolution=$3		\
+                                ^-- SC2086: Double quote to prevent globbing and word splitting.
 
 
+In shrinkpdf.sh line 48:
+	  -dMonoImageResolution=$3		\
+                                ^-- SC2086: Double quote to prevent globbing and word splitting.
 
+
+In shrinkpdf.sh line 57:
+	if [ ! -f "$1" -o ! -f "$2" ]; then
+                       ^-- SC2166: Prefer [ p ] || [ q ] as [ p -o q ] is not well defined.
+
+
+In shrinkpdf.sh line 60:
+	ISIZE="$(echo $(wc -c "$1") | cut -f1 -d\ )"
+                      ^-- SC2046: Quote this to prevent word splitting.
+                      ^-- SC2005: Useless echo? Instead of 'echo $(cmd)', just use 'cmd'.
+
+
+In shrinkpdf.sh line 61:
+	OSIZE="$(echo $(wc -c "$2") | cut -f1 -d\ )"
+                      ^-- SC2046: Quote this to prevent word splitting.
+                      ^-- SC2005: Useless echo? Instead of 'echo $(cmd)', just use 'cmd'.
+----
+
+The most common reminders are regarding potential quoting issues, but you can 
+see other useful tips in the above output, such as preferred arguments to the
+test construct, and advice on 'useless' echo's.
 
 
 === Cleanup
