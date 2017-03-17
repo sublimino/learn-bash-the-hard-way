@@ -208,10 +208,13 @@ $ rm -rf lbthw_debugging
 
 === What You Learned
 
-TODO
+In this section, you learned about the bash flags useful for debugging, how to
+use traps and declare to trace the use of variables, making your scripts more 
+robust with nounset, and using shelltrace to help you reduce the risk of your
+scripts failing.
 
 === Exercises
 
-1) Find a large bash script on a social coding site such as GitHub, and run shellcheck over it. Contribute back any 
+1) Find a large bash script on a social coding site such as GitHub, and run
+shellcheck over it. Contribute back any improvements you find.
 
-2) TODO
