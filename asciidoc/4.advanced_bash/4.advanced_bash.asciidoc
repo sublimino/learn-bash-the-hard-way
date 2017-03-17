@@ -8,3 +8,5 @@ include::4.1.traps.asciidoc[]
 
 include::4.2.debugging.asciidoc[]
 
+include::4.3.string_manipulation.asciidoc[]
+

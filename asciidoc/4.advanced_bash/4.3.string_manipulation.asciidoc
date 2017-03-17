@@ -1,0 +1,198 @@
+== String Manipulation
+
+Since so much of working in bash is related to files and strings of text, the
+ability to manipulate strings is valuable.
+
+While tools such as sed, awk, perl (and many many others) are well worth
+learning, in this section I want to show you what is possible in bash - and it
+may be more than you think!
+
+
+=== String Length
+
+One of the most common requirements when working with strings is to determine
+length:
+
+----
+$ A='12345678901234567890'
+$ echo "${#A}"
+$ echo "$#A"
+----
+
+Why did the second one not 'work'?
+
+
+
+=== String Editing
+
+Bash provides a way to extract a substring from a string. The following example
+expains how to parse n characters starting from a particular position.
+
+Work out what's going on here. You may need to consult the manual:
+
+----
+$ echo ${A:2}
+$ echo ${A:2:3}
+----
+
+You can replace sections of scripts using search and replace. The first part
+enclosed in '/' signs represents what's searched for, and the second what is
+replaced:
+
+----
+$ echo "${A/234/432}"
+$ echo "${A//234/432}"
+----
+
+What's going on in the TODO
+
+
+TODO
+
+Trim?
+Replace beginning and end
+
+----
+${string/#pattern/replacement}
+----
+
+
+=== Extglobs
+
+A more advanced means of working with strings is possible by using bash's
+extglobs functionality.
+
+A word of warning here: although this functionality is useful to know, it is
+arguably less useful than the 
+
+
+----
+#!/bin/bash
+shopt -s extglob
+b=" 	 asd asd "
+echo ${b}
+echo "|${b}|"
+
+# Single character (space)
+echo "|${b/+( )/}|"
+echo "|${b//+( )/}|"
+          
+# Multiple characters (space and tab)
+echo "|${b/+([ 	])/}|"
+echo "|${b//+([ 	])/}|"
+
+# Character class
+echo "|${b/+([[:space:]])/}|"
+echo "|${b//+([[:space:]])/}|"
+
+# Beginning
+echo "|${b/#+([[:space:]])/}|"
+# End
+echo "|${b/%+([[:space:]])/}|"
+----
+
+//http://www.linuxjournal.com/content/bash-extended-globbing
+
+
+//${parameter%word}
+//${parameter%%word}
+// The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches a trailing portion of the expanded value of parameter, then the result of the expansion is the expanded value of parameter with the shortest matching pattern (the ``%'' case) or the longest matching pattern (the ``%%'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable subscripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
+
+
+
+
+
+
+If the extglob shell option is enabled using the shopt builtin, several extended pattern matching operators are recognized. In the following description, a pattern-list is a list of one or more patterns separated by a |. Composite patterns may be formed using one or more of the following sub-patterns:
+
+ ?(pattern-list) Matches zero or one occurrence of the given patterns
+ *(pattern-list) Matches zero or more occurrences of the given patterns
+ +(pattern-list) Matches one or more occurrences of the given patterns
+ @(pattern-list) Matches one of the given patterns
+ !(pattern-list) Matches anything except one of the given patterns
+
+http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
+
+Replace leading zeroes
+TODAY=$(date +%j)            
+TODAY=${TODAY##+(0)}
+
+
+
+Replace leading spaces
+
+
+
+${string:position:length}
+
+=== Removing text
+
+TODO
+//${parameter#word}
+//${parameter##word}
+// The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches the beginning of the value of parameter, then the result of the expan- sion is the expanded value of parameter with the shortest matching pattern (the ``#'' case) or the longest matching pattern (the ``##'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable sub- scripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
+
+Following syntax deletes the shortest match of $substring from front of $string
+
+----
+${string#substring}
+Following syntax deletes the longest match of $substring from front of $string
+${string##substring}
+Following syntax deletes the shortest match of $substring from back of $string (TEST?)
+${string%substring}
+Following syntax deletes the longest match of $substring from back of $string
+${string%%substring}
+----
+
+
+Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
+${string/%pattern/replacement}
+
+
+=== Quoting Hell
+
+echo 'asdasd'''asdasd' ?
+
+
+=== Arrays
+
+TODO
+//${!name[@]}
+//${!name[*]}
+// If name is an array variable, expands to the list of array indices (keys) assigned in name. If name is not an array, expands to 0 if name is set and null otherwise. When @ is used and the expansion appears within double quotes, each key expands to a separate word.
+//
+
+=== Cleanup
+
+TODO
+
+=== What You Learned
+
+TODO
+
+
+
+=== Exercises
+
+1) Learn how to do all of the above things in sed too. This will take some research and time.
+
+2) Learn how to do all of the above in perl. This will also take some research and time!
+
+3) TODO
+
+
+
+// From regexps file
+//eg - BASH_REMATCH
+//
+//read line <&0                                                                                                                                                                     
+//regexp='([^ ]*) ([A-Z0-9_]*) (.*)'                                                                                                                                                
+//if [[ $line =~ $regexp ]]                                                                                                                                                         
+//then                                                                                                                                                                              
+//    FILENAME_STRING=${BASH_REMATCH[1]}                                                                                                                                            
+//    TEMPLATE_STRING=${BASH_REMATCH[2]}                                                                                                                                            
+//    REPLACE_STRING=${BASH_REMATCH[3]}                                                                                                                                             
+//    sed -i "s/$TEMPLATE_STRING/$REPLACE_STRING/g" $FILENAME_STRING                                                                                                                
+//else                                                                                                                                                                              
+//    echo $0: not matched: $line                                                                                                                                                   
+//fi                         
