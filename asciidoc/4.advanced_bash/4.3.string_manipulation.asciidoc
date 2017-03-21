@@ -14,6 +14,8 @@ One of the most common requirements when working with strings is to determine
 length:
 
 ----
+$ mkdir lbthw_strings
+$ cd lbthw_strings
 $ A='12345678901234567890'
 $ echo "${#A}"
 $ echo "$#A"
@@ -47,74 +49,37 @@ $ echo "${A//234/432}"
 What's going on in the second command above? How does it differ from the first?
 
 
-=== Extglobs
+=== Extglobs === Removing text
 
 A more advanced means of working with strings is possible by using bash's
 extglobs functionality.
 
 A word of warning here: although this functionality is useful to know, it is
-arguably less useful than the
+arguably less useful than learning the programs 'sed' and 'perl' for this
+purpose. It's also quite confusing to have this extra type of glob syntax to
+learn in addition to regular expressions (and there's even flavours of those
+too!).
 
 
-----
-#!/bin/bash
-shopt -s extglob
-b=" 	 asd asd "
-echo ${b}
-echo "|${b}|"
 
-# Single character (space)
-echo "|${b/+( )/}|"
-echo "|${b//+( )/}|"
-
-# Multiple characters (space and tab)
-echo "|${b/+([ 	])/}|"
-echo "|${b//+([ 	])/}|"
-
-# Character class
-echo "|${b/+([[:space:]])/}|"
-echo "|${b//+([[:space:]])/}|"
-
-# Beginning
-echo "|${b/#+([[:space:]])/}|"
-# End
-echo "|${b/%+([[:space:]])/}|"
-----
-
-//http://www.linuxjournal.com/content/bash-extended-globbing
-
-
-//${parameter%word}
-//${parameter%%word}
+//http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
+// ?(pattern-list) Matches zero or one occurrence of the given patterns
+// *(pattern-list) Matches zero or more occurrences of the given patterns
+// +(pattern-list) Matches one or more occurrences of the given patterns
+// @(pattern-list) Matches one of the given patterns
+// !(pattern-list) Matches anything except one of the given patterns
+//Following syntax deletes the shortest match of $substring from front of $string
+//Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
+//${string/%pattern/replacement}
+//${string#substring}
+//Following syntax deletes the longest match of $substring from front of $string
+//${string##substring}
+//Following syntax deletes the shortest match of $substring from back of $string (TEST?)
+//${string%substring}
+//Following syntax deletes the longest match of $substring from back of $string
+//${string%%substring}
 // The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches a trailing portion of the expanded value of parameter, then the result of the expansion is the expanded value of parameter with the shortest matching pattern (the ``%'' case) or the longest matching pattern (the ``%%'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable subscripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
 
-
-
-
-
-
-If the extglob shell option is enabled using the shopt builtin, several extended pattern matching operators are recognized. In the following description, a pattern-list is a list of one or more patterns separated by a |. Composite patterns may be formed using one or more of the following sub-patterns:
-
- ?(pattern-list) Matches zero or one occurrence of the given patterns
- *(pattern-list) Matches zero or more occurrences of the given patterns
- +(pattern-list) Matches one or more occurrences of the given patterns
- @(pattern-list) Matches one of the given patterns
- !(pattern-list) Matches anything except one of the given patterns
-
-http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
-
-Replace leading zeroes
-TODAY=$(date +%j)
-TODAY=${TODAY##+(0)}
-
-
-
-
-
-
-
-
-=== Removing text
 
 TEST SCRIPT
 //cat a.sh
@@ -141,53 +106,66 @@ TEST SCRIPT
 //echo "|${D}|"
 
 
-Following syntax deletes the shortest match of $substring from front of $string
 
-----
-${string#substring}
-Following syntax deletes the longest match of $substring from front of $string
-${string##substring}
-Following syntax deletes the shortest match of $substring from back of $string (TEST?)
-${string%substring}
-Following syntax deletes the longest match of $substring from back of $string
-${string%%substring}
-----
-
+Replace leading zeroes
+TODAY=$(date +%j)
+TODAY=${TODAY##+(0)}
 
 Remember: # to the left, % to the right on a (US) keyboard. Or 'hash' is before 'per cent' in the alphabet.
 
 
-Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
-${string/%pattern/replacement}
 
 
 
 
 === Quoting Hell
 
-TODO
+Quoting - as I'm sure you've seen - can get very complicated in bash very
+quickly.
+
+Try this:
 
 ----
-$ echo 'asdasd'''asdasd'
+$ echo 'I really want to echo $HOME and I can't avoid it'
 ----
 
+Uh-oh. You're now stuck.
 
-=== Arrays
+Can you see why?
 
-TODO
-//${!name[@]}
-//${!name[*]}
-// If name is an array variable, expands to the list of array indices (keys) assigned in name. If name is not an array, expands to 0 if name is set and null otherwise. When @ is used and the expansion appears within double quotes, each key expands to a separate word.
-//
+Hit CTRL-c to get out of it.
+
+So you might think to try this:
+
+----
+$ echo "I really want to echo $HOME and I can't avoid it"
+----
+
+but this time the $HOME variable is evaluated and the output is not what is
+wanted.
+
+Try this:
+
+----
+$ echo 'I really want to echo $HOME and I can'"'"'t avoid it'
+----
+
+That works. Remember this trick as it can save you a lot of time!
+
+
 
 === Cleanup
 
-TODO
+----
+$ cd ..
+$ rm -rf lbthw_strings
+----
 
 === What You Learned
 
 TODO
 
+- How to avoid common quoting problems.
 
 
 === Exercises
@@ -196,8 +174,9 @@ TODO
 
 2) Learn how to do all of the above in perl. This will also take some research and time!
 
-3) TODO
+3) Construct a useful echo that has a double-quoted string with a single-quoted string inside, eg one that outputs:
 
+He said 'I thought she'd said "bash was easy when $$$$s are involved" but that can't be true!'
 
 
 // From regexps file
