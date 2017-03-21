@@ -17,11 +17,8 @@ prefer!) out to get a feel for the flow of the code.
 
 === Annotated code
 
-
-TODO: annotate script 
-
-
-Here is the code with annotations:
+Here is the code with annotations. Not every line is annotated, I just draw
+attention to the bits you've learned during the course:
 
 ----
 #!/bin/bash
@@ -55,7 +52,7 @@ PAGER=${PAGER:more}
 # in the script.
 function show_help() {
 	cat > /dev/stdout << END
-$0 -r <repo> -l <local_checkout> [-q <pre-script>] [-w <post-script>]
+${0} -r <repo> -l <local_checkout> [-q <pre-script>] [-w <post-script>]
    [-m <email>] [-a <mail command>] [-t <mail command attach flag>]
    [-s <mail command subject flag] [-e <recipients flag>] [-n name] [-d <dir>] 
    [-c <command>] [-f] [-v] [-h]
@@ -144,27 +141,35 @@ then
 	set -x
 fi
 
-#TODO from here
+# More variables, this time derived from the optional values.
+# Create variables for items that will be re-used rather than using 'magic
+# values'.
 BUILD_DIR_BASE="/tmp/${NAME}"
 BUILD_DIR="${BUILD_DIR_BASE}/${NAME}_builddir"
 mkdir -p "${BUILD_DIR}"
+# Use of the RANDOM variable to create a log file hopefully unique to this run.
 LOG_FILE="${BUILD_DIR}/${NAME}_build_${RANDOM}.log.txt"
 BUILD_LOG_FILE="${BUILD_DIR}/${NAME}_build.log.txt"
-LOCK_FILE="${BUILD_DIR}/${NAME}ci.lck"
+# Create a lock file based on the name given
+LOCK_FILE="${BUILD_DIR}/${NAME}_ci.lck"
 
+# Create a generic cleanup function in case it is needed laster
 function cleanup() {
-	rm -rf "${BUILD_DIR:?}"/"${NAME}"
+	rm -rf "${BUILD_DIR}"
 	rm -f "${LOCK_FILE}"
 	# get rid of /tmp detritus, leaving anything accessed 2 days ago+
 	find "${BUILD_DIR_BASE}"/* -type d -atime +1 | rm -rf
 	echo "cleanup done"
 }
 
+# Trap specific signals and run cleanup
 trap cleanup TERM INT QUIT
 
+# Function to send mail. Note the use of the array log_file_arg in the mail
+# command.
 function send_mail() {
-	msg=$1
-	if [[ ${LOG_FILE} != '' ]] && [[ ${MAIL_CMD_ATTACH_FLAG} != '' ]]
+	msg=${1}
+	if [[ ${LOG_FILE} != "" ]] && [[ ${MAIL_CMD_ATTACH_FLAG} != "" ]]
 	then
 		log_file_arg=(${MAIL_CMD_ATTACH_FLAG} ${LOG_FILE})
 	fi
@@ -176,16 +181,17 @@ function send_mail() {
 	fi
 }
 
+# Output the date to the log file.
 date 2>&1 | tee -a "${BUILD_LOG_FILE}"
 
-# Lockfile
+# Use the -a test to determine whether this ci is currently running.
 if [[ -a ${LOCK_FILE} ]]
 then
 	echo "Already running" | tee -a "${BUILD_LOG_FILE}"
 	exit 
 else
 	touch "${LOCK_FILE}"
-	# Fetch changes
+	# Fetch changes from the remote servers.
 	pushd "${LOCAL_CHECKOUT}"
 	git fetch origin master 2>&1 | tee -a "${BUILD_LOG_FILE}"
 	# See if there are any incoming changes
@@ -226,7 +232,7 @@ else
 		fi
 		${POST_SCRIPT} 2>&1 | tee -a "${LOG_FILE}"
 		EXIT_CODE=$?
-	        if [[ ${EXIT_CODE} -ne 0 ]]
+	    if [[ ${EXIT_CODE} -ne 0 ]]
 		then
 			msg="ANGRY ${NAME} on $(hostname)"
 		fi
@@ -236,17 +242,21 @@ else
 fi
 ----
 
+If you have been following the course carefully, you will spot some improvements
+that could be made. See the exercises section for what to do if that is the
+case!
+
 === What You Learned
 
-TODO
+You won't have learned anything specifically new in this section, but I hope it
+has been made clear 
 
 === Cleanup
 
-TODO
+You should know the drill by now.
 
 === Exercises
 
 1) Find improvements to 'cheapci' and submit them as pull requests. If you're
 not familiar with the pull request process, then create an account on GitHub
-and suggest your change by adding an 'issue' and filling out the form (TODO
-link)
+and suggest your change by adding an 'issue' and filling out the form.
