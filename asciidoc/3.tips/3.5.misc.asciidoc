@@ -61,31 +61,31 @@ What happens if you cd to /tmp and run it from there? Do you get an absolute pat
 
 There are a bewildering number of archiving tools. To name a few of the most popular: tarred, zipped, bzipped, gzipped, and compressed.
 
-If you spend any time dealing with these files, then it's a candidate for a time-saving function to put into your startup files.
+If you spend any time dealing with these files, then this is a candidate for a time-saving function to put into your startup files.
 
 ----
 8$ function extract() {
   if [ -z "$1" ]
   then
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "Usage: extract <file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
   else
     if [ -f $1 ] ; then
        case $1 in
-         *.7z)        7z x ../$1        ;;
-         *.bz2)       bunzip2 ../$1     ;;
-         *.exe)       cabextract ../$1  ;;
-         *.gz)        gunzip ../$1      ;;
-         *.tar.bz2)   tar xvjf ../$1    ;;
-         *.tar.gz)    tar xvzf ../$1    ;;
-         *.tar.xz)    tar xvJf ../$1    ;;
-         *.tar)       tar xvf ../$1     ;;
-         *.tbz2)      tar xvjf ../$1    ;;
-         *.tgz)       tar xvzf ../$1    ;;
-         *.Z)         uncompress ../$1  ;;
-         *.xz)        unxz ../$1        ;;
-         *.lzma)      unlzma ../$1      ;;
-         *.rar)       unrar x -ad ../$1 ;;
-         *.zip)       unzip ../$1       ;;
+         *.7z)        7z x $1        ;;
+         *.bz2)       bunzip2 $1     ;;
+         *.exe)       cabextract $1  ;;
+         *.gz)        gunzip $1      ;;
+         *.tar.bz2)   tar xvjf $1    ;;
+         *.tar.gz)    tar xvzf $1    ;;
+         *.tar.xz)    tar xvJf $1    ;;
+         *.tar)       tar xvf $1     ;;
+         *.tbz2)      tar xvjf $1    ;;
+         *.tgz)       tar xvzf $1    ;;
+         *.Z)         uncompress $1  ;;
+         *.xz)        unxz $1        ;;
+         *.lzma)      unlzma $1      ;;
+         *.rar)       unrar x -ad $1 ;;
+         *.zip)       unzip $1       ;;
          *)           echo "extract: '$1' - unknown archive method" ;;
        esac
     else
@@ -97,12 +97,11 @@ If you spend any time dealing with these files, then it's a candidate for a time
 10$ cd lbthwmisc
 11$ touch a b c
 12$ tar cvfz test.tgz a b c
-13$ extract test.tgz
+13$ rm a b c
+14$ extract test.tgz
 ----
 
-TODO Test above
-
-
+//TESTED
 
 
 === Output Absolute File Path
