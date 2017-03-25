@@ -21,6 +21,7 @@ $ echo "${#A}"
 $ echo "$#A"
 ----
 
+
 Why did the second one not 'work'?
 
 
@@ -46,10 +47,12 @@ $ echo "${A/234/432}"
 $ echo "${A//234/432}"
 ----
 
+
+
 What's going on in the second command above? How does it differ from the first?
 
 
-=== Extglobs === Removing text
+=== Extglobs and removing text
 
 A more advanced means of working with strings is possible by using bash's
 extglobs functionality.
@@ -60,6 +63,39 @@ purpose. It's also quite confusing to have this extra type of glob syntax to
 learn in addition to regular expressions (and there's even flavours of those
 too!).
 
+
+----
+$ set -o extglob
+$ B="  ${A}  "
+$ echo "|${B}|"
+----
+
+You've ensured that the 'extglob' option is on, and created a new variable 'B',
+which is 'A' with two spaces in front and behind. The pipe ('|') character is
+used in the echo output to show where the spaces are.
+
+----
+$ echo "|{B# }|"
+$ echo "|${B#?( )}|"
+$ echo "|${B#+( )}|"
+$ echo "|${B#*( )}|"
+$ echo "|${B##+( )}|"
+----
+
+Using the bash man page, and experimenting, can you figure out the differences
+between the above extglobs? The are:
+
+- ?( )
+- +( )
+- *( )
+
+
+//Trim?
+//Replace beginning and end
+//C="${B##+( )}"
+//echo "|${C}|"
+//D="${C%%+( )}"
+//echo "|${D}|"
 
 
 //http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
@@ -79,31 +115,6 @@ too!).
 //Following syntax deletes the longest match of $substring from back of $string
 //${string%%substring}
 // The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches a trailing portion of the expanded value of parameter, then the result of the expansion is the expanded value of parameter with the shortest matching pattern (the ``%'' case) or the longest matching pattern (the ``%%'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable subscripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
-
-
-TEST SCRIPT
-//cat a.sh
-//#!/bin/bash
-//shopt -s extglob
-//
-//A='12345678901234567890'
-//echo "$#A"
-//echo "${#A}"
-//echo "${A:2}"
-//echo "${A:2:3}"
-//echo "${A/234/432}"
-//echo "${A//234/432}"
-//B="   ${A}    "
-//echo "${B# }"
-//echo "${B#?( )}"
-//echo "${B#+( )}"
-//echo "${B##+( )}"
-//Trim?
-//Replace beginning and end
-//C="${B##+( )}"
-//echo "|${C}|"
-//D="${C%%+( )}"
-//echo "|${D}|"
 
 
 
