@@ -65,9 +65,9 @@ too!).
 
 
 ----
-$ set -o extglob
-$ B="  ${A}  "
-$ echo "|${B}|"
+shopt -s extglob
+A="12345678901234567890"
+B="  ${A}  "
 ----
 
 You've ensured that the 'extglob' option is on, and created a new variable 'B',
@@ -75,58 +75,33 @@ which is 'A' with two spaces in front and behind. The pipe ('|') character is
 used in the echo output to show where the spaces are.
 
 ----
-$ echo "|{B# }|"
-$ echo "|${B#?( )}|"
-$ echo "|${B#+( )}|"
-$ echo "|${B#*( )}|"
-$ echo "|${B##+( )}|"
+echo "B      |${B}|"
+echo "B#+( ) |${B#+( )}|"
+echo "B#?( ) |${B#?( )}|"
+echo "B#*( ) |${B#\*( )}|"
+echo "B##+( )|${B##+( )}|"
+echo "B##*( )|${B##*( )}|"
+echo "B##?( )|${B##?( )}|"
 ----
 
 Using the bash man page, and experimenting, can you figure out the differences
-between the above extglobs? The are:
+between the above extglobs? They are:
 
 - ?( )
 - +( )
 - *( )
 
+Now try '%'s instead of '#'s above. What happens?
 
-//Trim?
-//Replace beginning and end
-//C="${B##+( )}"
-//echo "|${C}|"
-//D="${C%%+( )}"
-//echo "|${D}|"
+One potentially handy application of this is when having to remove leading zeroes from dates:
 
-
-//http://www.thegeekstuff.com/2010/07/bash-string-manipulation/
-// ?(pattern-list) Matches zero or one occurrence of the given patterns
-// *(pattern-list) Matches zero or more occurrences of the given patterns
-// +(pattern-list) Matches one or more occurrences of the given patterns
-// @(pattern-list) Matches one of the given patterns
-// !(pattern-list) Matches anything except one of the given patterns
-//Following syntax deletes the shortest match of $substring from front of $string
-//Following syntax replaces with the replacement string, only when the pattern matches beginning of the $string.
-//${string/%pattern/replacement}
-//${string#substring}
-//Following syntax deletes the longest match of $substring from front of $string
-//${string##substring}
-//Following syntax deletes the shortest match of $substring from back of $string (TEST?)
-//${string%substring}
-//Following syntax deletes the longest match of $substring from back of $string
-//${string%%substring}
-// The word is expanded to produce a pattern just as in pathname expansion. If the pattern matches a trailing portion of the expanded value of parameter, then the result of the expansion is the expanded value of parameter with the shortest matching pattern (the ``%'' case) or the longest matching pattern (the ``%%'' case) deleted. If parameter is @ or *, the pattern removal operation is applied to each positional parameter in turn, and the expansion is the resultant list. If parameter is an array variable subscripted with @ or *, the pattern removal operation is applied to each member of the array in turn, and the expansion is the resultant list.
-
-
-
-Replace leading zeroes
+----
 TODAY=$(date +%j)
 TODAY=${TODAY##+(0)}
+----
 
-Remember: # to the left, % to the right on a (US) keyboard. Or 'hash' is before 'per cent' in the alphabet.
-
-
-
-
+Remember: # to the left, % to the right on a (US) keyboard. Or 'hash' is before
+'per cent' in the alphabet.
 
 
 === Quoting Hell
@@ -174,9 +149,18 @@ $ rm -rf lbthw_strings
 
 === What You Learned
 
-TODO
+This section taught you about string management using pure bash. This is a 
+relatively rare field to cover, but worth having seen in case you come across
+it. You learned:
 
-- How to avoid common quoting problems.
+- How to edit strings using pure bash
+
+- How to determine string length
+
+- What extglobs are and how you can use them
+
+- How to avoid common quoting problems
+
 
 
 === Exercises
@@ -190,17 +174,3 @@ TODO
 He said 'I thought she'd said "bash was easy when $$$$s are involved" but that can't be true!'
 
 
-// From regexps file
-//eg - BASH_REMATCH
-//
-//read line <&0
-//regexp='([^ ]*) ([A-Z0-9_]*) (.*)'
-//if [[ $line =~ $regexp ]]
-//then
-//    FILENAME_STRING=${BASH_REMATCH[1]}
-//    TEMPLATE_STRING=${BASH_REMATCH[2]}
-//    REPLACE_STRING=${BASH_REMATCH[3]}
-//    sed -i "s/$TEMPLATE_STRING/$REPLACE_STRING/g" $FILENAME_STRING
-//else
-//    echo $0: not matched: $line
-//fi

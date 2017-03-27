@@ -139,10 +139,7 @@ curl -q bbc.co.uk
 ----
 
 ----
-NOTE: If you are on a Mac, then you might only get second-level granularity TODO
-
-
-
+NOTE: If you are on a Mac, then you might only get second-level granularity on the date!
 
 
 //http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
