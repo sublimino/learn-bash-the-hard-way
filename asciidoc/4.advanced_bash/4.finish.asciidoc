@@ -1,0 +1,21 @@
+== Finished!
+
+Well done! You've finished the course.
+
+The course's aims were to give you an understanding of key concepts of bash so
+that you are:
+
+- aware of what bash can do
+
+- develop your understanding of central bash concepts
+
+- 
+
+If I had to put it in a sentence, I'd say that this course should give you the
+ability to never be surprised or helpless in the face of bash you come across.
+
+I hope that's what you got from the course!
+
+I welcome feedback and comment to ian.miell@gmail.com
+
+
