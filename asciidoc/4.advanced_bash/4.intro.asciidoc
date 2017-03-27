@@ -1,12 +1,1 @@
-//ADVANCED
-
-//command
-//key variables: TERM, USER, DISPLAY
-
-//auto-completion?
-
-//eval
-
-// Advanced
-http://www.tldp.org/LDP/abs/html/part5.html
-
+TODO
