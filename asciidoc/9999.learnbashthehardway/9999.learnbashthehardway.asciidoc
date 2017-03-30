@@ -1,7 +1,6 @@
 = Learn Bash The Hard Way
-:toc: macro
 
-:toc::[]
+:toc: macro
 
 An introduction to Bash using 'The Hard Way' method.
 
