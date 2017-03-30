@@ -1,10 +1,10 @@
-== Example Bash Script
+=== Example Bash Script
 
 To finish off the course, we're going to look at a slightly larger bash
 project to demonstrate the techniques learned in this course in a more
 pracitcal context.
 
-=== Cheapci
+==== Cheapci
 
 'Cheapci' is a bash script I wrote in an effort to understand what Jenkins was
 doing, and improve my bash.
@@ -15,7 +15,7 @@ I reproduce a modified cut of the code here with annotations. As with every
 listing in this course, I recommend typing the code (minus the comments if you
 prefer!) out to get a feel for the flow of the code.
 
-=== Annotated code
+==== Annotated code
 
 Here is the code with annotations. Not every line is annotated, I just draw
 attention to the bits you've learned during the course:
@@ -246,16 +246,16 @@ If you have been following the course carefully, you will spot some improvements
 that could be made. See the exercises section for what to do if that is the
 case!
 
-=== What You Learned
+==== What You Learned
 
 You won't have learned anything specifically new in this section, but I hope it
 has been made clear 
 
-=== Cleanup
+==== Cleanup
 
 You should know the drill by now.
 
-=== Exercises
+==== Exercises
 
 1) Find improvements to 'cheapci' and submit them as pull requests. If you're
 not familiar with the pull request process, then create an account on GitHub

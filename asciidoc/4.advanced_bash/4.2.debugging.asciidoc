@@ -1,10 +1,10 @@
-== Debugging Bash Scripts
+=== Debugging Bash Scripts
 
 There are a few useful techniques worth knowing to help debug your bash scripts.
 While covering some of these here, you will also learn how to make your bash
 scripts more robust and less prone to failure.
 
-=== Syntax Checking Options
+==== Syntax Checking Options
 
 Start by creating this simple script:
 
@@ -88,7 +88,7 @@ echo "${B}"
 I always set 'nounset' on my scripts as a habit. It can catch many problems
 before they become serious.
 
-=== Tracing Variables
+==== Tracing Variables
 
 If you are working with a particularly complex script, then you can get to the
 point where you are unsure what happened to a variable.
@@ -117,7 +117,7 @@ The '-t' flag to declare 'traps' when the variable is referenced or assigned to.
 
 
 
-=== Profiling Bash Scripts
+==== Profiling Bash Scripts
 
 Returning to the 'xtrace' (or set -x) flag, we can exploit its use of a PS
 variable to implement the profiling of a script:
@@ -138,14 +138,15 @@ pwd
 curl -q bbc.co.uk
 ----
 
-----
+====
 NOTE: If you are on a Mac, then you might only get second-level granularity on the date!
+====
 
 
 //http://stackoverflow.com/questions/4336035/performance-profiling-tools-for-shell-scripts
 
 
-=== Shellcheck
+==== Shellcheck
 
 Finally, here is a very useful tip for understanding bash more deeply and
 improving any bash scripts you come across. Shellcheck is a website
@@ -194,7 +195,7 @@ see other useful tips in the above output, such as preferred arguments to the
 test construct, and advice on 'useless' echo's.
 
 
-=== Cleanup
+==== Cleanup
 
 To clean up the above work:
 
@@ -203,14 +204,14 @@ $ cd ..
 $ rm -rf lbthw_debugging
 ----
 
-=== What You Learned
+==== What You Learned
 
 In this section, you learned about the bash flags useful for debugging, how to
 use traps and declare to trace the use of variables, making your scripts more 
 robust with nounset, and using shelltrace to help you reduce the risk of your
 scripts failing.
 
-=== Exercises
+==== Exercises
 
 1) Find a large bash script on a social coding site such as GitHub, and run
 shellcheck over it. Contribute back any improvements you find.

@@ -1,4 +1,4 @@
-== Bash in Practice
+=== Bash in Practice
 
 So far we've been learning about bash in relatively abstract ways.
 
@@ -7,7 +7,7 @@ In this section you're going to see many of the ideas you've learned put togethe
 You can easily skip this section if you want as nothing here is new, but following this can embed some concepts and keep your motivation going before the final part!
 
 
-=== Output With Time
+==== Output With Time
 
 Frequently, I want to get the output of a command along with the time. Let's say I'm running vmstat while a server is having problems, and I want to ensure that I've logged the time that vmstat relates to. Type this in:
 
@@ -29,7 +29,7 @@ It is not available on Mac OSes. If vmstat does not exist for you, then replace 
 
 You will see the date appended to each line in the output. Experiment with the function to place the date before the line, or even on a separate line. See also the exercises below.
 
-=== Where Am I?
+==== Where Am I?
 
 You're probably familiar with the 'pwd' builtin, which gives you your current working directory (cwd). Similarly, there is an environment variable (PWD) that bash normally sets that stores the cwd.
 
@@ -57,7 +57,7 @@ Have a play with this function to see what it does.
 
 What happens if you cd to /tmp and run it from there? Do you get an absolute path in the second line? What can you do about this?
 
-=== Generic Extract Function
+==== Generic Extract Function
 
 There are a bewildering number of archiving tools. To name a few of the most popular: tarred, zipped, bzipped, gzipped, and compressed.
 
@@ -104,7 +104,7 @@ If you spend any time dealing with these files, then this is a candidate for a t
 //TESTED
 
 
-=== Output Absolute File Path
+==== Output Absolute File Path
 
 Quite often I want to give co-workers an absolute reference on a server to a file that I am looking at. One way to do this is to cut and paste the output of 'pwd', add a '/' to it, and then add the filename I want to share.
 
@@ -139,7 +139,7 @@ My experience is that the effects of automation can be very powerful, but the ab
 Think about what you could automate today (see exercises)!
 
 
-=== Cleanup
+==== Cleanup
 
 ----
 16$ cd ..
@@ -147,7 +147,7 @@ Think about what you could automate today (see exercises)!
 18$ rm /tmp/lbthwscript.sh
 ----
 
-=== Exercises
+==== Exercises
 
 1) Look at your history to work out what you do most often at the terminal. Write a function to make these tasks quicker.
 

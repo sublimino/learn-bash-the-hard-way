@@ -1,11 +1,11 @@
-== History
+=== History
 
 We all know understanding history is important, and this is true in bash as well.
 
 This section gives you a pragmatic overview of bash's history features, which can save you lots of time when at the terminal.
 
 
-=== Bash and History
+==== Bash and History
 
 Bash keeps a history of commands you have run in a file. By default this is in your $HOME directory and has the name '.bash_history'.
 
@@ -15,7 +15,7 @@ Have a look at it:
 1$ cat ~/.bash_history
 ----
 
-=== Using Your History
+==== Using Your History
 
 It can be tedious to type out commands and arguments again and again, so bash offers several ways to save your effort.
 
@@ -165,7 +165,7 @@ Let go. Now type 'grep'. You should see a previous grep command. If you keep hit
 
 If you want to cycle forward (if you hit CTRL+r too many times and go past the one you want (I do this a lot)), hit CTRL+s.
 
-=== What You Learned
+==== What You Learned
 
 - Where bash keeps a history of commands
 - How to refer to previous commands
@@ -175,11 +175,11 @@ If you want to cycle forward (if you hit CTRL+r too many times and go past the o
 - How to control the commands that are added to the history
 - How to search through your history dynamically
 
-=== What Next?
+==== What Next?
 
 Next you will tie these things together in a series of miscellaneous tips that finish off this part.
 
-=== Exercises
+==== Exercises
 
 1) Remember to use one of the above practical tips every day until you don't think about using it. Then learn another one.
 

@@ -1,9 +1,9 @@
-== Traps and Signals
+=== Traps and Signals
 
 Signals are a fundamental part of Linux processes. Signals (as the name
 suggests) are a way for simple messages to be sent to processes.
 
-=== Triggering signals
+==== Triggering signals
 
 Any easy way to trigger a signal is one you will likely already have used.
 
@@ -52,7 +52,7 @@ $ echo $?
 
 Which signal does CTRL-z trigger?
 
-=== kill
+==== kill
 
 Another way to send a signal to a process is another one you have also likely
 come across: the 'kill' command.
@@ -86,7 +86,7 @@ Instead of '-2' in the above listing, you can use the signal name. Either '-INT'
 or '-SIGINT' will work. Try them.
 
 
-=== Trapping Signals
+==== Trapping Signals
 
 Type out this first and follow the instruction:
 
@@ -124,7 +124,7 @@ $ kill %1
 
 
 
-=== Trap Exit
+==== Trap Exit
 
 In addition to the normal signal name traps, there is some special ones.
 
@@ -163,7 +163,7 @@ What is the name of the '-9' signal? Is this the default that the 'kill' command
 uses?
 
 
-=== A Note About Process Groups
+==== A Note About Process Groups
 
 You may have noticed that in the above script you used the 'wait' command
 after putting the process in the background.
@@ -208,14 +208,14 @@ message to a specific process, which may or may not be running at the time.
 
 If this seems complicated, just remember: signals can get complicated!
 
-=== Cleanup
+==== Cleanup
 
 ----
 $ cd ..
 $ rm -rf lbthw_traps
 ----
 
-=== What You Learned
+==== What You Learned
 
 In this section you have learned:
 
@@ -226,7 +226,7 @@ In this section you have learned:
 - How to trap exiting bash processes
 - What a process group is, and its significance for signals
 
-=== Exercises
+==== Exercises
 
 1) Write a shell script that you can't escape from (the machine it runs on must
 not be overloaded as a result!) in the terminal

@@ -1,4 +1,4 @@
-== String Manipulation
+=== String Manipulation
 
 Since so much of working in bash is related to files and strings of text, the
 ability to manipulate strings is valuable.
@@ -8,7 +8,7 @@ learning, in this section I want to show you what is possible in bash - and it
 may be more than you think!
 
 
-=== String Length
+==== String Length
 
 One of the most common requirements when working with strings is to determine
 length:
@@ -26,7 +26,7 @@ Why did the second one not 'work'?
 
 
 
-=== String Editing
+==== String Editing
 
 Bash provides a way to extract a substring from a string. The following example
 expains how to parse n characters starting from a particular position.
@@ -52,7 +52,7 @@ $ echo "${A//234/432}"
 What's going on in the second command above? How does it differ from the first?
 
 
-=== Extglobs and removing text
+==== Extglobs and removing text
 
 A more advanced means of working with strings is possible by using bash's
 extglobs functionality.
@@ -104,7 +104,7 @@ Remember: # to the left, % to the right on a (US) keyboard. Or 'hash' is before
 'per cent' in the alphabet.
 
 
-=== Quoting Hell
+==== Quoting Hell
 
 Quoting - as I'm sure you've seen - can get very complicated in bash very
 quickly.
@@ -140,14 +140,14 @@ That works. Remember this trick as it can save you a lot of time!
 
 
 
-=== Cleanup
+==== Cleanup
 
 ----
 $ cd ..
 $ rm -rf lbthw_strings
 ----
 
-=== What You Learned
+==== What You Learned
 
 This section taught you about string management using pure bash. This is a 
 relatively rare field to cover, but worth having seen in case you come across
@@ -163,7 +163,7 @@ it. You learned:
 
 
 
-=== Exercises
+==== Exercises
 
 1) Learn how to do all of the above things in sed too. This will take some research and time.
 
