@@ -133,7 +133,7 @@ Oh, and '[[' doesn't like the '-a' (and) and '-o' (or) operators.
 So '[[' can handle some edge cases when using '['. There are some other differences, but I won't cover them here.
 
 ====
-If you want to understand more, follow [this link](http://serverfault.com/questions/52034/what-is-the-difference-between-double-and-single-square-brackets-in-bash)
+If you want to understand more, go to http://serverfault.com/questions/52034/what-is-the-difference-between-double-and-single-square-brackets-in-bash
 ====
 
 
